@@ -1,226 +1,271 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-<title>AlQurmanix | Internal Secure System</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <title>AlQurmanix | The Sovereign Portal</title>
+    
+    <script>
+        if (document.referrer === "" || new URL(document.referrer).hostname !== window.location.hostname) {
+            window.location.href = "index.html"; 
+        }
+    </script>
 
-<script>
-(function() {
-    if (document.referrer === "" || new URL(document.referrer).hostname !== window.location.hostname) {
-        window.location.href = "index.html"; 
-    }
-})();
-</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;500;700&display=swap" rel="stylesheet"/>
+    
+    <style>
+        :root {
+            --gold-primary: #c9a84c;
+            --gold-light: #f5e4a8;
+            --gold-dark: #8a6820;
+            --deep-black: #020208;
+            --card-glass: rgba(10, 10, 20, 0.95);
+            --border-gold: rgba(201, 168, 76, 0.35);
+            --text-main: #ede0c4;
+        }
 
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Tajawal:wght@300;500;700&display=swap" rel="stylesheet"/>
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        body { 
+            background: var(--deep-black); 
+            color: var(--text-main); 
+            font-family: 'Tajawal', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
 
-<style>
-:root {
-    --g-primary: #c9a84c; --g-light: #f5e4a8; --g-dark: #8a6820;
-    --bg-deep: #04040c; --bg-card: rgba(10,10,25,0.9);
-    --border-g: rgba(201,168,76,0.3);
-    --green-act: #00e87a; --red-exit: #ff4060;
-    --ease: cubic-bezier(0.4, 0, 0.2, 1);
-}
+        /* فخامة الخلفية: وهج ذهبي خافت + تأثير جزيئات */
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: -1;
+            background: 
+                radial-gradient(circle at 50% 0%, rgba(201, 168, 76, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(201, 168, 76, 0.05) 0%, transparent 30%);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+        }
 
-* { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
-body { 
-    background: var(--bg-deep); color: #ede0c4; font-family: 'Tajawal', sans-serif;
-    overflow-x: hidden; min-height: 100vh;
-}
+        /* شاشة التحميل الأمنية */
+        #loading-screen {
+            position: fixed; inset: 0; z-index: 9999; background: var(--deep-black);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .loader-diamond {
+            width: 60px; height: 60px; border: 2px solid var(--gold-primary);
+            transform: rotate(45deg); animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0% { transform: rotate(45deg) scale(1); opacity: 1; } 50% { transform: rotate(45deg) scale(1.2); opacity: 0.5; } 100% { transform: rotate(45deg) scale(1); opacity: 1; } }
 
-/* فخامة الخلفية (الغبار الذهبي) */
-body::before {
-    content: ''; position: fixed; inset: 0; z-index: -1;
-    background: radial-gradient(circle at 15% 15%, rgba(201,168,76,0.1) 0%, transparent 40%),
-                radial-gradient(circle at 85% 85%, rgba(201,168,76,0.06) 0%, transparent 40%);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
-}
+        #main-wrapper { display: none; opacity: 0; transition: opacity 1s ease; }
 
-/* لودر التحقق (قواعد الأمان) */
-#ld {
-    position: fixed; inset: 0; z-index: 9999; background: var(--bg-deep);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-}
-.ld-orbit { width: 90px; height: 90px; border: 1px solid var(--border-g); border-top: 3px solid var(--g-primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
+        /* الهيدر العلوي الفخم */
+        #header-nav {
+            position: fixed; top: 0; left: 0; right: 0; height: 85px;
+            background: rgba(2, 2, 8, 0.9); backdrop-filter: blur(25px);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 40px; z-index: 1500; border-bottom: 2px solid var(--border-gold);
+        }
 
-#wrapper { display: none; opacity: 0; transition: 0.6s ease; }
+        /* أيقونة اللغات (العودة لـ 11 لغة أم) */
+        .lang-trigger {
+            cursor: pointer; font-size: 1.5rem; color: var(--gold-primary);
+            display: flex; align-items: center; gap: 10px; border: 1px solid var(--border-gold);
+            padding: 5px 15px; border-radius: 50px; transition: 0.3s;
+        }
+        .lang-trigger:hover { background: var(--gold-primary); color: var(--deep-black); }
 
-/* القائمة الجانبية الملوكية */
-#sb {
-    position: fixed; top: 0; right: 0; width: 320px; height: 100vh;
-    background: linear-gradient(180deg, #0a0a20, #04040c);
-    border-left: 1px solid var(--border-g); z-index: 2500;
-    transform: translateX(100%); transition: 0.5s var(--ease);
-    display: flex; flex-direction: column; box-shadow: -20px 0 50px rgba(0,0,0,0.9);
-}
-#sb.on { transform: translateX(0); }
-.sb-h { padding: 40px 25px; border-bottom: 1px solid var(--border-g); text-align: center; }
-.sb-list { flex: 1; padding: 20px; overflow-y: auto; list-style: none; }
-.sb-link {
-    display: flex; align-items: center; gap: 15px; padding: 14px 20px;
-    color: #ede0c4; text-decoration: none; border-radius: 12px; margin-bottom: 8px;
-    transition: 0.3s; border: 1px solid transparent; font-size: 0.9rem;
-}
-.sb-link:hover { background: rgba(201,168,76,0.12); border-color: var(--border-g); color: var(--g-primary); }
+        /* القائمة الجانبية مع زر الإغلاق (X) */
+        #sidebar {
+            position: fixed; top: 0; right: 0; width: 350px; height: 100vh;
+            background: linear-gradient(180deg, #0a0a1a 0%, #020208 100%);
+            border-left: 2px solid var(--gold-primary); z-index: 2500;
+            transform: translateX(100%); transition: 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+            box-shadow: -20px 0 60px rgba(0,0,0,0.9);
+        }
+        #sidebar.active { transform: translateX(0); }
+        .close-sb {
+            position: absolute; top: 25px; left: 25px; font-size: 2rem;
+            color: var(--gold-primary); cursor: pointer; transition: 0.3s;
+        }
+        .close-sb:hover { transform: rotate(90deg); color: #fff; }
 
-.sb-foot { padding: 25px; border-top: 1px solid rgba(255, 64, 96, 0.15); }
-.btn-logout {
-    width: 100%; padding: 14px; background: rgba(255, 64, 96, 0.05); border: 1px solid var(--red-exit);
-    color: var(--red-exit); border-radius: 10px; cursor: pointer; font-family: 'Tajawal'; font-weight: 700;
-    display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s;
-}
-.btn-logout:hover { background: var(--red-exit); color: #fff; box-shadow: 0 0 20px rgba(255, 64, 96, 0.4); }
+        .sb-content { padding: 80px 30px; display: flex; flex-direction: column; height: 100%; }
+        .sb-list { list-style: none; flex: 1; }
+        .sb-item {
+            display: flex; align-items: center; gap: 20px; padding: 18px;
+            color: var(--text-main); text-decoration: none; border-radius: 15px;
+            margin-bottom: 10px; transition: 0.3s; border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+        }
+        .sb-item:hover { background: rgba(201, 168, 76, 0.15); transform: translateX(-10px); color: var(--gold-primary); }
 
-/* الهيدر */
-#header {
-    position: fixed; top: 0; left: 0; right: 0; height: 75px; z-index: 1500;
-    background: rgba(4,4,12,0.9); backdrop-filter: blur(20px);
-    display: flex; align-items: center; justify-content: space-between; padding: 0 35px; border-bottom: 1px solid var(--border-g);
-}
-.menu-btn { cursor: pointer; font-size: 1.8rem; color: var(--g-primary); transition: 0.3s; }
+        /* منطقة الدعاء (بديل الاسم) - هيبة قصوى */
+        .dua-section {
+            text-align: center; margin: 60px auto; max-width: 800px; padding: 0 20px;
+        }
+        .dua-text {
+            font-family: 'Amiri', serif; font-size: 2.2rem; line-height: 1.6;
+            background: linear-gradient(to bottom, var(--gold-light), var(--gold-dark));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.5); font-weight: 700;
+        }
 
-/* كارت المستخدم الهيبة */
-.u-hero {
-    background: linear-gradient(135deg, rgba(201,168,76,0.15), var(--bg-card));
-    border: 1px solid var(--g-primary); border-radius: 25px; padding: 50px;
-    margin: 40px auto; max-width: 1100px; display: flex; align-items: center; gap: 40px;
-    box-shadow: 0 30px 70px rgba(0,0,0,0.7);
-}
-.u-avatar { position: relative; }
-.u-avatar img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--g-primary); padding: 5px; box-shadow: 0 0 30px var(--g-primary); }
-.u-status { position: absolute; bottom: 10px; left: 10px; width: 18px; height: 18px; background: var(--green-act); border-radius: 50%; border: 3px solid #0a0a20; box-shadow: 0 0 15px var(--green-act); }
+        /* كارت المستخدم (الصورة فقط والمعلومات التقنية) */
+        .user-hero-box {
+            display: flex; flex-direction: column; align-items: center; margin-bottom: 40px;
+        }
+        .avatar-frame {
+            width: 140px; height: 140px; border-radius: 50%;
+            border: 3px solid var(--gold-primary); padding: 7px;
+            box-shadow: 0 0 40px rgba(201, 168, 76, 0.4); background: var(--deep-black);
+        }
+        .avatar-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 
-/* بوابات الوصول */
-.p-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 30px; max-width: 1100px; margin: 40px auto; padding: 0 20px;
-}
-.p-card {
-    background: var(--bg-card); border: 1px solid var(--border-g); padding: 40px; border-radius: 20px;
-    text-decoration: none; color: inherit; transition: 0.4s var(--ease); text-align: center;
-}
-.p-card:hover { border-color: var(--g-primary); transform: translateY(-15px); box-shadow: 0 20px 40px rgba(201,168,76,0.2); }
+        /* بوابات الوصول مع النبذة المبسطة */
+        .portal-container {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 35px; max-width: 1200px; margin: 0 auto 60px; padding: 0 25px;
+        }
+        .gate-card {
+            background: var(--card-glass); border: 1px solid var(--border-gold);
+            padding: 40px 30px; border-radius: 30px; text-decoration: none; color: inherit;
+            transition: 0.5s; text-align: center; position: relative; overflow: hidden;
+        }
+        .gate-card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%);
+            transition: 0.5s; opacity: 0;
+        }
+        .gate-card:hover { border-color: var(--gold-primary); transform: translateY(-15px); }
+        .gate-card:hover::before { opacity: 1; }
+        .gate-card h3 { font-family: 'Cinzel'; color: var(--gold-primary); font-size: 1.6rem; margin: 15px 0; }
+        .gate-card p { font-size: 0.9rem; opacity: 0.7; line-height: 1.5; font-weight: 300; }
 
-/* فوتر اليد المشيرة */
-footer { text-align: center; padding: 80px 20px; border-top: 1px solid var(--border-g); }
-.f-logo { font-family: 'Cinzel', serif; font-size: 3rem; font-weight: 900; background: linear-gradient(to bottom, var(--g-light), var(--g-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 7px; margin-bottom: 30px; }
-.hand-link { display: inline-block; font-size: 4rem; text-decoration: none; animation: bounce 2s infinite; cursor: pointer; }
-@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
+        /* الفوتر واليد */
+        footer { text-align: center; padding: 100px 20px; border-top: 1px solid var(--border-gold); }
+        .f-logo { font-family: 'Cinzel'; font-size: 3.5rem; font-weight: 900; letter-spacing: 10px; color: var(--gold-primary); opacity: 0.8; }
+        .vault-hand { display: inline-block; font-size: 4.5rem; cursor: pointer; text-decoration: none; animation: float 2.5s infinite ease-in-out; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
 
-@media(max-width:768px){ .u-hero { flex-direction: column; text-align: center; } #sb { width: 100%; } }
-</style>
+        @media (max-width: 768px) { .dua-text { font-size: 1.6rem; } #sidebar { width: 100%; } }
+    </style>
 </head>
 <body>
 
-<div id="ld">
-    <div class="ld-orbit"></div>
-    <h2 style="margin-top:30px; color:var(--g-primary); font-family:'Cinzel'; letter-spacing:5px;">ALQURMANIXX</h2>
-    <p style="font-size:0.7rem; color:gray; margin-top:10px;">بروتوكول فحص الهوية نشط...</p>
+<div id="loading-screen">
+    <div class="loader-diamond"></div>
+    <p style="margin-top:20px; font-family:'Cinzel'; color:var(--gold-primary); letter-spacing:3px;">ALQURMANIXX AUTHENTICATING</p>
 </div>
 
-<div id="wrapper">
-    <header id="header">
-        <div class="menu-btn" onclick="toggleSide()">☰</div>
-        <div style="font-family:'Cinzel'; color:var(--g-primary); font-weight:900; font-size:1.4rem;">SYSTEM CORE</div>
-        <div style="color:var(--green-act); font-size:0.8rem; border:1px solid var(--green-act); padding:5px 15px; border-radius:30px;">🛡️ مؤمن بالكامل</div>
+<div id="main-wrapper">
+    <header id="header-nav">
+        <div class="menu-btn" onclick="toggleSidebar()" style="font-size:2rem; cursor:pointer; color:var(--gold-primary);">☰</div>
+        
+        <div class="lang-trigger" onclick="location.href='languages-gate.php'">
+            <span>🌐</span>
+            <span style="font-size: 0.8rem; font-family:'Cinzel';">11 NATIVE LANGUAGES</span>
+        </div>
+
+        <div style="font-family:'Cinzel'; font-weight:900; color:var(--gold-primary); border-left:1px solid var(--border-gold); padding-left:20px;">V3.0 ELITE</div>
     </header>
 
-    <nav id="sb">
-        <div class="sb-h">
-            <h2 style="font-family:'Cinzel'; color:var(--g-primary);">القائمة الجانبية</h2>
-        </div>
-        <ul class="sb-list">
-            <li><a href="user-profile.php" class="sb-link"><span>👤</span> الملف الشخصي الملوكي</a></li>
-            <li><a href="wallet-system.php" class="sb-link"><span>💰</span> محفظة القرماني كوين</a></li>
-            <li><a href="earn-coin.php" class="sb-link"><span>🪙</span> كسب القرماني كوين</a></li>
-            <li><a href="global-market.php" class="sb-link"><span>🛒</span> السوق العالمي</a></li>
-            <li><a href="hr-careers.php" class="sb-link"><span>💼</span> الوظائف والمهن</a></li>
-            <li><a href="referrals.php" class="sb-link"><span>🤝</span> نظام الإحالات</a></li>
-            <li><a href="notifications.php" class="sb-link"><span>🔔</span> مركز التنبيهات</a></li>
-            <li><a href="settings.php" class="sb-link"><span>⚙️</span> إعدادات الأمان</a></li>
-            <li><a href="support-desk.php" class="sb-link"><span>🎧</span> المكتب الفني للدعم</a></li>
-            <li><a href="policies.php" class="sb-link"><span>⚖️</span> السياسات والقوانين</a></li>
-        </ul>
-        <div class="sb-foot">
-            <button class="btn-logout" onclick="location.href='logout-protocol.php'">
-                <span>🚪</span> إنهاء الجلسة الآمنة
-            </button>
+    <nav id="sidebar">
+        <div class="close-sb" onclick="toggleSidebar()">✕</div>
+        <div class="sb-content">
+            <h2 style="font-family:'Cinzel'; color:var(--gold-primary); margin-bottom:40px; text-align:center; border-bottom:1px solid var(--border-gold); padding-bottom:10px;">CORE MENU</h2>
+            <div class="sb-list">
+                <a href="user-profile.php" class="sb-item"><span>👤</span> الملف الشخصي</a>
+                <a href="wallet.php" class="sb-item"><span>💰</span> محفظة الكوينز</a>
+                <a href="market.php" class="sb-item"><span>🛒</span> السوق المفتوح</a>
+                <a href="hr-portal.php" class="sb-item"><span>💼</span> شؤون التوظيف</a>
+                <a href="security.php" class="sb-item"><span>🛡️</span> إعدادات الأمان</a>
+                <a href="support.php" class="sb-item"><span>🎧</span> مركز الدعم</a>
+            </div>
+            <button onclick="location.href='logout-protocol.php'" style="background:none; border:1px solid #ff4060; color:#ff4060; padding:15px; border-radius:10px; cursor:pointer; font-weight:700; margin-top:20px;">🚪 إنهاء الجلسة الآمنة</button>
         </div>
     </nav>
 
     <main>
-        <div class="u-hero">
-            <div class="u-avatar">
-                <img src="user-avatar.png" id="u-img" alt="User">
-                <div class="u-status"></div>
+        <div class="dua-section">
+            <div class="user-hero-box">
+                <div class="avatar-frame">
+                    <img src="user-avatar.png" alt="Sovereign User">
+                </div>
             </div>
-            <div class="u-info">
-                <p style="color:var(--g-primary); font-size:0.8rem; font-weight:700; text-transform:uppercase;">مرحباً بك في AlQurmanix</p>
-                <h1 id="u-name" style="font-family:'Cinzel'; font-size:2.2rem; margin:10px 0;">-- جاري التحميل --</h1>
-                <p id="u-email" style="opacity:0.6; font-size:0.9rem; font-weight:300;"></p>
-            </div>
+            <h1 class="dua-text">
+                اللهم اجعل هذا العمل شاهداً لي لا عليّ،<br>
+                وارزقنا الإخلاص في القول والعمل،<br>
+                واجعل خير أعمارنا أواخرها وخير أعمالنا خواتيمها.
+            </h1>
         </div>
 
-        <div class="p-grid">
-            <a href="gate-staff.php" class="p-card"><span style="font-size:3rem;">👔</span><h3>بوابة الموظفين</h3></a>
-            <a href="gate-clients.php" class="p-card"><span style="font-size:3rem;">🤝</span><h3>بوابة العملاء</h3></a>
-            <a href="gate-trade.php" class="p-card"><span style="font-size:3rem;">🏢</span><h3>بوابة الأعمال</h3></a>
-            <a href="gate-community.php" class="p-card"><span style="font-size:3rem;">🌐</span><h3>البوابة الاجتماعية</h3></a>
+        <div class="portal-container">
+            <a href="gate-staff.php" class="gate-card">
+                <span>👔</span>
+                <h3>بوابة الموظفين</h3>
+                <p>إدارة الكوادر البشرية، مراجعة التقارير اليومية، والتحكم في سير العمل الداخلي للمؤسسة.</p>
+            </a>
+            <a href="gate-clients.php" class="gate-card">
+                <span>🤝</span>
+                <h3>بوابة العملاء</h3>
+                <p>مساحة خاصة لشركاء النجاح لمتابعة الطلبات، العقود، والخدمات الحصرية المقدمة لهم.</p>
+            </a>
+            <a href="gate-trade.php" class="gate-card">
+                <span>🏢</span>
+                <h3>بوابة الأعمال</h3>
+                <p>مركز الاستثمارات الكبرى، إدارة الصفقات التجارية، ومتابعة نمو السوق العالمي.</p>
+            </a>
+            <a href="gate-community.php" class="gate-card">
+                <span>🌐</span>
+                <h3>البوابة الاجتماعية</h3>
+                <p>منصة التواصل والتفاعل بين أعضاء النخبة في مجتمع AlQurmanix المتكامل.</p>
+            </a>
         </div>
     </main>
 
     <footer>
         <div class="f-logo">ALQURMANIXX</div>
-        <p style="font-family:'Cinzel'; font-size:0.7rem; letter-spacing:5px; opacity:0.5;">PREMIUM SECURITY LAYER</p>
-        <a href="core-vault.php" class="hand-link" title="نواة النظام">
-            <p style="font-size:0.6rem; color:var(--g-primary); font-family:'Cinzel'; margin-bottom:15px;">ACCESS CORE</p>
+        <p style="font-family:'Cinzel'; font-size:0.8rem; letter-spacing:5px; opacity:0.5; margin-bottom:30px;">ESTABLISHED FOR EXCELLENCE</p>
+        <a href="core-vault.php" class="vault-hand" title="الدخول للنواة">
+            <p style="font-size:0.7rem; color:var(--gold-primary); font-family:'Cinzel'; margin-bottom:10px;">CORE ACCESS</p>
             👆
         </a>
     </footer>
 </div>
 
 <script>
-// التحكم في القائمة
-function toggleSide() { document.getElementById('sb').classList.toggle('on'); }
-
-// محاكاة سحب البيانات من user-auth-data.php
-function initSystem() {
-    setTimeout(() => {
-        // [قاعدة]: هنا البيانات يتم جلبها برمجياً
-        document.getElementById('u-name').innerText = "AHMED ALQURMANI";
-        document.getElementById('u-email').innerText = "ceo@alqurmanix.com";
-        
-        // إخفاء اللودر وإظهار السيستم
-        const ld = document.getElementById('ld');
-        const wrp = document.getElementById('wrapper');
-        ld.style.opacity = '0';
-        setTimeout(() => {
-            ld.style.display = 'none';
-            wrp.style.display = 'block';
-            setTimeout(() => wrp.style.opacity = '1', 50);
-        }, 600);
-    }, 2500);
-}
-
-// [قاعدة أمان 2]: فحص الجلسة (24 ساعة)
-function checkSession() {
-    const lastLogin = localStorage.getItem('aqx_login');
-    if (lastLogin && (Date.now() - lastLogin > 86400000)) {
-        window.location.href = "logout-protocol.php";
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('active');
     }
-}
 
-// منع اليمين (Security)
-document.oncontextmenu = () => false;
+    // تهيئة النظام وسحب البيانات
+    function initSovereignSystem() {
+        setTimeout(() => {
+            // إخفاء اللودر وإظهار المحتوى
+            const loader = document.getElementById('loading-screen');
+            const main = document.getElementById('main-wrapper');
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+                main.style.display = 'block';
+                setTimeout(() => main.style.opacity = '1', 50);
+            }, 800);
+        }, 3000);
+    }
 
-window.onload = () => {
-    initSystem();
-    checkSession();
-};
+    // [قاعدة أمان]: فحص الجلسة (24 ساعة)
+    function validateSession() {
+        const sessionStart = localStorage.getItem('aqx_session_time');
+        if (sessionStart && (Date.now() - sessionStart > 86400000)) {
+            location.href = 'logout-protocol.php';
+        }
+    }
+
+    window.onload = () => {
+        initSovereignSystem();
+        validateSession();
+    };
+
+    // منع اليمين لحماية السورس
+    document.oncontextmenu = () => false;
 </script>
+
 </body>
 </html>
