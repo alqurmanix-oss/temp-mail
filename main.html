@@ -3,257 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Al-Qarmani X - الواجهة الاحترافية</title>
+    <title>Al-Qarmani X | Dashboard</title>
     <style>
         :root {
+            --gold-gradient: linear-gradient(135deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
             --bg-dark: #050505;
-            --sidebar-bg: #0d0d0d;
-            --gold-primary: #d4af37;
-            --gold-secondary: #f1d592;
-            --text-main: #ffffff;
-            --transition-speed: 0.4s;
+            --panel-bg: rgba(15, 15, 15, 0.95);
+            --neon-green: #39FF14;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            display: flex;
-            min-height: 100vh;
+        body, html {
+            margin: 0; padding: 0;
+            background: var(--bg-dark);
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
             overflow-x: hidden;
-        }
-
-        /* ===== القائمة الجانبية المحسنة ===== */
-        .sidebar {
-            width: 280px;
             height: 100vh;
-            background: var(--sidebar-bg);
-            border-left: 1px solid var(--gold-primary);
+        }
+
+        /* حماية الصفحة: إخفاء المحتوى حتى يتم التحقق */
+        #main-wrapper { display: none; }
+
+        /* القائمة الجانبية الفخمة */
+        .sidebar {
             position: fixed;
-            top: 0;
-            right: -280px; /* مخفية افتراضياً */
-            z-index: 2000;
-            transition: right var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
+            top: 0; right: -320px;
+            width: 300px; height: 100%;
+            background: var(--panel-bg);
+            border-left: 2px solid #BF953F;
+            z-index: 9999;
+            transition: 0.5s cubic-bezier(0.86, 0, 0.07, 1);
             padding: 20px;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.9);
-        }
-
-        .sidebar.active { right: 0; }
-
-        /* زر الإغلاق داخل القائمة */
-        .close-sidebar-btn {
-            align-self: flex-start;
-            background: none;
-            border: none;
-            color: var(--gold-primary);
-            font-size: 35px;
-            cursor: pointer;
-            margin-bottom: 20px;
-            line-height: 1;
-        }
-
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.8);
             overflow-y: auto;
-            padding-bottom: 20px;
         }
 
-        .sidebar-nav a {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            color: #ccc;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: 0.3s;
+        .sidebar.open { right: 0; }
+
+        .close-btn {
+            background: none; border: none; color: #BF953F;
+            font-size: 30px; cursor: pointer; float: left;
+        }
+
+        .time-box {
+            background: #111; border: 1px solid #BF953F;
+            padding: 10px; text-align: center; border-radius: 8px;
+            margin-bottom: 25px; color: #FCF6BA; font-size: 14px;
+        }
+
+        .nav-item {
+            display: flex; align-items: center;
+            padding: 12px; margin: 8px 0;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px; text-decoration: none;
+            color: #eee; transition: 0.3s;
             border: 1px solid transparent;
-            font-size: 14px;
         }
 
-        .sidebar-nav a:hover {
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--gold-secondary);
-            border-color: var(--gold-primary);
-            transform: translateX(-5px);
+        .nav-item:hover {
+            border-color: #BF953F; background: rgba(191, 149, 63, 0.1);
+            transform: translateX(-10px);
         }
 
-        .sidebar-nav a .icon { margin-left: 12px; font-size: 18px; }
+        .nav-item span { margin-left: 15px; font-size: 20px; }
 
-        /* ===== المحتوى الرئيسي ===== */
-        .main-wrapper {
-            flex: 1;
-            width: 100%;
-            padding: 20px;
-            transition: margin-right var(--transition-speed);
+        /* الهيدر والعناصر العلوية */
+        .header {
+            display: flex; justify-content: space-between;
+            align-items: center; padding: 20px 5%;
         }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0 30px;
+        .status-indicator {
+            display: flex; align-items: center; gap: 10px;
         }
 
-        /* زر فتح القائمة (الهمبرجر) */
-        .menu-toggle {
-            background: none;
-            border: 1px solid var(--gold-primary);
-            color: var(--gold-primary);
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .neon-lamp {
+            width: 12px; height: 12px; background: var(--neon-green);
+            border-radius: 50%; box-shadow: 0 0 15px var(--neon-green);
+            animation: pulse 1.5s infinite;
         }
 
-        .logo-text {
-            font-size: 28px;
-            font-weight: 900;
-            background: linear-gradient(45deg, var(--gold-primary), #fff, var(--gold-primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        .logo-x {
+            font-size: 35px; font-weight: 900;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-transform: uppercase; letter-spacing: 5px;
         }
 
-        /* الشبكة (Portals) - فخامة بدون تداخل */
-        .portals-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+        /* الكرة الأرضية */
+        .globe-container {
+            width: 60px; height: 60px; position: relative; cursor: pointer;
         }
 
-        .portal-item {
-            background: #111;
-            border: 1px solid #222;
-            padding: 40px 20px;
-            text-align: center;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: 0.4s;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
+        .globe-img {
+            width: 100%; height: 100%; border-radius: 50%;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/2/2c/Rotating_earth_%28large%29.gif');
+            background-size: cover; box-shadow: 0 0 20px rgba(179, 135, 40, 0.5);
         }
 
-        .portal-item:hover {
-            border-color: var(--gold-primary);
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+        /* البوابات الرئيسية */
+        .portals-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px; padding: 40px 10%;
         }
 
-        .portal-item i { font-size: 40px; margin-bottom: 15px; display: block; }
-        .portal-item h3 { color: var(--gold-secondary); font-size: 18px; }
-
-        /* الأيقونة العائمة الجانبية */
-        .side-actions {
-            position: fixed;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 1000;
+        .portal-card {
+            background: #0a0a0a; border: 1px solid #222;
+            padding: 50px 20px; text-align: center; border-radius: 20px;
+            transition: 0.5s; cursor: pointer; position: relative;
         }
 
-        .action-btn {
-            width: 50px; height: 50px;
-            border-radius: 50%;
-            background: var(--gold-primary);
-            border: none;
-            cursor: pointer;
-            font-size: 20px;
-            box-shadow: 0 0 15px rgba(212,175,55,0.4);
+        .portal-card:hover {
+            border-color: #BF953F; transform: translateY(-15px);
+            box-shadow: 0 15px 40px rgba(0,0,0,1);
         }
 
-        /* Modal الدعاء */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 3000;
-            backdrop-filter: blur(8px);
-        }
-        .modal-active { display: flex; }
-        .modal-card {
-            background: #0d0d0d;
-            border: 2px solid var(--gold-primary);
-            padding: 40px;
-            border-radius: 20px;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-        }
-        .modal-card p { font-size: 20px; color: var(--gold-secondary); line-height: 1.6; }
+        .portal-card i { font-size: 50px; display: block; margin-bottom: 20px; }
+        .portal-card h3 { color: #FCF6BA; letter-spacing: 1px; }
 
-        @media (max-width: 768px) {
-            .logo-text { font-size: 20px; }
-            .portals-container { grid-template-columns: 1fr; }
+        /* الأيقونات الجانبية الطائرة */
+        .floating-triggers {
+            position: fixed; right: 20px; top: 50%;
+            transform: translateY(-50%); display: flex; flex-direction: column; gap: 20px;
         }
+
+        .f-btn {
+            width: 55px; height: 55px; border-radius: 50%;
+            background: var(--gold-gradient); border: none;
+            cursor: pointer; font-size: 24px; box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        /* مودال الدعاء */
+        .modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            display: none; justify-content: center; align-items: center; z-index: 10000;
+        }
+
+        .modal-box {
+            background: #111; border: 2px solid #BF953F;
+            padding: 50px; border-radius: 30px; text-align: center;
+            max-width: 600px; width: 90%;
+        }
+
+        .modal-box h2 { color: #FCF6BA; margin-bottom: 20px; line-height: 1.6; }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar" id="sidebar">
-        <button class="close-sidebar-btn" id="closeBtn">×</button>
+<div id="main-wrapper">
+    <div class="sidebar" id="sidebar">
+        <button class="close-btn" id="closeSidebar">×</button>
+        <div style="clear:both"></div>
+        <div class="time-box" id="clock">--:--:--</div>
         
-        <div id="liveClock" style="color: var(--gold-primary); text-align: center; margin-bottom: 20px; font-weight: bold;"></div>
-        
-        <nav class="sidebar-nav">
-            <a href="profile.html"><span class="icon">👤</span> الملف الشخصي</a>
-            <a href="wallet.html"><span class="icon">💰</span> محفظة Al-Qarmani Coin</a>
-            <a href="earn.html"><span class="icon">📈</span> اربح Al-Qarmani Coin</a>
-            <a href="vip.html"><span class="icon">👑</span> Al-Qarmani X VIP</a>
-            <a href="settings.html"><span class="icon">⚙️</span> الإعدادات</a>
-            <a href="support.html"><span class="icon">🎧</span> الدعم الفني</a>
+        <nav>
+            <a href="wallet_qarmani.html" class="nav-item"><span>💰</span> محفظة القرماني كوين</a>
+            <a href="earn_qarmani.html" class="nav-item"><span>🚀</span> اربح عملة القرماني كوين</a>
+            <a href="profile_user.html" class="nav-item"><span>👤</span> الملف الشخصي</a>
+            <a href="vip_access.html" class="nav-item"><span style="color: gold;">👑</span> Al-Qarmani X VIP</a>
+            <a href="verifications.html" class="nav-item"><span>🛡️</span> التوثيقات والعضوية</a>
+            <a href="jobs_portal.html" class="nav-item"><span>💼</span> الوظائف</a>
+            <a href="notifications.html" class="nav-item"><span>🔔</span> نظام الإشعارات</a>
+            <a href="settings.html" class="nav-item"><span>⚙️</span> الإعدادات</a>
+            <a href="support.html" class="nav-item"><span>🎧</span> الدعم الفني</a>
+            <a href="laws.html" class="nav-item"><span>📜</span> قوانين Al-Qarmani X</a>
+            <a href="donate.html" class="nav-item"><span>💖</span> تبرع</a>
         </nav>
-    </aside>
-
-    <div class="main-wrapper">
-        <header>
-            <button class="menu-toggle" id="openBtn">
-                <span>☰</span> القائمة
-            </button>
-            
-            <div class="logo-text">AL-QARMANI X</div>
-            
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="color: #00ff00; font-size: 12px;">● متصل</span>
-            </div>
-        </header>
-
-        <section class="portals-container">
-            <a href="portal_employees.html" class="portal-item"><i>👔</i><h3>بوابة الموظفين</h3></a>
-            <a href="portal_customers.html" class="portal-item"><i>👥</i><h3>بوابة العملاء</h3></a>
-            <a href="portal_business.html" class="portal-item"><i>💼</i><h3>التجارة والأعمال</h3></a>
-            <a href="services.html" class="portal-item"><i>🛠️</i><h3>خدماتنا</h3></a>
-        </section>
     </div>
 
-    <div class="side-actions">
-        <button class="action-btn" id="prayBtn">🤲</button>
-        <button class="action-btn" onclick="location.href='platforms.html'">🔗</button>
+    <header class="header">
+        <div class="status-indicator">
+            <div class="neon-lamp"></div>
+            <span>متصل</span>
+        </div>
+
+        <div class="logo-x" id="toggleSidebar" style="cursor: pointer;">Al-Qarmani X</div>
+
+        <div class="globe-container" id="langBtn">
+            <div class="globe-img"></div>
+        </div>
+    </header>
+
+    <div class="portals-grid">
+        <div class="portal-card" onclick="location.href='portal_staff.html'"><i>👔</i><h3>بوابة الموظفين</h3></div>
+        <div class="portal-card" onclick="location.href='portal_clients.html'"><i>👥</i><h3>بوابة العملاء</h3></div>
+        <div class="portal-card" onclick="location.href='portal_biz.html'"><i>📈</i><h3>التجارة والأعمال</h3></div>
+        <div class="portal-card" onclick="location.href='portal_social.html'"><i>🌐</i><h3>المنتدى الاجتماعي</h3></div>
+        <div class="portal-card" onclick="location.href='services_hub.html'"><i>🛠️</i><h3>خدماتنا</h3></div>
+        <div class="portal-card" onclick="location.href='store_x.html'"><i>🛒</i><h3>متجرنا</h3></div>
     </div>
 
-    <div class="modal-overlay" id="prayModal">
-        <div class="modal-card">
-            <button style="position:absolute; top:10px; right:15px; background:none; border:none; color:#fff; cursor:pointer;" id="closeModal">✕</button>
-            <p>"اللهم اجعل هذا العمل شاهداً لي لا عليّ، واجعله خالصاً لوجهك الكريم، وانفع به العباد والبلاد.. آمين."</p>
+    <div class="floating-triggers">
+        <button class="f-btn" id="openDuaa">🤲</button>
+        <button class="f-btn" onclick="location.href='our_platforms.html'">🔗</button>
+    </div>
+
+    <div class="modal" id="duaaModal">
+        <div class="modal-box">
+            <button class="close-btn" id="closeDuaa">×</button>
+            <h2>اللهم اجعل هذا العمل شاهداً لي لا عليّ، واجعله خالصاً لوجهك الكريم، وانفع به كل من دخله.. آمين.</h2>
         </div>
     </div>
+</div>
 
-    <script type="module" src="app.js"></script>
+<script type="module" src="app_core.js"></script>
 </body>
 </html>
