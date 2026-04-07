@@ -66,7 +66,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   LOADING
 ════════════════════════════════*/
 #ld{position:fixed;inset:0;z-index:9999;background:var(--bg);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;
+  display:none;flex-direction:column;align-items:center;justify-content:center;gap:28px;
   transition:opacity .45s var(--ease)}
 #ld.out{opacity:0;pointer-events:none}
 
@@ -95,7 +95,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 /*════════════════════════════════
   PAGE STRUCTURE
 ════════════════════════════════*/
-#page{display:none;min-height:100vh;position:relative;z-index:1}
+#page{display:block;min-height:100vh;position:relative;z-index:1}
 #page.show{display:block;animation:fadeIn .4s var(--ease)}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
@@ -673,7 +673,7 @@ const T={
     referrals:"الإحالات",marketplace:"السوق العالمي",
     employees:"بوابة الموظفين",     empBadge:"STAFF",   empDesc:"إدارة الكوادر والموارد الداخلية",
     clients:"بوابة العملاء",         cliBadge:"CLIENTS", cliDesc:"الخدمات المخصصة لشركاء النجاح",
-    business:"بوابة الأعمال",        bizBadge:"TRADE",  bizDesc:"إدارة الاستثمارات والشراكات الدولية",
+    business:"بوابة الأعمال",         bizBadge:"TRADE",  bizDesc:"إدارة الاستثمارات والشراكات الدولية",
     social:"البوابة الاجتماعية",     socBadge:"SOCIAL",  socDesc:"منصة التواصل الرقمي المعتمدة",
     enter:"دخول آمن",
   }},
@@ -685,306 +685,10 @@ const T={
     notifications:"Notifications & Preferences",support:"Technical Support",
     wallet:"Wallet",earnCoin:"Earn AlQurmanix Coin",careers:"Careers",
     referrals:"Referrals",marketplace:"Global Marketplace",
-    employees:"Employees Portal",     empBadge:"STAFF",   empDesc:"Staff management and internal resources",
-    clients:"Clients Portal",          cliBadge:"CLIENTS", cliDesc:"Dedicated services for partners",
-    business:"Business Portal",        bizBadge:"TRADE",  bizDesc:"Investments and international partnerships",
-    social:"Social Portal",            socBadge:"SOCIAL",  socDesc:"The official digital community platform",
-    enter:"Secure Enter",
-  }},
-  de:{fl:"🇩🇪",lb:"Deutsch",dir:"ltr",t:{
-    conn:"Verbunden",out:"Abmelden",greet:"Willkommen",
-    tag:"Das integrierte System für Handel, Community und Innovation",
-    gatesSec:"Offizielle Portale",hold:"",
-    profile:"Profil",settings:"Einstellungen",policies:"Richtlinien",
-    notifications:"Benachrichtigungen",support:"Technischer Support",
-    wallet:"Wallet",earnCoin:"Coins verdienen",careers:"Karriere",
-    referrals:"Empfehlungen",marketplace:"Globaler Marktplatz",
-    employees:"Mitarbeiterportal",empBadge:"STAFF",empDesc:"Personalverwaltung und interne Ressourcen",
-    clients:"Kundenportal",cliBadge:"CLIENTS",cliDesc:"Dedizierte Dienstleistungen für Partner",
-    business:"Geschäftsportal",bizBadge:"TRADE",bizDesc:"Investitionen und internationale Partnerschaften",
-    social:"Soziales Portal",socBadge:"SOCIAL",socDesc:"Die offizielle digitale Community-Plattform",
-    enter:"Sicher Eintreten",
-  }},
-  es:{fl:"🇪🇸",lb:"Español",dir:"ltr",t:{
-    conn:"Conectado",out:"Cerrar Sesión",greet:"Bienvenido",
-    tag:"El sistema integrado de comercio, comunidad e innovación",
-    gatesSec:"Portales Oficiales",hold:"",
-    profile:"Perfil",settings:"Configuración",policies:"Políticas",
-    notifications:"Notificaciones",support:"Soporte Técnico",
-    wallet:"Billetera",earnCoin:"Ganar Coin",careers:"Carreras",
-    referrals:"Referidos",marketplace:"Mercado Global",
-    employees:"Portal de Empleados",empBadge:"STAFF",empDesc:"Gestión de personal y recursos internos",
-    clients:"Portal de Clientes",cliBadge:"CLIENTS",cliDesc:"Servicios dedicados para socios",
-    business:"Portal de Negocios",bizBadge:"TRADE",bizDesc:"Inversiones y asociaciones internacionales",
-    social:"Portal Social",socBadge:"SOCIAL",socDesc:"La plataforma oficial de la comunidad digital",
-    enter:"Entrada Segura",
-  }},
-  fr:{fl:"🇫🇷",lb:"Français",dir:"ltr",t:{
-    conn:"Connecté",out:"Se Déconnecter",greet:"Bienvenue",
-    tag:"Le système intégré pour le commerce, la communauté et l'innovation",
-    gatesSec:"Portails Officiels",hold:"",
-    profile:"Profil",settings:"Paramètres",policies:"Politiques",
-    notifications:"Notifications",support:"Support Technique",
-    wallet:"Portefeuille",earnCoin:"Gagner des Coins",careers:"Carrières",
-    referrals:"Parrainages",marketplace:"Marché Mondial",
-    employees:"Portail Employés",empBadge:"STAFF",empDesc:"Gestion du personnel et ressources internes",
-    clients:"Portail Clients",cliBadge:"CLIENTS",cliDesc:"Services dédiés aux partenaires",
-    business:"Portail Commercial",bizBadge:"TRADE",bizDesc:"Investissements et partenariats internationaux",
-    social:"Portail Social",socBadge:"SOCIAL",socDesc:"La plateforme officielle de la communauté numérique",
-    enter:"Entrée Sécurisée",
-  }},
-  it:{fl:"🇮🇹",lb:"Italiano",dir:"ltr",t:{
-    conn:"Connesso",out:"Disconnetti",greet:"Benvenuto",
-    tag:"Il sistema integrato per commercio, comunità e innovazione",
-    gatesSec:"Portali Ufficiali",hold:"",
-    profile:"Profilo",settings:"Impostazioni",policies:"Politiche",
-    notifications:"Notifiche",support:"Supporto Tecnico",
-    wallet:"Portafoglio",earnCoin:"Guadagna Coin",careers:"Carriere",
-    referrals:"Referral",marketplace:"Mercato Globale",
-    employees:"Portale Dipendenti",empBadge:"STAFF",empDesc:"Gestione del personale e risorse interne",
-    clients:"Portale Clienti",cliBadge:"CLIENTS",cliDesc:"Servizi dedicati per i partner",
-    business:"Portale Business",bizBadge:"TRADE",bizDesc:"Investimenti e partnership internazionali",
-    social:"Portale Sociale",socBadge:"SOCIAL",socDesc:"La piattaforma ufficiale della comunità digitale",
-    enter:"Ingresso Sicuro",
-  }},
-  hi:{fl:"🇮🇳",lb:"हिंदी",dir:"ltr",t:{
-    conn:"जुड़ा हुआ",out:"लॉग आउट",greet:"स्वागत है",
-    tag:"व्यापार, समुदाय और नवाचार के लिए एकीकृत प्रणाली",
-    gatesSec:"आधिकारिक पोर्टल",hold:"",
-    profile:"प्रोफ़ाइल",settings:"सेटिंग्स",policies:"नीतियां",
-    notifications:"सूचनाएं",support:"तकनीकी सहायता",
-    wallet:"वॉलेट",earnCoin:"Coin कमाएं",careers:"करियर",
-    referrals:"रेफरल",marketplace:"वैश्विक बाज़ार",
-    employees:"कर्मचारी पोर्टल",empBadge:"STAFF",empDesc:"कर्मचारी प्रबंधन और आंतरिक संसाधन",
-    clients:"ग्राहक पोर्टल",cliBadge:"CLIENTS",cliDesc:"भागीदारों के लिए समर्पित सेवाएं",
-    business:"व्यापार पोर्टल",bizBadge:"TRADE",bizDesc:"निवेश और अंतर्राष्ट्रीय भागीदारी",
-    social:"सामाजिक पोर्टल",socBadge:"SOCIAL",socDesc:"आधिकारिक डिजिटल समुदाय मंच",
-    enter:"सुरक्षित प्रवेश",
-  }},
-  ko:{fl:"🇰🇷",lb:"한국어",dir:"ltr",t:{
-    conn:"연결됨",out:"로그아웃",greet:"환영합니다",
-    tag:"상업, 커뮤니티, 혁신을 위한 통합 시스템",
-    gatesSec:"공식 포털",hold:"",
-    profile:"프로필",settings:"설정",policies:"정책",
-    notifications:"알림",support:"기술 지원",
-    wallet:"지갑",earnCoin:"Coin 획득",careers:"채용",
-    referrals:"추천",marketplace:"글로벌 마켓",
-    employees:"직원 포털",empBadge:"STAFF",empDesc:"직원 관리 및 내부 리소스",
-    clients:"고객 포털",cliBadge:"CLIENTS",cliDesc:"파트너를 위한 전용 서비스",
-    business:"비즈니스 포털",bizBadge:"TRADE",bizDesc:"투자 및 국제 파트너십",
-    social:"소셜 포털",socBadge:"SOCIAL",socDesc:"공식 디지털 커뮤니티 플랫폼",
-    enter:"안전한 입장",
-  }},
-  ja:{fl:"🇯🇵",lb:"日本語",dir:"ltr",t:{
-    conn:"接続済み",out:"サインアウト",greet:"ようこそ",
-    tag:"商業、コミュニティ、イノベーションのための統合システム",
-    gatesSec:"公式ポータル",hold:"",
-    profile:"プロフィール",settings:"設定",policies:"ポリシー",
-    notifications:"通知",support:"テクニカルサポート",
-    wallet:"ウォレット",earnCoin:"Coinを稼ぐ",careers:"採用",
-    referrals:"紹介",marketplace:"グローバルマーケット",
-    employees:"従業員ポータル",empBadge:"STAFF",empDesc:"スタッフ管理と内部リソース",
-    clients:"クライアントポータル",cliBadge:"CLIENTS",cliDesc:"パートナー向けの専用サービス",
-    business:"ビジネスポータル",bizBadge:"TRADE",bizDesc:"投資と国際的パートナーシップ",
-    social:"ソーシャルポータル",socBadge:"SOCIAL",socDesc:"公式のデジタルコミュニティプラットフォーム",
-    enter:"安全に入る",
-  }},
-  zh:{fl:"🇨🇳",lb:"中文",dir:"ltr",t:{
-    conn:"已连接",out:"退出登录",greet:"欢迎",
-    tag:"您的商业、社区与创新综合系统",
-    gatesSec:"官方门户",hold:"",
-    profile:"个人资料",settings:"设置",policies:"政策",
-    notifications:"通知",support:"技术支持",
-    wallet:"钱包",earnCoin:"赚取 Coin",careers:"职业",
-    referrals:"推荐",marketplace:"全球市场",
-    employees:"员工门户",empBadge:"STAFF",empDesc:"员工管理和内部资源",
-    clients:"客户门户",cliBadge:"CLIENTS",cliDesc:"合作伙伴专享服务",
-    business:"商业门户",bizBadge:"TRADE",bizDesc:"投资与国际合作伙伴关系",
-    social:"社交门户",socBadge:"SOCIAL",socDesc:"官方数字社区平台",
-    enter:"安全进入",
-  }},
-  tr:{fl:"🇹🇷",lb:"Türkçe",dir:"ltr",t:{
-    conn:"Bağlandı",out:"Çıkış Yap",greet:"Hoş geldiniz",
-    tag:"Ticaret, topluluk ve yenilik için entegre sistem",
-    gatesSec:"Resmi Portallar",hold:"",
-    profile:"Profil",settings:"Ayarlar",policies:"Politikalar",
-    notifications:"Bildirimler",support:"Teknik Destek",
-    wallet:"Cüzdan",earnCoin:"Coin Kazan",careers:"Kariyer",
-    referrals:"Referanslar",marketplace:"Küresel Pazar",
-    employees:"Çalışan Portalı",empBadge:"STAFF",empDesc:"Personel yönetimi ve dahili kaynaklar",
-    clients:"Müşteri Portalı",cliBadge:"CLIENTS",cliDesc:"Ortaklara özel hizmetler",
-    business:"Ticaret Portalı",bizBadge:"TRADE",bizDesc:"Yatırımlar ve uluslararası ortaklıklar",
-    social:"Sosyal Portal",socBadge:"SOCIAL",socDesc:"Resmi dijital topluluk platformu",
-    enter:"Güvenli Giriş",
-  }},
+    employees:"Employees Portal",      empBadge:"STAFF",   empDesc:"Staff management and internal resources",
+    clients:"Clients Portal",          cliBadge:"CLIENTS", cliDesc:"Dedicated services"
+  }}
 };
-
-const GMAP={employees:{b:"empBadge",d:"empDesc",n:"employees"},
-            clients:   {b:"cliBadge",d:"cliDesc",n:"clients"},
-            business:  {b:"bizBadge",d:"bizDesc",n:"business"},
-            social:    {b:"socBadge",d:"socDesc",n:"social"}};
-
-let lang="ar";
-
-function navTo(f){sessionStorage.setItem("aqx","1");window.location.href=f}
-function openSb(){document.getElementById("sb").classList.add("open");document.getElementById("overlay").classList.add("on")}
-function closeSb(){document.getElementById("sb").classList.remove("open");document.getElementById("overlay").classList.remove("on")}
-function toggleLang(e){e.stopPropagation();document.getElementById("lm").classList.toggle("on")}
-document.addEventListener("click",e=>{if(!document.getElementById("lw").contains(e.target))document.getElementById("lm").classList.remove("on")});
-
-function applyLang(l){
-  lang=l;
-  const L=T[l],t=L.t;
-  document.documentElement.lang=l;
-  document.documentElement.dir=L.dir;
-  document.getElementById("lf").textContent=L.fl;
-  document.getElementById("lbl-conn").textContent=t.conn;
-  document.getElementById("lbl-out").textContent=t.out;
-  document.getElementById("lbl-tag").textContent=t.tag;
-  document.getElementById("lbl-gates-sec").textContent=t.gatesSec;
-
-  const nav=document.getElementById("sb-nav");
-  nav.innerHTML="";
-  NAVS.forEach((n,i)=>{
-    const a=document.createElement("a");
-    a.className="sb-item";a.href=n.f;
-    a.style.animationDelay=(i*28)+"ms";
-    a.addEventListener("click",e=>{e.preventDefault();closeSb();navTo(n.f)});
-    a.innerHTML=`<span class="si">${n.e}</span><span class="sl">${t[n.k]||n.k}</span><span class="sa">›</span>`;
-    nav.appendChild(a);
-  });
-
-  const gc=document.getElementById("gates");
-  gc.innerHTML="";
-  GATES_CFG.forEach((g,i)=>{
-    const m=GMAP[g.k];
-    const a=document.createElement("a");
-    a.className="gate";a.href=g.f;
-    a.style.animationDelay=(i*70)+"ms";
-    a.addEventListener("click",e=>{e.preventDefault();navTo(g.f)});
-    a.innerHTML=`
-      <div class="gate-line"></div>
-      <div class="gate-inner">
-        <div class="gate-top">
-          <div class="gate-icon">${g.e}</div>
-          <div class="gate-badge">${t[m.b]||""}</div>
-        </div>
-        <div>
-          <div class="gate-title">${t[m.n]||g.k}</div>
-          <div class="gate-desc" style="margin-top:6px">${t[m.d]||""}</div>
-        </div>
-        <div class="gate-cta"><span>${t.enter}</span><span class="gate-cta-arrow">→</span></div>
-      </div>
-      <div class="gate-corner"></div>`;
-    gc.appendChild(a);
-  });
-
-  const lm=document.getElementById("lm");
-  lm.innerHTML="";
-  Object.entries(T).forEach(([k,v])=>{
-    const b=document.createElement("button");
-    b.className="lm-btn"+(k===l?" cur":"");
-    b.innerHTML=`<span class="lm-flag">${v.fl}</span><span>${v.lb}</span>`;
-    b.addEventListener("click",()=>{applyLang(k);lm.classList.remove("on")});
-    lm.appendChild(b);
-  });
-}
-
-function tick(){
-  const now=new Date();
-  const locMap={ar:"ar-SA",zh:"zh-CN",ko:"ko-KR",ja:"ja-JP",hi:"hi-IN",
-                de:"de-DE",es:"es-ES",fr:"fr-FR",it:"it-IT",tr:"tr-TR",en:"en-GB"};
-  const lc=locMap[lang]||navigator.language||"en";
-  document.getElementById("sb-t").textContent=
-    now.toLocaleTimeString(lc,{hour:"2-digit",minute:"2-digit",second:"2-digit"});
-  document.getElementById("sb-dy").textContent=
-    now.toLocaleDateString(lc,{weekday:"long"});
-  document.getElementById("sb-dt").textContent=
-    now.toLocaleDateString(lc,{year:"numeric",month:"long",day:"numeric"});
-}
-setInterval(tick,1000);tick();
-
-history.pushState(null,"",location.href);
-window.addEventListener("popstate",()=>history.pushState(null,"",location.href));
-
-window.showDash=function(name,email){
-  const initials=(name||"A")[0].toUpperCase();
-  document.getElementById("u-nm").textContent=name||"";
-  document.getElementById("u-em").textContent=email||"";
-  document.getElementById("u-av-letter").textContent=initials;
-  applyLang("ar");
-  const ld=document.getElementById("ld");
-  ld.classList.add("out");
-  document.getElementById("page").classList.add("show");
-  setTimeout(()=>{if(ld.parentNode)ld.parentNode.removeChild(ld)},480);
-};
-
-window.setAvatar=function(url,name){
-  if(url){
-    const av=document.getElementById("u-av");
-    av.innerHTML=`<div class="u-avatar-ring"></div><img src="${url}" alt="${name||""}"/>`;
-  }
-};
-</script>
-
-<script type="module">
-import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import{getAuth,onAuthStateChanged,signOut}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import{getFirestore,doc,getDoc,updateDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-const FB={
-  apiKey:"AIzaSyCoM-Aqq7VwTDx5ZeHmIpHM4sm2XM0WdKw",
-  authDomain:"alqurmanix-15b92.firebaseapp.com",
-  projectId:"alqurmanix-15b92",
-  storageBucket:"alqurmanix-15b92.firebasestorage.app",
-  messagingSenderId:"477352026568",
-  appId:"1:477352026568:web:49f90cd3fc74b6948ba0fd",
-  measurementId:"G-VJF36N1MCD"
-};
-const app=initializeApp(FB);
-const auth=getAuth(app),db=getFirestore(app);
-
-function kick(){sessionStorage.removeItem("aqx");window.location.replace("./index.html")}
-
-window._aqxOut=async()=>{
-  sessionStorage.removeItem("aqx");
-  await signOut(auth);
-  kick();
-};
-
-onAuthStateChanged(auth,async user=>{
-  if(!user){kick();return}
-  if(!user.emailVerified){await signOut(auth);kick();return}
-
-  window.showDash(
-    user.displayName||user.email.split("@")[0],
-    user.email
-  );
-  sessionStorage.setItem("aqx","1");
-
-  try{
-    const ref=doc(db,"users",user.uid);
-    const snap=await getDoc(ref);
-
-    if(!snap.exists()){await signOut(auth);kick();return}
-    const d=snap.data();
-
-    // تطبيق قواعد الأمان الصارمة للخمول والحالة
-    if(d.status!=="active"||d.inactivityStatus!=="active"){
-      await signOut(auth);kick();return
-    }
-
-    const n=d.displayName||user.displayName||user.email.split("@")[0];
-    document.getElementById("u-nm").textContent=n;
-    document.getElementById("u-av-letter").textContent=(n[0]||"A").toUpperCase();
-    if(d.photoURL)window.setAvatar(d.photoURL,n);
-
-    updateDoc(ref,{lastActivity:serverTimestamp()}).catch(()=>{});
-
-  }catch(err){
-    console.warn("Firestore bg check:",err.code||err.message);
-  }
-});
 </script>
 </body>
 </html>
