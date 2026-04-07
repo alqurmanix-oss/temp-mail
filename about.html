@@ -1,0 +1,173 @@
+import React, { useState } from 'react';
+
+/**
+ * @interface FAQItem
+ * تعريف هيكل البيانات للأسئلة الشائعة لضمان دقة النوع
+ */
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+const AboutPage: React.FC = () => {
+  const [activeFAQ, setActiveFAQ] = useState<number | null>(null);
+
+  const faqData: FAQItem[] = [
+    {
+      question: "ما هي الطبيعة القانونية لكيان ALQURMANI X؟",
+      answer: "نحن منظومة تقنية متكاملة تعمل وفق بروتوكولات حوكمة رقمية مستقلة، تهدف لتوفير بيئة اقتصادية آمنة للمستخدمين والشركاء على حد سواء."
+    },
+    {
+      question: "كيف يضمن النظام العدل المطلق في توزيع العوائد؟",
+      answer: "عبر خوارزميات مشفرة لا تقبل التدخل البشري، حيث يتم الربط بين الأداء الفعلي (Performance) والاستحقاق الآلي (Instant Crediting)."
+    },
+    {
+      question: "هل بياناتي محمية ضد الاختراقات السيادية؟",
+      answer: "نعتمد نظام 'الحصن الصارم' الذي يفصل بين الهوية الشخصية والنشاط المالي، مع تشفير خماسي الأبعاد لكل حركة مرور بيانات."
+    }
+  ];
+
+  const toggleFAQ = (index: number) => {
+    setActiveFAQ(activeFAQ === index ? null : index);
+  };
+
+  return (
+    <div style={styles.container}>
+      {/* زر العودة للصفحة الرئيسية - فخامة هادئة */}
+      <nav style={styles.nav}>
+        <a href="index.html" style={styles.backLink}>
+          <span style={styles.backIcon}>←</span> العودة للرئيسية
+        </a>
+      </nav>
+
+      {/* القسم الرئيسي - الشعار والغموض الرسمي */}
+      <header style={styles.header}>
+        <h1 style={styles.goldText}>ALQURMANI X</h1>
+        <p style={styles.subTitle}>ما وراء الرقمية.. حيث تلتقي القوة بالنزاهة</p>
+      </header>
+
+      {/* المحتوى التفصيلي - شرح الاستراتيجية */}
+      <section style={styles.section}>
+        <div style={styles.glassCard}>
+          <h2 style={styles.sectionTitle}>رؤيتنا الاستراتيجية</h2>
+          <p style={styles.description}>
+            نحن لا نبني منصة، بل نؤسس لـ **نظام بيئي سيادي** يعيد تعريف القيمة المضافة. في **ALQURMANI X**، نؤمن أن الشفافية ليست مجرد خيار، بل هي بروتوكول تنفيذي يتم تطبيقه عبر "العدل المطلق" في كل تفاعل رقمي.
+          </p>
+        </div>
+
+        <div style={styles.grid}>
+          <div style={styles.glassCard}>
+            <h3 style={styles.goldTextSmall}>المصداقية</h3>
+            <p>التزامنا تجاه الشركاء يرتكز على المصداقية الجنائية في حماية الأصول والبيانات.</p>
+          </div>
+          <div style={styles.glassCard}>
+            <h3 style={styles.goldTextSmall}>الشفافية</h3>
+            <p>كل نبضة في محركنا مسجلة في "دفتر الحقيقة" غير القابل للتعديل أو المسح.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* نظام الأكورديون للأسئلة الشائعة FAQ */}
+      <section style={styles.faqSection}>
+        <h2 style={styles.sectionTitleCenter}>البروتوكولات الشائعة (FAQ)</h2>
+        <div style={styles.accordion}>
+          {faqData.map((item, index) => (
+            <div key={index} style={styles.accordionItem}>
+              <button 
+                onClick={() => toggleFAQ(index)} 
+                style={styles.accordionHeader}
+              >
+                <span>{item.question}</span>
+                <span>{activeFAQ === index ? '−' : '+'}</span>
+              </button>
+              {activeFAQ === index && (
+                <div style={styles.accordionBody}>
+                  <p>{item.answer}</p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <footer style={styles.footer}>
+        <p>© 2026 ALQURMANI X - جميع الحقوق محفوظة للسيادة التقنية</p>
+      </footer>
+    </div>
+  );
+};
+
+// التنسيقات - الفخامة البصرية (CSS-in-JS)
+const styles: { [key: string]: React.CSSProperties } = {
+  container: {
+    backgroundColor: '#050505',
+    color: '#ffffff',
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    minHeight: '100vh',
+    padding: '40px 20px',
+    direction: 'rtl',
+  },
+  nav: { marginBottom: '30px' },
+  backLink: {
+    color: '#D4AF37',
+    textDecoration: 'none',
+    fontSize: '1.1rem',
+    fontWeight: 'bold',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px'
+  },
+  header: {
+    textAlign: 'center',
+    marginBottom: '60px',
+    borderBottom: '1px solid #1a1a1a',
+    paddingBottom: '40px'
+  },
+  goldText: {
+    fontSize: '4rem',
+    background: 'linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    letterSpacing: '5px',
+    margin: '0'
+  },
+  goldTextSmall: {
+    color: '#D4AF37',
+    fontSize: '1.5rem',
+    marginBottom: '15px'
+  },
+  glassCard: {
+    background: 'rgba(255, 255, 255, 0.03)',
+    borderRadius: '15px',
+    padding: '30px',
+    border: '1px solid rgba(212, 175, 55, 0.2)',
+    backdropFilter: 'blur(10px)',
+    marginBottom: '20px'
+  },
+  sectionTitle: { fontSize: '2rem', borderRight: '4px solid #D4AF37', paddingRight: '15px', marginBottom: '20px' },
+  sectionTitleCenter: { textAlign: 'center', fontSize: '2.2rem', marginBottom: '40px', color: '#D4AF37' },
+  grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' },
+  accordion: { maxWidth: '800px', margin: '0 auto' },
+  accordionHeader: {
+    width: '100%',
+    padding: '20px',
+    backgroundColor: '#111',
+    border: '1px solid #222',
+    color: '#fff',
+    display: 'flex',
+    justifyContent: 'space-between',
+    fontSize: '1.2rem',
+    cursor: 'pointer',
+    textAlign: 'right'
+  },
+  accordionBody: {
+    padding: '20px',
+    backgroundColor: '#0a0a0a',
+    border: '1px solid #1a1a1a',
+    color: '#ccc',
+    lineHeight: '1.6'
+  },
+  footer: { textAlign: 'center', marginTop: '100px', opacity: 0.5, fontSize: '0.9rem' }
+};
+
+export default AboutPage;
