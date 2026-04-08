@@ -356,4 +356,38 @@ export function injectSidebarStyles(): string {
 </style>`;
 }
 
-    
+    /**
+ * AlQurmani X - Main Layout Styles (Optimized)
+ */
+
+let injected = false;
+
+export function injectMainLayoutStyles(): string {
+    if (injected) return "";
+    injected = true;
+
+    return `<style id="alqurmani-main-layout">
+/* Main Page */
+#page{
+    margin-top:var(--th);
+
+    padding:28px 18px 90px;
+
+    max-width:1400px;
+    margin-inline:auto; /* أفضل من left/right */
+
+    position:relative;
+    z-index:1;
+
+    /* تحسين الأداء */
+    will-change:transform;
+}
+
+/* Responsive ضبط بسيط */
+@media (max-width:768px){
+    #page{
+        padding:22px 14px 80px;
+    }
+}
+</style>`;
+}
