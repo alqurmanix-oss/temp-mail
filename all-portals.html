@@ -6,24 +6,25 @@
     <title>AlQurmani X | بوابات العبور</title>
     
     <script>
-        // الأمان المطلق بتأخير ذكي (أهم جزء)
-        window.onload = function() {
-            setTimeout(() => {
-                const accessKey = localStorage.getItem("portal_access_key");
-                
-                if (accessKey === "AlQurmani_VIP_2026") {
-                    console.log("Welcome AlQurmani");
-                    // مسح المفتاح للأمان بعد التأكد
-                    localStorage.removeItem("portal_access_key");
-                    
-                    // العودة التلقائية بعد 15 ثانية
-                    setTimeout(() => { window.location.href = "main.html"; }, 15000);
-                } else {
-                    // الطرد الفوري لو مفيش مفتاح
-                    window.location.replace("main.html");
-                }
-            }, 500); // تأخير نصف ثانية لضمان قراءة الذاكرة
-        };
+        // نظام الأمان القاطع - لا طرد بعد اليوم
+        function checkAccess() {
+            const key = localStorage.getItem("portal_access_key");
+            const card = document.getElementById("mainCard");
+
+            if (key === "AlQurmani_VIP_2026") {
+                // المفتاح سليم: أظهر الصفحة وامسح المفتاح للأمان
+                card.style.display = "block";
+                localStorage.removeItem("portal_access_key");
+
+                // العودة التلقائية بعد 15 ثانية
+                setTimeout(() => { window.location.href = "main.html"; }, 15000);
+            } else {
+                // طرد فوري للمتسلل
+                window.location.replace("main.html");
+            }
+        }
+        // تشغيل الفحص فوراً
+        window.onload = checkAccess;
     </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
@@ -45,7 +46,9 @@
             overflow: hidden;
             text-align: center;
         }
-        .portal-card {
+        /* إخفاء الكارت افتراضياً حتى التأكد من الهوية */
+        #mainCard {
+            display: none;
             position: relative;
             z-index: 10;
             padding: 60px 40px;
@@ -73,15 +76,17 @@
     </style>
 </head>
 <body>
-    <div class="portal-card">
+
+    <div id="mainCard">
         <h1>صالة السيادة</h1>
         <p class="msg">
-            مرحباً بك في المنطقة المؤمنة لـ <span class="highlight">AlQurmani X</span>.<br>
+            أهلاً بك في المنطقة المؤمنة لـ <span class="highlight">AlQurmani X</span>.<br>
             يتم الآن تجهيز البوابات الرقمية لسيادتكم.<br>
             <span class="highlight">تمتع بالرؤية.. سيعاد توجيهك تلقائياً بعد 15 ثانية.</span>
         </p>
         <div class="loader-bar"><div class="loader-fill"></div></div>
         <a href="main.html" class="back-link">العودة يدوياً الآن</a>
     </div>
+
 </body>
 </html>
