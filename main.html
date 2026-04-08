@@ -682,6 +682,17 @@ const FB = initializeApp({
 const auth = getAuth(FB);
 const db   = getFirestore(FB);
 
+ let idleTimer;
+function resetIdle() {
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(() => {
+    signOut(auth);
+  }, 15 * 60 * 1000); // 15 دقيقة
+}
+["click","mousemove","keydown"].forEach(e=>{
+  window.addEventListener(e, resetIdle);
+});
+resetIdle();  
   window.addEventListener("storage", e => {
   if (e.key === "logout") {
     window.location.reload();
