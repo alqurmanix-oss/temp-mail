@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlQurmani X | مركز العمليات</title>
+    <title>AlQurmani X | مركز القيادة</title>
     
     <style>
         :root {
@@ -21,17 +21,18 @@
             justify-content: center;
             overflow: hidden;
             text-align: center;
-            opacity: 0; /* الصفحة مخفية تماماً في البداية */
-            transition: opacity 0.5s ease;
+            opacity: 0; /* الصفحة مخفية تماماً لحين التأكد من الهوية */
+            transition: opacity 1s ease-in-out;
         }
         .portal-card {
             padding: 60px 40px;
             border: 1px solid rgba(255, 215, 0, 0.2);
             background: rgba(8, 11, 24, 0.95);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
             border-radius: 30px;
             box-shadow: 0 0 100px #000;
-            max-width: 600px;
+            max-width: 650px;
+            position: relative;
         }
         h1 {
             font-family: 'Cinzel Decorative', cursive;
@@ -43,10 +44,20 @@
         }
         .msg { font-size: 1.4rem; line-height: 1.8; margin-bottom: 40px; }
         .highlight { color: #FFD700; font-weight: bold; }
-        .loader-bar { width: 100%; height: 3px; background: rgba(255, 215, 0, 0.1); margin: 20px 0; position: relative; }
-        .loader-fill { height: 100%; width: 0; background: var(--gold); animation: progress 15s linear forwards; }
+        .loader-bar { width: 100%; height: 4px; background: rgba(255, 215, 0, 0.1); margin: 25px 0; overflow: hidden; border-radius: 10px; }
+        .loader-fill { height: 100%; width: 0; background: var(--gold); animation: progress 30s linear forwards; }
         @keyframes progress { to { width: 100%; } }
-        .back-link { display: inline-block; color: #FFD700; text-decoration: none; border-bottom: 1px solid #FFD700; cursor: pointer; }
+        .back-link { 
+            display: inline-block; 
+            color: #FFD700; 
+            text-decoration: none; 
+            border: 1px solid #C8860A; 
+            padding: 12px 35px; 
+            border-radius: 50px; 
+            font-weight: bold;
+            transition: 0.3s; 
+        }
+        .back-link:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
     </style>
 </head>
 <body>
@@ -55,31 +66,46 @@
         <h1>صالة السيادة</h1>
         <p class="msg">
             مرحباً بك في المنطقة المؤمنة لـ <span class="highlight">AlQurmani X</span>.<br>
-            يتم الآن تجهيز البوابات الرقمية لسيادتكم.<br>
-            <span class="highlight">تمتع بالرؤية.. سيعاد توجيهك تلقائياً بعد 15 ثانية.</span>
+            تم التحقق من هويتك عبر بروتوكولاتنا الرقمية.<br>
+            <span class="highlight">أمامك 30 ثانية للمعاينة قبل العودة التلقائية لـ Main.</span>
         </p>
         <div class="loader-bar"><div class="loader-fill"></div></div>
         <a href="main.html" class="back-link">العودة يدوياً الآن</a>
     </div>
 
-    <script>
-        // الفحص القاطع فوراً
-        const key = localStorage.getItem("portal_access_key");
-        
-        if (key === "AlQurmani_VIP_2026") {
-            // المفتاح صح -> أظهر الصفحة فوراً
-            document.body.style.opacity = "1";
-            localStorage.removeItem("portal_access_key"); // مسحه للأمان
+    <script type="module">
+        // استيراد Firebase المباشر
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-            // العودة التلقائية لـ main.html
-            setTimeout(() => {
-                window.location.href = "main.html";
-            }, 15000);
-        } else {
-            // المفتاح غلط أو داخل من الرابط -> طرد فوري
-            window.location.replace("main.html");
-        }
+        // إعدادات مشروعك الحقيقية التي أرسلتها
+        const firebaseConfig = {
+            apiKey: "AIzaSyCoM-Aqq7VwTDx5ZeHmIpHM4sm2XM0WdKw",
+            authDomain: "alqurmanix-15b92.firebaseapp.com",
+            projectId: "alqurmanix-15b92",
+            storageBucket: "alqurmanix-15b92.firebasestorage.app",
+            messagingSenderId: "477352026568",
+            appId: "1:477352026568:web:49f90cd3fc74b6948ba0fd"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // مراقب الحالة: القاضي والجلاد
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // المستخدم مسجل دخول فعلاً -> أظهر الفخامة
+                document.body.style.opacity = "1";
+
+                // العودة التلقائية لصفحة main بعد 30 ثانية
+                setTimeout(() => {
+                    window.location.href = "main.html";
+                }, 30000);
+            } else {
+                // مش مسجل دخول أو فاتح الرابط "تسلل" -> طرد فوري لـ index.html
+                window.location.replace("index.html");
+            }
+        });
     </script>
-
 </body>
 </html>
