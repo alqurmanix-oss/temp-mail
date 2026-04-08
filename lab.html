@@ -1,1 +1,98 @@
+/**
+ * AlQurmani X - Header Module (Optimized & Ready)
+ * المعمل: lab.ts
+ */
 
+interface PageMetadata {
+    lang?: string;
+    dir?: "rtl" | "ltr";
+    title: string;
+    charSet?: string;
+    description?: string;
+}
+
+const DEFAULT_META: Required<Omit<PageMetadata, "title">> = {
+    lang: "ar",
+    dir: "rtl",
+    charSet: "UTF-8",
+    description: "منصة القرماني X - نظام رقمي متكامل"
+};
+
+/**
+ * دالة بناء رأس الصفحة والهيكل الأساسي
+ */
+export function renderHeader(meta: PageMetadata): string {
+    const data = { ...DEFAULT_META, ...meta };
+
+    return `<!DOCTYPE html>
+<html lang="${data.lang}" dir="${data.dir}">
+<head>
+    <meta charset="${data.charSet}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>${data.title}</title>
+    <meta name="description" content="${data.description}"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+
+    <style>
+        :root {
+            /* درجات الذهبي الملكي */
+            --gold: #d4af37;
+            --gold-bright: #ffd700;
+            --gold-dark: #b8860b;
+            
+            /* الألوان الأساسية */
+            --black: #020409;
+            --white: #ffffff;
+            --glass: rgba(212, 175, 55, 0.05);
+            
+            /* الخطوط */
+            --font-main: 'Tajawal', sans-serif;
+            --font-royal: 'Cinzel Decorative', cursive;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* تنسيق أولي لمنع الوميض الأبيض أثناء التحميل */
+        html {
+            background: var(--black);
+        }
+
+        /* تحسين مظهر السكرول بار (نظام القرماني) */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--black);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    `;
+}
+
+// --- مثال لكيفية تشغيل الكود في ملف المعمل ---
+// const fullHeader = renderHeader({ title: "AlQurmani X — المعمل" });
+// document.write(fullHeader);
