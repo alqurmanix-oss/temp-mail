@@ -1,443 +1,106 @@
-/**
- * AlQurmani X - Header Module (Optimized & Ready)
- * المعمل: lab.ts
- */
-
-interface PageMetadata {
-    lang?: string;
-    dir?: "rtl" | "ltr";
-    title: string;
-    charSet?: string;
-    description?: string;
-}
-
-const DEFAULT_META: Required<Omit<PageMetadata, "title">> = {
-    lang: "ar",
-    dir: "rtl",
-    charSet: "UTF-8",
-    description: "منصة القرماني X - نظام رقمي متكامل"
-};
-
-/**
- * دالة بناء رأس الصفحة والهيكل الأساسي
- */
-export function renderHeader(meta: PageMetadata): string {
-    const data = { ...DEFAULT_META, ...meta };
-
-    return `<!DOCTYPE html>
-<html lang="${data.lang}" dir="${data.dir}">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="${data.charSet}"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-    <title>${data.title}</title>
-    <meta name="description" content="${data.description}"/>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALQURMANI X — المعمل</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            /* درجات الذهبي الملكي */
-            --gold: #d4af37;
-            --gold-bright: #ffd700;
-            --gold-dark: #b8860b;
-            
-            /* الألوان الأساسية */
-            --black: #020409;
-            --white: #ffffff;
-            --glass: rgba(212, 175, 55, 0.05);
-            
-            /* الخطوط */
-            --font-main: 'Tajawal', sans-serif;
-            --font-royal: 'Cinzel Decorative', cursive;
+            /* التدرج الذهبي الذي شرحناه */
+            --g1:#FFD700; --g2:#FFC200; --g3:#E6A800; --g4:#F0B429;
+            --g5:#FFEC80; --g6:#C8860A; --g7:#B8720A; --g8:#FFE066;
+            --neon:#39FF14; --bg:#020409; --card:rgba(8,11,24,0.96);
+            --border:rgba(255,215,0,0.22); --txt:#F5F0DC;
+            --shadow:0 0 28px rgba(255,215,0,0.18); --th:64px; --r:16px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+        /* تنسيق الجسم والخلفية الفضائية */
+        body { 
+            background: var(--bg); color: var(--txt); font-family: 'Tajawal', sans-serif; 
+            margin: 0; min-height: 100vh; overflow-x: hidden; position: relative;
         }
 
-        body {
-            background: var(--black);
-            color: var(--white);
-            font-family: var(--font-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-            min-height: 100vh;
+        body::before {
+            content:''; position:fixed; inset:0; z-index:-1;
+            background: radial-gradient(ellipse at 15% 50%,rgba(255,215,0,0.035) 0%,transparent 55%);
         }
 
-        /* تنسيق أولي لمنع الوميض الأبيض أثناء التحميل */
-        html {
-            background: var(--black);
+        /* Topbar الملكي */
+        #topbar {
+            position:fixed; top:0; left:0; right:0; height:var(--th); z-index:1000;
+            display:flex; align-items:center; justify-content:space-between; padding:0 20px;
+            background:rgba(2,4,9,0.97); border-bottom:1px solid var(--border);
+            backdrop-filter:blur(22px); box-shadow: 0 2px 30px rgba(255, 215, 0, 0.07);
         }
 
-        /* تحسين مظهر السكرول بار (نظام القرماني) */
-        ::-webkit-scrollbar {
-            width: 6px;
+        #logo {
+            font-family:'Cinzel Decorative'; font-weight:900; font-size:clamp(18px, 3vw, 24px);
+            background:linear-gradient(90deg, var(--g6), var(--g1), var(--g5), var(--g2));
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+            animation: goldShift 4s linear infinite; background-size: 400% 100%;
         }
-        ::-webkit-scrollbar-track {
-            background: var(--black);
+        @keyframes goldShift { 0% { background-position: 0% 50% } 100% { background-position: 400% 50% } }
+
+        /* المحتوى الرئيسي */
+        #page { margin-top: var(--th); padding: 40px 20px; max-width: 1200px; margin-inline: auto; }
+
+        /* الكروت الملكية */
+        #hero { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media(max-width:700px) { #hero { grid-template-columns: 1fr; } }
+
+        .hcard {
+            background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
+            padding: 26px; box-shadow: var(--shadow); position: relative; overflow: hidden;
+            animation: fadeUp 0.6s ease both;
         }
-        ::-webkit-scrollbar-thumb {
-            background: var(--gold);
-            border-radius: 10px;
+        .hcard::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--g6), var(--g1), var(--g5));
         }
+
+        #ptsVal {
+            font-family: 'Cinzel Decorative'; font-size: 46px; font-weight: 900;
+            background: linear-gradient(135deg, var(--g6), var(--g1), var(--g5));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: gp 2.5s ease-in-out infinite;
+        }
+        @keyframes gp { 0%, 100% { filter: brightness(1) } 50% { filter: brightness(1.35) } }
+
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-    `;
-}
 
-// --- مثال لكيفية تشغيل الكود في ملف المعمل ---
-// const fullHeader = renderHeader({ title: "AlQurmani X — المعمل" });
-// document.write(fullHeader);
+    <div id="topbar">
+        <div id="logo">ALQURMANI X</div>
+        <div style="display:flex; align-items:center; gap:8px; color:var(--neon); font-size:12px;">
+            <div style="width:8px; height:8px; background:var(--neon); border-radius:50%; box-shadow:0 0 10px var(--neon);"></div>
+            LIVE SYSTEM
+        </div>
+    </div>
 
-/**
- * AlQurmani X - Theme Styles (Optimized)
- */
+    <div id="page">
+        <div id="hero">
+            <div class="hcard">
+                <div style="display: flex; align-items: center; gap: 18px;">
+                    <div style="width: 70px; height: 70px; border-radius: 50%; border: 3px solid var(--g1); background: #000; display:flex; align-items:center; justify-content:center; font-size:30px;">👑</div>
+                    <div>
+                        <div style="font-family:'Cinzel Decorative'; font-weight:bold; color:var(--g1); font-size:20px;">M. AlQurmani</div>
+                        <div style="font-size: 11px; color: rgba(245,240,220,0.5);">ADMINISTRATOR</div>
+                    </div>
+                </div>
+            </div>
 
-interface ThemeConfig {
-    g: string[];
-    neon: string;
-    cyan: string;
-    bg: string;
-    card: string;
-    sw: string;
-    th: string;
-}
+            <div class="hcard" style="text-align: center;">
+                <div style="font-size: 11px; color: rgba(245,240,220,0.5); letter-spacing: 2px;">TOTAL POINTS</div>
+                <div id="ptsVal">1,250,000</div>
+                <div style="margin-top:10px; font-size:12px; color:var(--g1)">ROYAL BALANCE</div>
+            </div>
+        </div>
+    </div>
 
-const THEME: ThemeConfig = {
-    g: ["#FFD700", "#FFC200", "#E6A800", "#F0B429", "#FFEC80", "#C8860A", "#B8720A", "#FFE066"],
-    neon: "#39FF14",
-    cyan: "#00FFFF",
-    bg: "#020409",
-    card: "rgba(8,11,24,0.96)",
-    sw: "320px",
-    th: "64px"
-};
-
-let injected = false;
-
-export function injectStyles(): string {
-    if (injected) return "";
-    injected = true;
-
-    return `<style id="alqurmani-core">
-:root {
-  ${THEME.g.map((c, i) => `--g${i + 1}:${c};`).join("")}
-  --neon:${THEME.neon};
-  --cyan:${THEME.cyan};
-  --bg:${THEME.bg};
-  --card:${THEME.card};
-  --glass:rgba(255,215,0,0.055);
-  --border:rgba(255,215,0,0.22);
-  --borderhov:rgba(255,215,0,0.55);
-  --txt:#F5F0DC;
-  --muted:rgba(245,240,220,0.52);
-  --shadow:0 0 28px rgba(255,215,0,0.18),0 0 56px rgba(255,215,0,0.08);
-  --sw:${THEME.sw};
-  --th:${THEME.th};
-  --r:16px;
-}
-
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-
-body{
-  background:var(--bg);
-  color:var(--txt);
-  font-family:'Tajawal',sans-serif;
-  min-height:100vh;
-  overflow-x:hidden;
-  direction:rtl;
-}
-
-/* دعم LTR */
-body.ltr{
-  direction:ltr;
-  font-family:'Playfair Display','Tajawal',sans-serif;
-}
-
-/* Nebula (خففنا الحمل شوية) */
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-  background:
-    radial-gradient(ellipse at 20% 50%,rgba(255,215,0,0.03),transparent 60%),
-    radial-gradient(ellipse at 80% 20%,rgba(0,255,255,0.02),transparent 55%);
-}
-
-/* Stars (optimized) */
-body::after{
-  content:'';
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-  background-image:
-    radial-gradient(1px 1px at 15% 20%,rgba(255,215,0,0.6),transparent),
-    radial-gradient(1px 1px at 35% 45%,rgba(255,255,255,0.4),transparent),
-    radial-gradient(1px 1px at 70% 65%,rgba(255,215,0,0.4),transparent),
-    radial-gradient(1px 1px at 50% 80%,rgba(255,255,255,0.25),transparent);
-}
-
-/* Scrollbar */
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:var(--g3)}
-</style>`;
-}
-
-   /**
- * AlQurmani X - Topbar & UI Components
- */
-
-export function injectTopbarStyles(): string {
-    return `
-<style id="alqurmani-topbar">
-/* الشريط العلوي */
-#topbar {
-    position: fixed; top: 0; left: 0; right: 0; height: var(--th); z-index: 1000;
-    display: flex; align-items: center; justify-content: space-between; padding: 0 18px;
-    background: rgba(2, 4, 9, 0.97); border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
-    box-shadow: 0 2px 30px rgba(255, 215, 0, 0.07);
-}
-
-/* اللوجو المتحرك */
-#logo {
-    font-family: 'Cinzel Decorative', cursive; font-weight: 900;
-    font-size: clamp(16px, 3.2vw, 26px); letter-spacing: 2px;
-    background: linear-gradient(90deg, var(--g6), var(--g1), var(--g5), var(--g2), var(--g8), var(--g3), var(--g4), var(--g1));
-    background-size: 400% 100%; -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; background-clip: text;
-    animation: goldShift 4s linear infinite; user-select: none;
-}
-@keyframes goldShift { 0% { background-position: 0% 50% } 100% { background-position: 400% 50% } }
-
-/* مؤشر النشاط */
-#onlineDot {
-    width: 9px; height: 9px; border-radius: 50%; background: var(--neon);
-    box-shadow: 0 0 7px var(--neon), 0 0 14px rgba(57, 255, 20, 0.45);
-    animation: blink 1.5s ease-in-out infinite;
-}
-@keyframes blink { 0%, 100% { opacity: 1 } 50% { opacity: .15 } }
-
-/* الكرة الأرضية */
-#globeEl {
-    width: 50px; height: 50px; border-radius: 50%;
-    background: conic-gradient(from 0deg, #0d1b4a, #1a3a6e, #0d2a5c, #0d1b4a);
-    border: 1.5px solid var(--border);
-    animation: spinY 14s linear infinite; display: flex; align-items: center; justify-content: center;
-}
-@keyframes spinY { from { transform: rotateY(0) } to { transform: rotateY(360deg) } }
-
-/* الستارة */
-#overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.68); z-index: 1500;
-    opacity: 0; pointer-events: none; transition: opacity .4s; backdrop-filter: blur(5px);
-}
-#overlay.on { opacity: 1; pointer-events: all; }
-</style>
-    `;
-} 
-
-/**
- * AlQurmani X - Sidebar Styles (Optimized)
- */
-
-let injected = false;
-
-export function injectSidebarStyles(): string {
-    if (injected) return "";
-    injected = true;
-
-    return `<style id="alqurmani-sidebar">
-/* Sidebar */
-#sidebar{
-    position:fixed;
-    top:0;
-    right:-340px;
-    width:var(--sw);
-    height:100vh;
-    z-index:1600;
-
-    display:flex;
-    flex-direction:column;
-    overflow-y:auto;
-
-    background:linear-gradient(180deg,
-        rgba(4,7,20,0.995),
-        rgba(8,12,28,0.995)
-    );
-
-    border-left:1px solid var(--border);
-
-    transition:right .4s cubic-bezier(.22,1,.36,1);
-    will-change:right;
-}
-
-#sidebar.open{right:0}
-
-/* Time */
-#sbTime{
-    font-family:'Cinzel Decorative',cursive;
-    font-size:22px;
-    font-weight:700;
-
-    background:linear-gradient(135deg,var(--g1),var(--g5));
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
-
-/* Avatar */
-#sbAvatar{
-    width:46px;
-    height:46px;
-    border-radius:50%;
-
-    border:2px solid var(--g1);
-    box-shadow:0 0 8px rgba(255,215,0,0.25);
-}
-
-/* Nav Item */
-.ni{
-    display:flex;
-    align-items:center;
-    gap:10px;
-
-    padding:11px 18px;
-    cursor:pointer;
-
-    color:var(--muted);
-    text-decoration:none;
-
-    border-right:3px solid transparent;
-
-    transition:
-        color .2s,
-        background .2s,
-        border-color .2s,
-        transform .15s;
-}
-
-.ni:hover{
-    color:var(--g1);
-    border-right-color:var(--g1);
-    background:var(--glass);
-    transform:translateX(-3px);
-}
-
-/* Active state (مهم) */
-.ni.active{
-    color:var(--g1);
-    border-right-color:var(--g1);
-    background:var(--glass);
-}
-
-/* Logout */
-.logout{
-    color:#FF4455 !important;
-}
-
-.logout:hover{
-    color:#FF6677 !important;
-    border-right-color:#FF4455 !important;
-}
-</style>`;
-}
-
-    /**
- * AlQurmani X - Main Layout Styles (Optimized)
- */
-
-let injected = false;
-
-export function injectMainLayoutStyles(): string {
-    if (injected) return "";
-    injected = true;
-
-    return `<style id="alqurmani-main-layout">
-/* Main Page */
-#page{
-    margin-top:var(--th);
-
-    padding:28px 18px 90px;
-
-    max-width:1400px;
-    margin-inline:auto; /* أفضل من left/right */
-
-    position:relative;
-    z-index:1;
-
-    /* تحسين الأداء */
-    will-change:transform;
-}
-
-/* Responsive ضبط بسيط */
-@media (max-width:768px){
-    #page{
-        padding:22px 14px 80px;
-    }
-}
-</style>`;
-}
-
-  /**
- * AlQurmani X - Hero & User Stats Styles
- */
-
-export function injectHeroStyles(): string {
-    return `
-<style id="alqurmani-hero">
-/* الحاوية الرئيسية للهيرو */
-#hero { 
-    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 36px; 
-}
-@media(max-width:700px) { #hero { grid-template-columns: 1fr; } }
-
-/* الكارت الملكي الموحد */
-.hcard {
-    background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
-    padding: 26px 22px; box-shadow: var(--shadow); position: relative; overflow: hidden;
-    transition: transform .3s, box-shadow .3s;
-    animation: fadeUp .6s ease both;
-}
-.hcard::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--g6), var(--g1), var(--g5), var(--g2));
-}
-.hcard:hover { 
-    transform: translateY(-4px); 
-    box-shadow: 0 14px 50px rgba(255,215,0,0.2), 0 0 80px rgba(255,215,0,0.07); 
-}
-
-/* تفاصيل النقاط والرقم اللامع */
-#ptsVal {
-    font-family: 'Cinzel Decorative', cursive;
-    font-size: clamp(26px, 5vw, 46px); font-weight: 900;
-    background: linear-gradient(135deg, var(--g6), var(--g1), var(--g5));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    animation: gp 2.5s ease-in-out infinite;
-}
-@keyframes gp { 0%, 100% { filter: brightness(1) } 50% { filter: brightness(1.35) } }
-
-/* الأزرار الزجاجية */
-.pbtn {
-    padding: 8px 16px; border: 1px solid var(--border); border-radius: 8px;
-    background: var(--glass); color: var(--g1); font-weight: 700;
-    transition: all .25s; text-decoration: none; display: inline-block;
-}
-.pbtn:hover { background: rgba(255,215,0,0.14); transform: scale(1.04); }
-</style>
-    `;
-}  
+</body>
+</html>
