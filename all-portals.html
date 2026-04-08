@@ -3,93 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlQurmani X | معالجة البيانات</title>
+    <title>AlQurmani X | Processing</title>
     
     <style>
-        :root {
-            --gold: linear-gradient(135deg, #C8860A, #FFD700, #FFE066, #B8720A);
-            --bg: #020409;
-        }
-        body {
-            background-color: var(--bg);
-            color: #F5F0DC;
-            font-family: 'Tajawal', sans-serif;
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            text-align: center;
-            opacity: 0; /* مخفي للأمان حتى التأكد من الهوية */
-            transition: opacity 0.8s ease;
-        }
-        .container {
-            width: 90%;
-            max-width: 600px;
-            padding: 30px;
-            background: rgba(8, 11, 24, 0.95);
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            border-radius: 35px;
-            box-shadow: 0 0 80px #000;
-        }
-        .spinner {
-            width: 50px; height: 50px;
-            border: 3px solid rgba(255, 215, 0, 0.1);
-            border-top: 3px solid #FFD700;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        
-        h1 {
-            font-size: 1.6rem;
-            background: var(--gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
-        }
-        .status { font-size: 1.1rem; line-height: 1.6; color: #d4cfbc; margin-bottom: 25px; }
+        :root { --gold: linear-gradient(135deg, #C8860A, #FFD700); --bg: #020409; }
+        body { background: var(--bg); color: #F5F0DC; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; height: 100vh; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.5s; text-align: center; overflow: hidden; }
+        .card { padding: 40px; background: rgba(8, 11, 24, 0.95); border-radius: 30px; border: 1px solid rgba(255, 215, 0, 0.1); max-width: 600px; width: 90%; box-shadow: 0 0 50px #000; }
+        h1 { background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.8rem; margin-bottom: 10px; }
+        .status { font-size: 1.2rem; line-height: 1.6; color: #d4cfbc; }
         .highlight { color: #FFD700; font-weight: bold; }
-
-        /* منطقة الإعلانات */
-        .ad-container {
-            margin: 20px 0;
-            min-height: 250px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .loader-bar { width: 100%; height: 3px; background: rgba(255, 215, 0, 0.05); margin-top: 20px; position: relative; }
-        .loader-fill { height: 100%; width: 0; background: var(--gold); animation: progress 15s linear forwards; }
-        @keyframes progress { to { width: 100%; } }
-        
-        .timer-text { font-size: 0.8rem; color: #666; margin-top: 10px; }
+        .ad-box { margin: 20px 0; min-height: 250px; display: flex; align-items: center; justify-content: center; }
+        .loader { width: 100%; height: 2px; background: rgba(255,215,0,0.1); margin-top: 20px; overflow: hidden; }
+        .fill { height: 100%; width: 0; background: var(--gold); animation: p 15s linear forwards; }
+        @keyframes p { to { width: 100%; } }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="spinner"></div>
-        <h1>جاري تجهيز القسم المطلوب</h1>
-        <p class="status">
-            نحن الآن نقوم بمزامنة البيانات لتقديم <span class="highlight">أفضل جودة مضمونة</span>.<br>
-            دقة التفاصيل تتطلب لحظات من المعالجة.. شكراً لثقتك.
-        </p>
+    <div class="card">
+        <h1 id="portalTitle">...</h1>
+        <p class="status" id="statusMsg">...</p>
 
-        <div class="ad-container">
-            <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="pa7acda22b7" data-domain="//data527.click" data-affquery="/683625d43596b818e752/a7acda22b7/?placementName=default">
-                <script src="//data527.click/js/responsive.js" async></script>
-            </ins>
+        <div class="ad-box">
+            <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="pa7acda22b7" data-domain="//data527.click" data-affquery="/683625d43596b818e752/a7acda22b7/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins>
         </div>
 
-        <div class="loader-bar"><div class="loader-fill"></div></div>
-        <div class="timer-text">سيتم نقلك تلقائياً خلال 15 ثانية...</div>
+        <div class="loader"><div class="fill"></div></div>
     </div>
 
     <script type="text/javascript" src="//cdn-server.live/b17fdc633185091d29e6/2104835e2b/?placementName=default"></script>
@@ -98,7 +37,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // إعدادات مشروعك الحقيقية
         const firebaseConfig = {
             apiKey: "AIzaSyCoM-Aqq7VwTDx5ZeHmIpHM4sm2XM0WdKw",
             authDomain: "alqurmanix-15b92.firebaseapp.com",
@@ -107,22 +45,33 @@
             messagingSenderId: "477352026568",
             appId: "1:477352026568:web:49f90cd3fc74b6948ba0fd"
         };
-
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // مراقب الأمان والتوجيه
+        // نظام الترجمة والذكاء
+        const translations = {
+            ar: { title: "جاري تجهيز {portal}", msg: "أهلاً {name}، نقوم الآن بضبط المعايير النهائية لضمان جودة تليق بك." },
+            en: { title: "Preparing {portal}", msg: "Hello {name}, we are fine-tuning the parameters to ensure the best quality." },
+            zh: { title: "正在准备 {portal}", msg: "你好 {name}，我们正在调整最终参数以确保质量。" }
+            // يمكنك إضافة باقي الـ 11 لغة هنا بنفس النمط
+        };
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // مستخدم مسجل -> أظهر الصفحة بجمالها وإعلاناتها
                 document.body.style.opacity = "1";
+                
+                // سحب البيانات أوتوماتيكياً
+                const name = user.displayName || "AlQurmani User";
+                const portal = sessionStorage.getItem("active_portal") || "Section";
+                const lang = (navigator.language || navigator.userLanguage).split('-')[0];
+                const content = translations[lang] || translations.en;
 
-                // العودة التلقائية لـ main.html بعد 15 ثانية بالظبط
-                setTimeout(() => {
-                    window.location.href = "main.html";
-                }, 15000);
+                document.getElementById('portalTitle').innerText = content.title.replace("{portal}", portal);
+                document.getElementById('statusMsg').innerHTML = content.msg.replace("{name}", `<span class="highlight">${name}</span>`);
+
+                // التوجيه لـ main.html حصراً بعد 15 ثانية
+                setTimeout(() => { window.location.href = "main.html"; }, 15000);
             } else {
-                // محاولة تسلل -> طرد فوري لصفحة الدخول
                 window.location.replace("index.html");
             }
         });
