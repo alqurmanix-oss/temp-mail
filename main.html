@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<script>
+  // تأكد ان الصفحة الرئيسية هي المرجع
+  if (document.referrer === "" || !document.referrer.includes("index.html")) {
+    // لو دخل مباشرة بدون مرجع أو مش من الصفحة الرئيسية
+    window.location.href = "index.html"; // يرجع للصفحة الرئيسية
+  }
+</script>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
