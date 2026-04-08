@@ -251,4 +251,109 @@ export function injectTopbarStyles(): string {
     `;
 } 
 
+/**
+ * AlQurmani X - Sidebar Styles (Optimized)
+ */
+
+let injected = false;
+
+export function injectSidebarStyles(): string {
+    if (injected) return "";
+    injected = true;
+
+    return `<style id="alqurmani-sidebar">
+/* Sidebar */
+#sidebar{
+    position:fixed;
+    top:0;
+    right:-340px;
+    width:var(--sw);
+    height:100vh;
+    z-index:1600;
+
+    display:flex;
+    flex-direction:column;
+    overflow-y:auto;
+
+    background:linear-gradient(180deg,
+        rgba(4,7,20,0.995),
+        rgba(8,12,28,0.995)
+    );
+
+    border-left:1px solid var(--border);
+
+    transition:right .4s cubic-bezier(.22,1,.36,1);
+    will-change:right;
+}
+
+#sidebar.open{right:0}
+
+/* Time */
+#sbTime{
+    font-family:'Cinzel Decorative',cursive;
+    font-size:22px;
+    font-weight:700;
+
+    background:linear-gradient(135deg,var(--g1),var(--g5));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* Avatar */
+#sbAvatar{
+    width:46px;
+    height:46px;
+    border-radius:50%;
+
+    border:2px solid var(--g1);
+    box-shadow:0 0 8px rgba(255,215,0,0.25);
+}
+
+/* Nav Item */
+.ni{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:11px 18px;
+    cursor:pointer;
+
+    color:var(--muted);
+    text-decoration:none;
+
+    border-right:3px solid transparent;
+
+    transition:
+        color .2s,
+        background .2s,
+        border-color .2s,
+        transform .15s;
+}
+
+.ni:hover{
+    color:var(--g1);
+    border-right-color:var(--g1);
+    background:var(--glass);
+    transform:translateX(-3px);
+}
+
+/* Active state (مهم) */
+.ni.active{
+    color:var(--g1);
+    border-right-color:var(--g1);
+    background:var(--glass);
+}
+
+/* Logout */
+.logout{
+    color:#FF4455 !important;
+}
+
+.logout:hover{
+    color:#FF6677 !important;
+    border-right-color:#FF4455 !important;
+}
+</style>`;
+}
+
     
