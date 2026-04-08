@@ -1,27 +1,24 @@
 <!DOCTYPE html>
-<body style="opacity: 0; transition: opacity 0.4s ease;">
-    
-    <h1 id="welcomeMsg" style="text-align:center; margin-top:20%; font-family:sans-serif; color:#FFD700;">
-        جاري فحص الصلاحيات الرقمية...
-    </h1>
+<script>
+    /* حارس القلعة - يمنع الروابط المباشرة والتبويبات الجديدة نهائياً */
+    (function() {
+        // جلب رابط الصفحة اللي الزائر جاي منها
+        const fromPage = document.referrer;
+        
+        // جلب اسم موقعك (Domain) عشان نضمن إنه جاي من عندك مش من موقع غريب
+        const mySite = window.location.hostname;
 
-    <script type="module">
-        import { securePage } from './security-core.js';
-
-        // دالة إظهار الصفحة بعد النجاح
-        const showPage = () => { document.body.style.opacity = "1"; };
-
-        // تشغيل نظام الأمان
-        securePage(async ({ user, userData, langConfig }) => {
-            
-            // تخصيص رسالة الترحيب باللغة المكتشفة
-            const welcomeEl = document.getElementById('welcomeMsg');
-            if (welcomeEl) {
-                const name = userData.fullName || "User";
-                welcomeEl.innerText = langConfig?.portalMsg?.replace("{name}", name) || `مرحباً ${name}`;
-            }
-
-            // --- بداية محتواك الحقيقي ستبدأ بعد هذا السطر ---
+        // الشرط الصارم: 
+        // 1. لازم الـ Referrer ما يكونش فاضي (يعني مش داخل مباشر أو تبويب جديد)
+        // 2. ولازم الـ Referrer يكون فيه اسم موقعك (يعني جاي من صفحة داخلية عندك)
+        if (fromPage !== "" && fromPage.includes(mySite)) {
+            console.log("صلاحية الوصول مؤكدة من داخل الموقع");
+        } else {
+            // إعدام الجلسة وتحويل فوري لصفحة الدخول
+            window.location.replace("index.html");
+        }
+    })();
+</script>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
