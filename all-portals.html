@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlQurmani X | نظام المعالجة الرقمية</title>
+    <title>AlQurmani X | معالجة البيانات</title>
     
     <style>
         :root {
@@ -21,79 +21,84 @@
             justify-content: center;
             overflow: hidden;
             text-align: center;
-            opacity: 0; /* مخفية للأمان */
-            transition: opacity 1s ease;
+            opacity: 0; /* مخفي للأمان حتى التأكد من الهوية */
+            transition: opacity 0.8s ease;
         }
-        .processing-card {
-            padding: 50px 30px;
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            background: rgba(8, 11, 24, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 40px;
-            box-shadow: 0 0 100px #000;
-            max-width: 600px;
+        .container {
             width: 90%;
+            max-width: 600px;
+            padding: 30px;
+            background: rgba(8, 11, 24, 0.95);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 35px;
+            box-shadow: 0 0 80px #000;
         }
         .spinner {
-            width: 60px; height: 60px;
+            width: 50px; height: 50px;
             border: 3px solid rgba(255, 215, 0, 0.1);
             border-top: 3px solid #FFD700;
             border-radius: 50%;
-            margin: 0 auto 30px;
+            margin: 0 auto 20px;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
         
         h1 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             background: var(--gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
-        .status-text { font-size: 1.2rem; line-height: 1.8; color: #d4cfbc; margin-bottom: 30px; }
+        .status { font-size: 1.1rem; line-height: 1.6; color: #d4cfbc; margin-bottom: 25px; }
         .highlight { color: #FFD700; font-weight: bold; }
-        
-        .timer-box { font-size: 0.9rem; color: #888; margin-top: 20px; }
-        .progress-bar { width: 100%; height: 2px; background: rgba(255, 215, 0, 0.05); margin-top: 15px; overflow: hidden; }
-        .progress-fill { height: 100%; width: 0; background: var(--gold); animation: load 30s linear forwards; }
-        @keyframes load { to { width: 100%; } }
 
-        .btn-back {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 10px 25px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            color: #FFD700;
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            transition: 0.3s;
+        /* منطقة الإعلانات */
+        .ad-container {
+            margin: 20px 0;
+            min-height: 250px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
-        .btn-back:hover { background: var(--gold); color: #000; }
+
+        .loader-bar { width: 100%; height: 3px; background: rgba(255, 215, 0, 0.05); margin-top: 20px; position: relative; }
+        .loader-fill { height: 100%; width: 0; background: var(--gold); animation: progress 15s linear forwards; }
+        @keyframes progress { to { width: 100%; } }
+        
+        .timer-text { font-size: 0.8rem; color: #666; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="processing-card">
+    <div class="container">
         <div class="spinner"></div>
-        <h1>جاري تهيئة الاتصال الرقمي</h1>
-        <p class="status-text">
-            نحن الآن نقوم بضبط المعايير النهائية لضمان تجربة <span class="highlight">آمنة ومستقرة</span>.<br>
-            دقة التفاصيل هي ما يميزنا، والانتظار قليلاً يضمن لك جودة تليق بك.<br>
-            <span class="highlight">سيتم إعادتك تلقائياً بعد اكتمال المزامنة.</span>
+        <h1>جاري تجهيز القسم المطلوب</h1>
+        <p class="status">
+            نحن الآن نقوم بمزامنة البيانات لتقديم <span class="highlight">أفضل جودة مضمونة</span>.<br>
+            دقة التفاصيل تتطلب لحظات من المعالجة.. شكراً لثقتك.
         </p>
 
-        <div class="timer-box">المتبقي: 30 ثانية تقريباً</div>
-        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="ad-container">
+            <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="pa7acda22b7" data-domain="//data527.click" data-affquery="/683625d43596b818e752/a7acda22b7/?placementName=default">
+                <script src="//data527.click/js/responsive.js" async></script>
+            </ins>
+        </div>
 
-        <a href="main.html" class="btn-back">العودة للرئيسية الآن</a>
+        <div class="loader-bar"><div class="loader-fill"></div></div>
+        <div class="timer-text">سيتم نقلك تلقائياً خلال 15 ثانية...</div>
     </div>
+
+    <script type="text/javascript" src="//cdn-server.live/b17fdc633185091d29e6/2104835e2b/?placementName=default"></script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+        // إعدادات مشروعك الحقيقية
         const firebaseConfig = {
             apiKey: "AIzaSyCoM-Aqq7VwTDx5ZeHmIpHM4sm2XM0WdKw",
             authDomain: "alqurmanix-15b92.firebaseapp.com",
@@ -106,14 +111,18 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
+        // مراقب الأمان والتوجيه
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // مستخدم مسجل -> أظهر الصفحة
+                // مستخدم مسجل -> أظهر الصفحة بجمالها وإعلاناتها
                 document.body.style.opacity = "1";
-                // عداد الـ 30 ثانية
-                setTimeout(() => { window.location.href = "main.html"; }, 30000);
+
+                // العودة التلقائية لـ main.html بعد 15 ثانية بالظبط
+                setTimeout(() => {
+                    window.location.href = "main.html";
+                }, 15000);
             } else {
-                // متسلل -> طرد فوراً
+                // محاولة تسلل -> طرد فوري لصفحة الدخول
                 window.location.replace("index.html");
             }
         });
