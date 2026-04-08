@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlQurmani X | مركز القيادة</title>
+    <title>AlQurmani X | نظام المعالجة الرقمية</title>
     
     <style>
         :root {
@@ -21,64 +21,79 @@
             justify-content: center;
             overflow: hidden;
             text-align: center;
-            opacity: 0; /* الصفحة مخفية تماماً لحين التأكد من الهوية */
-            transition: opacity 1s ease-in-out;
+            opacity: 0; /* مخفية للأمان */
+            transition: opacity 1s ease;
         }
-        .portal-card {
-            padding: 60px 40px;
-            border: 1px solid rgba(255, 215, 0, 0.2);
+        .processing-card {
+            padding: 50px 30px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
             background: rgba(8, 11, 24, 0.95);
-            backdrop-filter: blur(25px);
-            border-radius: 30px;
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
             box-shadow: 0 0 100px #000;
-            max-width: 650px;
-            position: relative;
+            max-width: 600px;
+            width: 90%;
         }
+        .spinner {
+            width: 60px; height: 60px;
+            border: 3px solid rgba(255, 215, 0, 0.1);
+            border-top: 3px solid #FFD700;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
         h1 {
-            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1.8rem;
             background: var(--gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 3rem;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
-        .msg { font-size: 1.4rem; line-height: 1.8; margin-bottom: 40px; }
+        .status-text { font-size: 1.2rem; line-height: 1.8; color: #d4cfbc; margin-bottom: 30px; }
         .highlight { color: #FFD700; font-weight: bold; }
-        .loader-bar { width: 100%; height: 4px; background: rgba(255, 215, 0, 0.1); margin: 25px 0; overflow: hidden; border-radius: 10px; }
-        .loader-fill { height: 100%; width: 0; background: var(--gold); animation: progress 30s linear forwards; }
-        @keyframes progress { to { width: 100%; } }
-        .back-link { 
-            display: inline-block; 
-            color: #FFD700; 
-            text-decoration: none; 
-            border: 1px solid #C8860A; 
-            padding: 12px 35px; 
-            border-radius: 50px; 
-            font-weight: bold;
-            transition: 0.3s; 
+        
+        .timer-box { font-size: 0.9rem; color: #888; margin-top: 20px; }
+        .progress-bar { width: 100%; height: 2px; background: rgba(255, 215, 0, 0.05); margin-top: 15px; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0; background: var(--gold); animation: load 30s linear forwards; }
+        @keyframes load { to { width: 100%; } }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 25px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: #FFD700;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            transition: 0.3s;
         }
-        .back-link:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
+        .btn-back:hover { background: var(--gold); color: #000; }
     </style>
 </head>
 <body>
 
-    <div class="portal-card">
-        <h1>صالة السيادة</h1>
-        <p class="msg">
-            مرحباً بك في المنطقة المؤمنة لـ <span class="highlight">AlQurmani X</span>.<br>
-            تم التحقق من هويتك عبر بروتوكولاتنا الرقمية.<br>
-            <span class="highlight">أمامك 30 ثانية للمعاينة قبل العودة التلقائية لـ Main.</span>
+    <div class="processing-card">
+        <div class="spinner"></div>
+        <h1>جاري تهيئة الاتصال الرقمي</h1>
+        <p class="status-text">
+            نحن الآن نقوم بضبط المعايير النهائية لضمان تجربة <span class="highlight">آمنة ومستقرة</span>.<br>
+            دقة التفاصيل هي ما يميزنا، والانتظار قليلاً يضمن لك جودة تليق بك.<br>
+            <span class="highlight">سيتم إعادتك تلقائياً بعد اكتمال المزامنة.</span>
         </p>
-        <div class="loader-bar"><div class="loader-fill"></div></div>
-        <a href="main.html" class="back-link">العودة يدوياً الآن</a>
+
+        <div class="timer-box">المتبقي: 30 ثانية تقريباً</div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+
+        <a href="main.html" class="btn-back">العودة للرئيسية الآن</a>
     </div>
 
     <script type="module">
-        // استيراد Firebase المباشر
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // إعدادات مشروعك الحقيقية التي أرسلتها
         const firebaseConfig = {
             apiKey: "AIzaSyCoM-Aqq7VwTDx5ZeHmIpHM4sm2XM0WdKw",
             authDomain: "alqurmanix-15b92.firebaseapp.com",
@@ -91,18 +106,14 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // مراقب الحالة: القاضي والجلاد
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // المستخدم مسجل دخول فعلاً -> أظهر الفخامة
+                // مستخدم مسجل -> أظهر الصفحة
                 document.body.style.opacity = "1";
-
-                // العودة التلقائية لصفحة main بعد 30 ثانية
-                setTimeout(() => {
-                    window.location.href = "main.html";
-                }, 30000);
+                // عداد الـ 30 ثانية
+                setTimeout(() => { window.location.href = "main.html"; }, 30000);
             } else {
-                // مش مسجل دخول أو فاتح الرابط "تسلل" -> طرد فوري لـ index.html
+                // متسلل -> طرد فوراً
                 window.location.replace("index.html");
             }
         });
