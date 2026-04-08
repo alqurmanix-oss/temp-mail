@@ -96,3 +96,106 @@ export function renderHeader(meta: PageMetadata): string {
 // --- مثال لكيفية تشغيل الكود في ملف المعمل ---
 // const fullHeader = renderHeader({ title: "AlQurmani X — المعمل" });
 // document.write(fullHeader);
+
+/**
+ * AlQurmani X - Theme Styles (Optimized)
+ */
+
+interface ThemeConfig {
+    g: string[];
+    neon: string;
+    cyan: string;
+    bg: string;
+    card: string;
+    sw: string;
+    th: string;
+}
+
+const THEME: ThemeConfig = {
+    g: ["#FFD700", "#FFC200", "#E6A800", "#F0B429", "#FFEC80", "#C8860A", "#B8720A", "#FFE066"],
+    neon: "#39FF14",
+    cyan: "#00FFFF",
+    bg: "#020409",
+    card: "rgba(8,11,24,0.96)",
+    sw: "320px",
+    th: "64px"
+};
+
+let injected = false;
+
+export function injectStyles(): string {
+    if (injected) return "";
+    injected = true;
+
+    return `<style id="alqurmani-core">
+:root {
+  ${THEME.g.map((c, i) => `--g${i + 1}:${c};`).join("")}
+  --neon:${THEME.neon};
+  --cyan:${THEME.cyan};
+  --bg:${THEME.bg};
+  --card:${THEME.card};
+  --glass:rgba(255,215,0,0.055);
+  --border:rgba(255,215,0,0.22);
+  --borderhov:rgba(255,215,0,0.55);
+  --txt:#F5F0DC;
+  --muted:rgba(245,240,220,0.52);
+  --shadow:0 0 28px rgba(255,215,0,0.18),0 0 56px rgba(255,215,0,0.08);
+  --sw:${THEME.sw};
+  --th:${THEME.th};
+  --r:16px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--bg);
+  color:var(--txt);
+  font-family:'Tajawal',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+  direction:rtl;
+}
+
+/* دعم LTR */
+body.ltr{
+  direction:ltr;
+  font-family:'Playfair Display','Tajawal',sans-serif;
+}
+
+/* Nebula (خففنا الحمل شوية) */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(ellipse at 20% 50%,rgba(255,215,0,0.03),transparent 60%),
+    radial-gradient(ellipse at 80% 20%,rgba(0,255,255,0.02),transparent 55%);
+}
+
+/* Stars (optimized) */
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background-image:
+    radial-gradient(1px 1px at 15% 20%,rgba(255,215,0,0.6),transparent),
+    radial-gradient(1px 1px at 35% 45%,rgba(255,255,255,0.4),transparent),
+    radial-gradient(1px 1px at 70% 65%,rgba(255,215,0,0.4),transparent),
+    radial-gradient(1px 1px at 50% 80%,rgba(255,255,255,0.25),transparent);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--g3)}
+</style>`;
+}
+
+
+    
