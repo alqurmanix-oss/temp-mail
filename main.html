@@ -217,6 +217,33 @@ body.ltr .ni:hover{border-right-color:transparent;border-left-color:var(--g1)}
 .logout:hover{border-right-color:#FF4455 !important;color:#FF6677 !important}
 body.ltr .logout:hover{border-left-color:#FF4455 !important;border-right-color:transparent !important}
 
+  /* ===================== SIDEBAR SCROLLBAR UPDATED ===================== */
+#sidebar {
+    overflow-y: auto !important; 
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* مساحة أمان سفلية لضمان ظهور زر تسجيل الخروج */
+#sidebar .nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 80px !important; 
+}
+
+/* تخصيص شكل شريط التمرير */
+#sidebar::-webkit-scrollbar { width: 6px; }
+#sidebar::-webkit-scrollbar-track { background: rgba(2,4,9,0.7); border-radius: 4px; }
+#sidebar::-webkit-scrollbar-thumb {
+    background: var(--g1); 
+    border-radius: 4px;
+    border: 1px solid rgba(255,215,0,0.25);
+}
+#sidebar::-webkit-scrollbar-thumb:hover { background: var(--g6); }
+#sidebar { scrollbar-width: thin; scrollbar-color: var(--g1) rgba(2,4,9,0.7); }
   /* ===================== SIDEBAR SCROLLBAR ===================== */
 #sidebar {
   overflow-y: auto; /* تمكين التمرير الرأسي */
