@@ -723,6 +723,10 @@ onAuthStateChanged(auth, async (user) => {
       return;
     }
 
+     ["mainName", "sbName"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = "جارٍ التحميل...";
+});
     // الدخول مستقر -> تحميل البيانات
     await loadUser(user);
     touchActivity(user.uid);
