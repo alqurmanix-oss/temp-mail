@@ -96,3 +96,119 @@ export function renderHeader(meta: PageMetadata): string {
 // --- مثال لكيفية تشغيل الكود في ملف المعمل ---
 // const fullHeader = renderHeader({ title: "AlQurmani X — المعمل" });
 // document.write(fullHeader);
+
+/**
+ * AlQurmani X - Theme & Styles Module (Optimized)
+ */
+
+interface Theme {
+    gold: string;
+    goldGradients: string[];
+    black: string;
+    cardBg: string;
+    neon: string;
+    cyan: string;
+    sidebarWidth: string;
+    topbarHeight: string;
+    borderRadius: string;
+}
+
+const THEME: Theme = {
+    gold: "#FFD700",
+    goldGradients: ["#FFD700", "#FFC200", "#E6A800", "#F0B429", "#FFEC80", "#C8860A", "#B8720A", "#FFE066"],
+    black: "#020409",
+    cardBg: "rgba(8,11,24,0.96)",
+    neon: "#39FF14",
+    cyan: "#00FFFF",
+    sidebarWidth: "320px",
+    topbarHeight: "64px",
+    borderRadius: "16px"
+};
+
+/**
+ * Prevent duplicate injection
+ */
+let injected = false;
+
+export function injectGlobalStyles(): string {
+    if (injected) return "";
+    injected = true;
+
+    return `<style id="alqurmani-theme">
+:root {
+    ${THEME.goldGradients.map((g, i) => `--g${i + 1}:${g};`).join("")}
+
+    --neon:${THEME.neon};
+    --cyan:${THEME.cyan};
+    --bg:${THEME.black};
+    --card:${THEME.cardBg};
+    --glass:rgba(255,215,0,0.055);
+    --border:rgba(255,215,0,0.22);
+    --borderhov:rgba(255,215,0,0.55);
+    --txt:#F5F0DC;
+    --muted:rgba(245,240,220,0.52);
+
+    --sw:${THEME.sidebarWidth};
+    --th:${THEME.topbarHeight};
+    --r:${THEME.borderRadius};
+    --shadow:0 0 28px rgba(255,215,0,0.18),0 0 56px rgba(255,215,0,0.08);
+}
+
+*,*::before,*::after{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+    background:var(--bg);
+    color:var(--txt);
+    font-family:'Tajawal',sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+    direction:rtl;
+    position:relative;
+}
+
+/* Nebula */
+body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    background:
+        radial-gradient(ellipse at 15% 50%, rgba(255,215,0,0.035), transparent 55%),
+        radial-gradient(ellipse at 85% 15%, rgba(0,255,255,0.025), transparent 50%),
+        radial-gradient(ellipse at 50% 85%, rgba(57,255,20,0.018), transparent 50%);
+}
+
+/* Stars */
+body::after{
+    content:'';
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(255,215,0,0.6), transparent),
+        radial-gradient(1px 1px at 30% 40%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 55% 10%, rgba(255,215,0,0.5), transparent),
+        radial-gradient(1px 1px at 75% 60%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 90% 30%, rgba(255,215,0,0.4), transparent),
+        radial-gradient(1px 1px at 20% 75%, rgba(255,255,255,0.35), transparent),
+        radial-gradient(1px 1px at 65% 85%, rgba(255,215,0,0.5), transparent),
+        radial-gradient(1px 1px at 45% 55%, rgba(255,255,255,0.25), transparent);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--g3);}
+</style>`;
+}
+
+    
