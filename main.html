@@ -1,280 +1,1709 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-    <title>AlQurmanix | Premium Ecosystem</title>
-    <meta name="robots" content="noindex,nofollow"/>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Tajawal:wght@300;500;700;900&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AlQurmani X — البوابة الرئيسية</title>
 
-    <style>
-        :root {
-            /* لوحة الألوان الملكية (AlQurmanix Gold & Obsidian) */
-            --g1: #c8a84b; --g2: #e9cf78; --g3: #f7edbe; --g4: #7a5e18;
-            --bg: #04040e; --bg2: #08081a; --bg3: #0d0d24;
-            --brd: rgba(200, 168, 75, .15); --brd2: rgba(200, 168, 75, .35);
-            --tx: #ede0c2; --tx2: rgba(237, 224, 194, .55); --tx3: rgba(237, 224, 194, .28);
-            --red: #ff3c5a; --grn: #00e87a;
-            --ease: cubic-bezier(.4, 0, .2, 1);
-        }
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Tajawal:wght@300;400;500;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
 
-        /* الإعدادات الأساسية وتحسين الأداء */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
-        html, body { height: 100%; background: var(--bg); color: var(--tx); font-family: 'Tajawal', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  <!-- Firebase SDKs -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
 
-        /* تأثيرات الإضاءة المحيطة (Luxury Ambient Glows) */
-        body::before {
-            content: ''; position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .45;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23f)' opacity='.04'/%3E%3C/svg%3E");
-        }
-        .glow { position: fixed; border-radius: 50%; filter: blur(140px); pointer-events: none; z-index: 0; }
-        .gl1 { width: 800px; height: 600px; top: -200px; right: -200px; background: radial-gradient(ellipse, rgba(200,168,75,.07), transparent 75%); }
-        .gl2 { width: 600px; height: 600px; bottom: -150px; left: -100px; background: radial-gradient(ellipse, rgba(200,168,75,.05), transparent 75%); }
-
-        /* شاشة التحميل (Professional Preloader) */
-        #loader { position: fixed; inset: 0; z-index: 9999; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; transition: opacity .6s var(--ease); }
-        #loader.out { opacity: 0; pointer-events: none; }
-        .ld-crest { position: relative; width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; }
-        .ld-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--brd); animation: spin 4s linear infinite; }
-        .ld-ring::after { content: ''; position: absolute; inset: -2px; border-radius: 50%; border: 2px solid transparent; border-top-color: var(--g1); animation: spin 1.5s linear infinite reverse; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .ld-brand { font-family: 'Cinzel'; font-weight: 900; font-size: 2.2rem; background: linear-gradient(90deg, var(--g4), var(--g1), var(--g3), var(--g1), var(--g4)); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 3s linear infinite; letter-spacing: 5px; }
-        @keyframes shine { to { background-position: 200% center; } }
-
-        /* الهيكل الرئيسي للواجهة */
-        #app { display: none; min-height: 100vh; position: relative; z-index: 2; }
-        #app.on { display: block; animation: fadeIn .5s var(--ease); }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* شريط التحكم (Topbar) */
-        #tb { position: sticky; top: 0; z-index: 900; height: 75px; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; background: rgba(4, 4, 14, .92); border-bottom: 1px solid var(--brd); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); }
-        .logo { font-family: 'Cinzel'; font-weight: 900; font-size: 1.6rem; color: var(--g2); letter-spacing: 3px; text-decoration: none; }
-        
-        .hbg { width: 44px; height: 44px; border: 1px solid var(--brd); border-radius: 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; background: rgba(200, 168, 75, .05); transition: .3s; }
-        .hbg span { display: block; height: 2px; background: var(--g1); border-radius: 2px; transition: .3s; }
-        .hbg span:nth-child(1) { width: 22px; } .hbg span:nth-child(2) { width: 14px; } .hbg span:nth-child(3) { width: 22px; }
-
-        /* نظام اللغات العالمي (I18n Engine UI) */
-        .gw { position: relative; }
-        .gorb { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--brd); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: .3s; font-size: 1.2rem; }
-        .gmenu { position: absolute; top: 60px; left: 0; background: #0c0c22; border: 1px solid var(--brd); border-radius: 16px; padding: 12px; display: none; grid-template-columns: repeat(2, 1fr); gap: 8px; z-index: 1000; min-width: 260px; box-shadow: 0 25px 60px rgba(0,0,0,.9); }
-        .gmenu.on { display: grid; }
-        [dir="ltr"] .gmenu { left: auto; right: 0; }
-        .gbtn { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 10px; color: var(--tx2); cursor: pointer; border: 1px solid transparent; transition: .2s; font-size: 0.9rem; }
-        .gbtn:hover, .gbtn.active { background: rgba(200, 168, 75, .15); color: var(--g2); border-color: var(--brd); }
-
-        /* منطقة المستخدم (Hero Section) */
-        .hero { padding: 50px; border-radius: 30px; border: 1px solid var(--brd); background: linear-gradient(145deg, rgba(200, 168, 75, .08), rgba(4, 4, 14, .95)); margin-bottom: 40px; }
-        .u-meta { display: flex; align-items: center; gap: 30px; }
-        .u-av { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--g1); background: var(--g4); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-family: 'Cinzel'; font-weight: 900; color: var(--bg); box-shadow: 0 15px 35px rgba(0,0,0,0.6); overflow: hidden; }
-        .u-av img { width: 100%; height: 100%; object-fit: cover; }
-        .u-info h1 { font-family: 'Cinzel'; font-size: 2rem; color: var(--tx); margin: 5px 0; }
-        .u-info p { color: var(--tx3); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
-
-        /* شبكة البوابات (Gateways Grid) */
-        .gg { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 40px; }
-        .gt { position: relative; border-radius: 24px; border: 1px solid var(--brd); background: linear-gradient(160deg, rgba(15,15,35,.8), rgba(4,4,14,.98)); text-decoration: none; padding: 35px; transition: .4s var(--ease); display: flex; flex-direction: column; min-height: 250px; }
-        .gt:hover { border-color: var(--g2); transform: translateY(-8px); box-shadow: 0 25px 50px rgba(0,0,0,0.7); }
-        .gt-ico { width: 64px; height: 64px; border-radius: 18px; border: 1px solid var(--brd2); display: flex; align-items: center; justify-content: center; font-size: 2rem; background: rgba(200, 168, 75, .05); margin-bottom: 25px; }
-        .gt-ttl { font-family: 'Cinzel'; font-size: 1.2rem; color: var(--g2); font-weight: 800; margin-bottom: 12px; }
-        .gt-dsc { font-size: 0.9rem; color: var(--tx2); line-height: 1.7; }
-        .gt-btn { margin-top: auto; color: var(--g1); font-weight: 900; display: flex; align-items: center; gap: 10px; font-size: 0.85rem; }
-
-        /* زر التحويل الرئيسي السفلي */
-        .hub-zone { display: flex; justify-content: center; margin-top: 60px; padding-bottom: 60px; }
-        .hub-btn { padding: 22px 60px; border-radius: 60px; border: 1.5px solid var(--g2); background: rgba(200, 168, 75, .08); color: var(--g2); text-decoration: none; font-weight: 900; font-size: 1.1rem; display: flex; align-items: center; gap: 20px; transition: .4s; box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
-        .hub-btn:hover { background: rgba(200, 168, 75, .2); transform: scale(1.05); }
-
-        /* القائمة الجانبية (Sidebar) */
-        #sb { position: fixed; top: 0; right: 0; width: 340px; height: 100%; background: var(--bg2); z-index: 1100; transform: translateX(100%); transition: .45s var(--ease); border-left: 1px solid var(--brd); padding: 50px 30px; }
-        #sb.on { transform: translateX(0); }
-        #ov { position: fixed; inset: 0; z-index: 1050; background: rgba(0,0,0,.8); backdrop-filter: blur(8px); opacity: 0; pointer-events: none; transition: .4s; }
-        #ov.on { opacity: 1; pointer-events: all; }
-        [dir="ltr"] #sb { right: auto; left: 0; transform: translateX(-100%); border-left: none; border-right: 1px solid var(--brd); }
-
-        @media (max-width: 768px) {
-            .hero { padding: 30px; }
-            .u-meta { flex-direction: column; text-align: center; }
-            .gg { grid-template-columns: 1fr; }
-            #sb { width: 100%; }
-        }
-    </style>
-</head>
-<body>
-
-<div class="glow gl1"></div><div class="glow gl2"></div>
-
-<div id="loader">
-    <div class="ld-crest"><div class="ld-ring"></div><span class="ld-brand" style="font-size: 1.2rem;">AQ</span></div>
-    <div class="ld-brand">AlQurmanix</div>
-    <div style="font-size: 0.75rem; color: var(--tx3); letter-spacing: 5px;">SYSTEM INITIALIZING...</div>
-</div>
-
-<div id="app">
-    <header id="tb">
-        <div class="hbg" onclick="openSb()">
-            <span></span><span></span><span></span>
-        </div>
-        <a href="#" class="logo">AlQurmanix</a>
-        <div class="gw">
-            <div class="gorb" onclick="toggleGMenu(event)"><span id="cur-f">🇸🇦</span></div>
-            <div class="gmenu" id="gm"></div>
-        </div>
-    </header>
-
-    <main style="max-width:1200px; margin:0 auto; padding:50px 24px;">
-        <section class="hero">
-            <div class="u-meta">
-                <div class="u-av" id="u-av">A</div>
-                <div class="u-info">
-                    <p id="t-welcome">Welcome</p>
-                    <h1 id="u-nm">---</h1>
-                    <p id="u-em" style="text-transform:none; letter-spacing:0;">---</p>
-                </div>
-            </div>
-            <div style="margin-top:35px; border-top:1px solid var(--brd); padding-top:25px;">
-                <p id="t-tag">AlQurmanix — Connecting Trade, Community, and Technology</p>
-            </div>
-        </section>
-
-        <div style="display:flex; align-items:center; gap:20px; margin-bottom:30px;">
-            <h2 id="t-gs-head" style="font-family:'Cinzel'; font-size:1.3rem; color:var(--g1); letter-spacing:3px;">GATEWAYS</h2>
-            <div style="flex:1; height:1px; background:linear-gradient(90deg, var(--brd2), transparent);"></div>
-        </div>
-
-        <div class="gg" id="gg"></div>
-
-        <div class="hub-zone">
-            <a href="./main-hub.html" class="hub-btn">
-                <span id="t-hub-btn">الانتقال للواجهة الرئيسية</span>
-                <span id="hub-ico">👈</span>
-            </a>
-        </div>
-    </main>
-</div>
-
-<div id="ov" onclick="closeSb()"></div>
-<nav id="sb">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:50px;">
-        <span class="logo" style="font-size: 1.2rem;">SYSTEM MENU</span>
-        <span onclick="closeSb()" style="cursor:pointer; font-size:1.8rem; color:var(--red);">✕</span>
-    </div>
-    <div id="sb-nav"></div>
-    <button onclick="window.exit()" style="width:100%; margin-top:60px; padding:18px; background:rgba(255,60,90,0.08); border:1.5px solid var(--red); color:var(--red); border-radius:15px; cursor:pointer; font-weight:900; font-family:'Tajawal';">SIGN OUT</button>
-</nav>
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-    // إعدادات الـ Production
     const firebaseConfig = {
-        apiKey: "AIzaSyCoM-Aqq7VwTDx5ZeHmIpHM4sm2XM0WdKw",
-        authDomain: "alqurmanix-15b92.firebaseapp.com",
-        projectId: "alqurmanix-15b92",
-        storageBucket: "alqurmanix-15b92.firebasestorage.app",
-        messagingSenderId: "477352026568",
-        appId: "1:477352026568:web:49f90cd3fc74b6948ba0fd"
+      apiKey: "AIzaSyCoM-Aqq7VwTDx5ZeHmIpHM4sm2XM0WdKw",
+      authDomain: "alqurmanix-15b92.firebaseapp.com",
+      projectId: "alqurmanix-15b92",
+      storageBucket: "alqurmanix-15b92.firebasestorage.app",
+      messagingSenderId: "477352026568",
+      appId: "1:477352026568:web:49f90cd3fc74b6948ba0fd",
+      measurementId: "G-VJF36N1MCD"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
+    const analytics = getAnalytics(app);
 
-    // نظام اللغات الـ 11 الكامل - لا يوجد سطر ناقص
-    const T = {
-        ar: { f:"🇸🇦", n:"العربية", d:"rtl", t: { welcome:"مرحباً بك", tag:"منصتك المتكاملة للتجارة والمجتمع والابتكار", gs:"البوابات", enter:"دخول", hub:"الانتقال للواجهة الرئيسية", ico:"👈", emp:"بوابة الموظفين", cli:"بوابة العملاء", biz:"بوابة التجارة", soc:"بوابة المجتمع", srv:"مركز الخدمات", sto:"المتجر الرسمي" }},
-        en: { f:"🇺🇸", n:"English", d:"ltr", t: { welcome:"Welcome Back", tag:"Integrated Platform for Commerce & Innovation", gs:"GATEWAYS", enter:"Enter", hub:"Go to Main Hub", ico:"👉", emp:"Employees Portal", cli:"Clients Portal", biz:"Business Portal", soc:"Social Portal", srv:"Service Hub", sto:"Official Store" }},
-        de: { f:"🇩🇪", n:"Deutsch", d:"ltr", t: { welcome:"Willkommen", tag:"Integrierte Plattform für Handel & Innovation", gs:"PORTALE", enter:"Eintreten", hub:"Zum Haupt-Hub", ico:"👉", emp:"Mitarbeiterportal", cli:"Kundenportal", biz:"Geschäftsportal", soc:"Soziales Portal", srv:"Service-Hub", sto:"Offizieller Shop" }},
-        es: { f:"🇪🇸", n:"Español", d:"ltr", t: { welcome:"Bienvenido", tag:"Plataforma Integrada de Comercio e Innovación", gs:"PORTALES", enter:"Entrar", hub:"Ir al Hub Principal", ico:"👉", emp:"Portal de Empleados", cli:"Portal de Clientes", biz:"Portal de Negocios", soc:"Portal Social", srv:"Centro de Servicios", sto:"Tienda Oficial" }},
-        fr: { f:"🇫🇷", n:"Français", d:"ltr", t: { welcome:"Bienvenue", tag:"Plateforme Intégrée pour le Commerce et l'Innovation", gs:"PORTAILS", enter:"Entrer", hub:"Aller au Hub", ico:"👉", emp:"Portail Employés", cli:"Portail Clients", biz:"Portail Affaires", soc:"Portail Social", srv:"Centre de Services", sto:"Boutique Officielle" }},
-        it: { f:"🇮🇹", n:"Italiano", d:"ltr", t: { welcome:"Benvenuto", tag:"Piattaforma Integrata per Commercio e Innovazione", gs:"PORTALI", enter:"Entra", hub:"Vai all'Hub Principale", ico:"👉", emp:"Portale Dipendenti", cli:"Portale Clienti", biz:"Portale Business", soc:"Portale Sociale", srv:"Centro Servizi", sto:"Negozio Ufficiale" }},
-        hi: { f:"🇮🇳", n:"हिन्दी", d:"ltr", t: { welcome:"नमस्ते", tag:"वाणिज्य और नवाचार के लिए एकीकृत मंच", gs:"गेटवे", enter:"प्रवेश करें", hub:"मुख्य हब पर जाएं", ico:"👉", emp:"कर्मचारी पोर्टल", cli:"ग्राहक पोर्टल", biz:"व्यापार पोर्टल", soc:"सामाजिक पोर्टल", srv:"सेवा केंद्र", sto:"आधिकारिक स्टोर" }},
-        tr: { f:"🇹🇷", n:"Türkçe", d:"ltr", t: { welcome:"Hoş Geldiniz", tag:"Ticaret ve İnovasyon İçين Entegre Platform", gs:"PORTALLAR", enter:"Giriş", hub:"Ana Merkeze Git", ico:"👉", emp:"Personel Portalı", cli:"Müşteri Portalı", biz:"Ticaret Portalı", soc:"Sosyal Portal", srv:"Servis Merkezi", sto:"Resmi Mağaza" }},
-        zh: { f:"🇨🇳", n:"中文", d:"ltr", t: { welcome:"欢迎回来", tag:"贸易与创新的综合平台", gs:"门户", enter:"进入", hub:"前往主中心", ico:"👉", emp:"员工门户", cli:"客户门户", biz:"商务门户", soc:"社交门户", srv:"服务中心", sto:"官方商店" }},
-        ja: { f:"🇯🇵", n:"日本語", d:"ltr", t: { welcome:"ようこそ", tag:"貿易と革新のための統合プラットフォーム", gs:"ゲートウェイ", enter:"入る", hub:"メインハブへ", ico:"👉", emp:"従業員ポータル", cli:"クライアントポータル", biz:"ビジネス回線", soc:"ソーシャルポータル", srv:"サービスハブ", sto:"公式ストア" }},
-        ko: { f:"🇰🇷", n:"한국어", d:"ltr", t: { welcome:"환영합니다", tag:"무역 및 혁신을 위한 통합 플랫폼", gs:"게이트웨ي", enter:"입장", hub:"메인 허브로 이동", ico:"👉", emp:"직원 포털", cli:"고객 포털", biz:"비즈니스 포털", soc:"소셜 포털", srv:"서비스 허브", sto:"공식 스토어" }}
-    };
-
-    let curL = localStorage.getItem("aq_lang") || "ar";
-
-    // محرك تحديث الواجهة
-    window.applyL = (l) => {
-        curL = l; localStorage.setItem("aq_lang", l);
-        const d = T[l];
-        document.documentElement.dir = d.d;
-        document.documentElement.lang = l;
-        document.getElementById("cur-f").innerText = d.f;
-        document.getElementById("t-welcome").innerText = d.t.welcome;
-        document.getElementById("t-tag").innerText = d.t.tag;
-        document.getElementById("t-gs-head").innerText = d.t.gs;
-        document.getElementById("t-hub-btn").innerText = d.t.hub;
-        document.getElementById("hub-ico").innerText = d.t.ico;
-        renderGates(d.t);
-    };
-
-    const renderGates = (t) => {
-        const gc = [
-            { k:"emp", e:"👔", p:"./gate-employees.html" },
-            { k:"cli", e:"🤝", p:"./gate-clients.html" },
-            { k:"biz", e:"🏢", p:"./gate-business.html" },
-            { k:"soc", e:"🌐", p:"./gate-social.html" },
-            { k:"srv", e:"✨", p:"./gate-services.html" },
-            { k:"sto", e:"🛍️", p:"./gate-store.html" }
-        ];
-        document.getElementById("gg").innerHTML = gc.map(g => `
-            <a href="${g.p}" class="gt">
-                <div class="gt-ico">${g.e}</div>
-                <div class="gt-ttl">${t[g.k]}</div>
-                <div class="gt-dsc">نظام متكامل لتعزيز الكفاءة والابتكار داخل بيئة AlQurmanix الرقمية.</div>
-                <div class="gt-btn"><span>${t.enter}</span> <span>➔</span></div>
-            </a>
-        `).join('');
-    };
-
-    onAuthStateChanged(auth, async (u) => {
-        if (u) {
-            document.getElementById("u-nm").innerText = u.displayName || u.email.split('@')[0];
-            document.getElementById("u-em").innerText = u.email;
-            document.getElementById("u-av").innerText = (u.displayName || u.email)[0].toUpperCase();
-
-            try {
-                const snap = await getDoc(doc(db, "users", u.uid));
-                if (snap.exists() && snap.data().photoURL) {
-                    document.getElementById("u-av").innerHTML = `<img src="${snap.data().photoURL}" alt="User">`;
-                }
-            } catch (e) { console.error("FS Error", e); }
-
-            window.applyL(curL);
-            setTimeout(() => {
-                document.getElementById("loader").classList.add("out");
-                document.getElementById("app").classList.add("on");
-            }, 1000);
-        } else {
-            window.location.replace("./index.html");
+    // ============================================================
+    // SECURITY GUARD — Must come from index.html session only
+    // ============================================================
+    function enforceAuthGate() {
+      const authFlag = sessionStorage.getItem("qx_auth_passed");
+      const sessionStart = sessionStorage.getItem("qx_session_start");
+      if (!authFlag || authFlag !== "true") {
+        window.location.replace("index.html");
+        return false;
+      }
+      // Session max 24h
+      if (sessionStart) {
+        const elapsed = Date.now() - parseInt(sessionStart, 10);
+        if (elapsed > 24 * 60 * 60 * 1000) {
+          sessionStorage.clear();
+          signOut(auth).finally(() => window.location.replace("index.html"));
+          return false;
         }
+      }
+      return true;
+    }
+
+    // Block direct access (no referrer from index / no sessionStorage flag)
+    window.addEventListener("DOMContentLoaded", () => {
+      if (!enforceAuthGate()) return;
+      initPage(auth, db, signOut, onAuthStateChanged, doc, getDoc, updateDoc, serverTimestamp);
     });
 
-    // التحكم في النظام
-    window.toggleGMenu = (e) => { e.stopPropagation(); document.getElementById("gm").classList.toggle("on"); };
-    window.openSb = () => { document.getElementById("sb").classList.add("on"); document.getElementById("ov").classList.add("on"); };
-    window.closeSb = () => { document.getElementById("sb").classList.remove("on"); document.getElementById("ov").classList.remove("on"); };
-    window.exit = async () => { await signOut(auth); window.location.replace("./index.html"); };
+    window.__firebaseSignOut = () => signOut(auth);
+    window.__firebaseAuth = auth;
+    window.__firebaseDb = db;
+  </script>
 
-    // بناء قائمة اللغات
-    const m = document.getElementById("gm");
-    Object.keys(T).forEach(k => {
-        const b = document.createElement("div");
-        b.className = `gbtn ${k === curL ? 'active' : ''}`;
-        b.innerHTML = `<span>${T[k].f}</span><span>${T[k].n}</span>`;
-        b.onclick = () => { window.applyL(k); m.classList.remove("on"); };
-        m.appendChild(b);
+  <style>
+    /* ============================================================
+       CSS VARIABLES & RESET
+    ============================================================ */
+    :root {
+      --gold-1: #FFD700;
+      --gold-2: #FFC200;
+      --gold-3: #E6A800;
+      --gold-4: #F0B429;
+      --gold-5: #FFEC80;
+      --gold-6: #C8860A;
+      --gold-7: #B8720A;
+      --gold-8: #FFE066;
+      --neon-green: #39FF14;
+      --neon-blue: #00FFFF;
+      --bg-deep: #020409;
+      --bg-card: rgba(10, 12, 22, 0.92);
+      --bg-glass: rgba(255, 215, 0, 0.06);
+      --border-gold: rgba(255, 215, 0, 0.25);
+      --border-glow: rgba(255, 215, 0, 0.5);
+      --text-primary: #F5F0DC;
+      --text-muted: rgba(245, 240, 220, 0.55);
+      --shadow-gold: 0 0 30px rgba(255, 215, 0, 0.25), 0 0 60px rgba(255, 215, 0, 0.1);
+      --sidebar-w: 320px;
+      --topbar-h: 64px;
+      --radius: 16px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      font-family: 'Tajawal', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      direction: rtl;
+    }
+
+    body[dir="ltr"] { direction: ltr; font-family: 'Playfair Display', 'Tajawal', sans-serif; }
+
+    /* Stars background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(255,215,0,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(0,255,255,0.03) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(57,255,20,0.02) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ============================================================
+       TOPBAR
+    ============================================================ */
+    #topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--topbar-h);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      background: rgba(2, 4, 9, 0.95);
+      border-bottom: 1px solid var(--border-gold);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 30px rgba(255, 215, 0, 0.08);
+    }
+
+    /* Sidebar toggle button */
+    #menuToggle {
+      width: 44px; height: 44px;
+      border: 1px solid var(--border-gold);
+      border-radius: 10px;
+      background: var(--bg-glass);
+      cursor: pointer;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 5px;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    #menuToggle:hover { border-color: var(--gold-1); box-shadow: var(--shadow-gold); }
+    #menuToggle span {
+      display: block; width: 22px; height: 2px;
+      background: var(--gold-1);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* LOGO */
+    #topLogo {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: clamp(18px, 3vw, 28px);
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, var(--gold-6), var(--gold-1), var(--gold-5), var(--gold-2), var(--gold-8), var(--gold-3), var(--gold-4), var(--gold-1));
+      background-size: 400% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: goldShift 4s linear infinite;
+      text-shadow: none;
+      user-select: none;
+    }
+    @keyframes goldShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 400% 50%; }
+    }
+
+    /* Right side of topbar: online indicator + globe */
+    #topbarRight {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Online dot + label */
+    #onlineIndicator {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: var(--neon-green);
+      font-weight: 500;
+    }
+    #onlineDot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--neon-green);
+      box-shadow: 0 0 8px var(--neon-green), 0 0 16px rgba(57,255,20,0.5);
+      animation: blink 1.4s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    /* Globe */
+    #globeContainer {
+      position: relative;
+      width: 52px; height: 52px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    #globe {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0d1b4a 0%, #1a3a6e 40%, #0d1b4a 100%);
+      border: 2px solid var(--border-gold);
+      box-shadow: 0 0 15px rgba(255,215,0,0.2), inset 0 0 20px rgba(0,100,255,0.15);
+      animation: spin 12s linear infinite;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    @keyframes spin { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+
+    .lang-label {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 7px; font-weight: 700;
+      color: rgba(255,255,255,0.9);
+      pointer-events: none;
+    }
+
+    /* Language dropdown */
+    #langDropdown {
+      display: none;
+      position: absolute;
+      top: 58px; right: 0;
+      background: rgba(5, 8, 20, 0.98);
+      border: 1px solid var(--border-gold);
+      border-radius: 12px;
+      overflow: hidden;
+      min-width: 160px;
+      z-index: 9999;
+      box-shadow: 0 8px 40px rgba(255,215,0,0.15);
+      animation: fadeDown 0.25s ease;
+    }
+    #langDropdown.open { display: block; }
+    @keyframes fadeDown { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
+
+    .lang-item {
+      padding: 10px 16px;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 8px;
+      transition: background 0.2s;
+      border-bottom: 1px solid rgba(255,215,0,0.07);
+    }
+    .lang-item:hover { background: var(--bg-glass); color: var(--gold-1); }
+    .lang-item:last-child { border-bottom: none; }
+
+    /* ============================================================
+       SIDEBAR
+    ============================================================ */
+    #sidebarOverlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 1500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      backdrop-filter: blur(4px);
+    }
+    #sidebarOverlay.active { opacity: 1; pointer-events: all; }
+
+    #sidebar {
+      position: fixed;
+      top: 0; right: -340px;
+      width: var(--sidebar-w);
+      height: 100vh;
+      z-index: 1600;
+      background: linear-gradient(180deg, rgba(5,8,22,0.99) 0%, rgba(10,14,30,0.99) 100%);
+      border-left: 1px solid var(--border-gold);
+      box-shadow: -8px 0 60px rgba(255,215,0,0.12);
+      transition: right 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex; flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    body[dir="ltr"] #sidebar { right: auto; left: -340px; border-left: none; border-right: 1px solid var(--border-gold); transition: left 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+
+    #sidebar.open { right: 0; }
+    body[dir="ltr"] #sidebar.open { right: auto; left: 0; }
+
+    /* 4-stripe top decoration */
+    .sidebar-stripes {
+      height: 6px;
+      background: linear-gradient(90deg, var(--gold-6) 0%, var(--gold-1) 25%, var(--gold-5) 50%, var(--gold-8) 75%, var(--gold-3) 100%);
+      flex-shrink: 0;
+    }
+
+    #sidebarClose {
+      position: absolute; top: 16px; right: 16px;
+      width: 36px; height: 36px;
+      border: 1px solid var(--border-gold);
+      border-radius: 8px;
+      background: var(--bg-glass);
+      color: var(--gold-1);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+      z-index: 10;
+    }
+    body[dir="ltr"] #sidebarClose { right: auto; left: 16px; }
+    #sidebarClose:hover { background: rgba(255,215,0,0.15); box-shadow: var(--shadow-gold); }
+
+    /* Sidebar datetime */
+    #sidebarDatetime {
+      padding: 52px 20px 12px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-gold);
+    }
+    #sidebarTime {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 26px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--gold-1), var(--gold-5));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    #sidebarDate {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Sidebar user */
+    #sidebarUser {
+      display: flex; align-items: center; gap: 12px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-gold);
+      background: var(--bg-glass);
+    }
+    #sidebarAvatar {
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-1);
+      object-fit: cover;
+      box-shadow: 0 0 12px rgba(255,215,0,0.35);
+      flex-shrink: 0;
+    }
+    #sidebarUserName {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--gold-1);
+      text-shadow: 0 0 10px rgba(255,215,0,0.4);
+    }
+    #sidebarUserSub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Nav items */
+    .nav-section { padding: 8px 0; }
+    .nav-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 20px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-size: 14px;
+      color: var(--text-muted);
+      border-left: 3px solid transparent;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+    body[dir="ltr"] .nav-item { border-left: none; border-right: 3px solid transparent; }
+
+    .nav-item::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(255,215,0,0.06), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .nav-item:hover::before { opacity: 1; }
+    .nav-item:hover {
+      color: var(--gold-1);
+      border-left-color: var(--gold-1);
+    }
+    body[dir="ltr"] .nav-item:hover { border-left-color: transparent; border-right-color: var(--gold-1); }
+
+    .nav-item .nav-emoji { font-size: 20px; flex-shrink: 0; }
+    .nav-item .nav-label { font-weight: 500; }
+    .nav-item .nav-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+    .nav-item-inner { display: flex; flex-direction: column; }
+
+    .nav-separator { height: 1px; background: var(--border-gold); margin: 6px 16px; opacity: 0.5; }
+
+    .logout-item { color: #FF4444 !important; }
+    .logout-item:hover { border-left-color: #FF4444 !important; color: #FF6666 !important; }
+
+    /* ============================================================
+       MAIN CONTENT
+    ============================================================ */
+    #pageContent {
+      margin-top: var(--topbar-h);
+      padding: 32px 20px 80px;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ============================================================
+       HERO SECTION - User card + points
+    ============================================================ */
+    #heroSection {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 768px) { #heroSection { grid-template-columns: 1fr; } }
+
+    .hero-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow-gold);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-6), var(--gold-1), var(--gold-5), var(--gold-2));
+    }
+    .hero-card:hover { transform: translateY(-4px); box-shadow: 0 12px 50px rgba(255,215,0,0.2), 0 0 80px rgba(255,215,0,0.08); }
+
+    /* User profile card */
+    #userCard { display: flex; align-items: center; gap: 20px; }
+    #mainAvatar {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      border: 3px solid var(--gold-1);
+      object-fit: cover;
+      box-shadow: 0 0 20px rgba(255,215,0,0.4), 0 0 40px rgba(255,215,0,0.15);
+      flex-shrink: 0;
+    }
+    #mainUserName {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: clamp(16px, 2.5vw, 22px);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--gold-1), var(--gold-5));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    #mainUserSub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+    /* Points card */
+    #pointsCard { text-align: center; }
+    .points-title {
+      font-size: 12px; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px;
+    }
+    #pointsValue {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold-6), var(--gold-1), var(--gold-5));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: none;
+      animation: goldPulse 2.5s ease-in-out infinite;
+    }
+    @keyframes goldPulse {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.3); }
+    }
+    .points-actions {
+      display: flex; gap: 10px; justify-content: center; margin-top: 14px;
+    }
+    .points-btn {
+      padding: 8px 18px;
+      border: 1px solid var(--border-gold);
+      border-radius: 8px;
+      background: var(--bg-glass);
+      color: var(--gold-1);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+      text-decoration: none;
+      font-family: 'Tajawal', sans-serif;
+    }
+    .points-btn:hover { background: rgba(255,215,0,0.15); box-shadow: var(--shadow-gold); transform: scale(1.04); }
+
+    /* ============================================================
+       GATES SECTION
+    ============================================================ */
+    .section-title {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: clamp(18px, 3vw, 26px);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 24px;
+      position: relative;
+      background: linear-gradient(135deg, var(--gold-6), var(--gold-1), var(--gold-5));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold-1), transparent);
+      margin: 10px auto 0;
+    }
+
+    #gatesGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .gate-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius);
+      padding: 28px 22px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: var(--text-primary);
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+    }
+    .gate-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(255,215,0,0.08) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .gate-card:hover::before { opacity: 1; }
+    .gate-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: var(--gold-1);
+      box-shadow: 0 16px 50px rgba(255,215,0,0.2), 0 0 30px rgba(255,215,0,0.1);
+    }
+    .gate-emoji { font-size: 42px; filter: drop-shadow(0 0 8px rgba(255,215,0,0.4)); }
+    .gate-name {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gold-1);
+    }
+    .gate-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+    /* Special store/services/platforms section */
+    #extraSection {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .extra-card {
+      background: linear-gradient(135deg, rgba(10,12,22,0.95), rgba(18,22,40,0.95));
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius);
+      padding: 22px 18px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: var(--text-primary);
+      position: relative;
+      overflow: hidden;
+    }
+    .extra-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold-6), var(--gold-1), var(--gold-5));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .extra-card:hover::after { transform: scaleX(1); }
+    .extra-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255,215,0,0.5);
+      box-shadow: var(--shadow-gold);
+    }
+    .extra-emoji { font-size: 32px; margin-bottom: 8px; }
+    .extra-name { font-size: 14px; font-weight: 700; color: var(--gold-1); margin-bottom: 4px; }
+    .extra-desc { font-size: 11px; color: var(--text-muted); }
+
+    /* ============================================================
+       FOOTER CTA BANNER
+    ============================================================ */
+    #footerBanner {
+      background: linear-gradient(135deg, rgba(255,215,0,0.06) 0%, rgba(255,215,0,0.02) 100%);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: block;
+      position: relative;
+      overflow: hidden;
+    }
+    #footerBanner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,215,0,0.04), rgba(0,255,255,0.02));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    #footerBanner:hover::before { opacity: 1; }
+    #footerBanner:hover { transform: scale(1.01); box-shadow: var(--shadow-gold); }
+    .footer-banner-title {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: clamp(14px, 2.5vw, 22px);
+      font-weight: 700;
+      color: var(--gold-1);
+      margin-bottom: 8px;
+    }
+    .footer-banner-sub { font-size: 13px; color: var(--text-muted); }
+    .footer-banner-arrow {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 20px;
+      animation: bounce 1.5s ease-in-out infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+    /* ============================================================
+       FLOATING PRAYER ICON
+    ============================================================ */
+    #prayerIcon {
+      position: fixed;
+      bottom: 32px;
+      right: 28px;
+      width: 54px; height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,215,0,0.08));
+      border: 1.5px solid var(--border-gold);
+      box-shadow: 0 0 20px rgba(255,215,0,0.25), 0 0 40px rgba(255,215,0,0.1);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      z-index: 900;
+      transition: all 0.3s ease;
+      animation: glow 3s ease-in-out infinite;
+    }
+    body[dir="ltr"] #prayerIcon { right: auto; left: 28px; }
+
+    @keyframes glow {
+      0%,100%{box-shadow:0 0 20px rgba(255,215,0,0.25),0 0 40px rgba(255,215,0,0.1)}
+      50%{box-shadow:0 0 35px rgba(255,215,0,0.45),0 0 70px rgba(255,215,0,0.2)}
+    }
+    #prayerIcon:hover { transform: scale(1.15); background: rgba(255,215,0,0.2); }
+
+    /* ============================================================
+       PRAYER MODAL
+    ============================================================ */
+    #prayerModal {
+      position: fixed; inset: 0;
+      z-index: 9000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    #prayerModal.open { opacity: 1; pointer-events: all; }
+    #prayerModal .modal-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(12px);
+    }
+    #prayerModal .modal-box {
+      position: relative;
+      background: linear-gradient(145deg, rgba(5,8,22,0.99), rgba(12,18,40,0.99));
+      border: 1px solid var(--border-glow);
+      border-radius: 24px;
+      padding: 48px 36px;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 80px rgba(255,215,0,0.2), 0 20px 80px rgba(0,0,0,0.6);
+      transform: scale(0.85) translateY(20px);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 1;
+    }
+    #prayerModal.open .modal-box { transform: scale(1) translateY(0); }
+    #prayerModal .modal-box::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 4px;
+      border-radius: 24px 24px 0 0;
+      background: linear-gradient(90deg, var(--gold-6), var(--gold-1), var(--gold-5), var(--gold-2), var(--gold-8));
+    }
+    #prayerClose {
+      position: absolute; top: 14px; right: 14px;
+      width: 32px; height: 32px;
+      border: 1px solid var(--border-gold);
+      border-radius: 8px;
+      background: var(--bg-glass);
+      color: var(--gold-1);
+      font-size: 16px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    body[dir="ltr"] #prayerClose { right: auto; left: 14px; }
+    #prayerClose:hover { background: rgba(255,215,0,0.15); }
+
+    .prayer-icon-big { font-size: 52px; margin-bottom: 16px; display: block; }
+    #prayerText {
+      font-family: 'Tajawal', sans-serif;
+      font-size: clamp(15px, 2.5vw, 18px);
+      line-height: 2;
+      color: var(--text-primary);
+      direction: rtl;
+    }
+    body[dir="ltr"] #prayerText { direction: ltr; }
+
+    .prayer-divider {
+      width: 60px; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold-1), transparent);
+      margin: 20px auto;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 640px) {
+      #pageContent { padding: 24px 14px 80px; }
+      .hero-card { padding: 20px; }
+      #gatesGrid { grid-template-columns: 1fr 1fr; }
+      #extraSection { grid-template-columns: 1fr 1fr; }
+      .gate-card { padding: 20px 14px; }
+      .gate-emoji { font-size: 32px; }
+    }
+    @media (max-width: 400px) {
+      #gatesGrid { grid-template-columns: 1fr; }
+      #extraSection { grid-template-columns: 1fr; }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-deep); }
+    ::-webkit-scrollbar-thumb { background: var(--border-gold); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold-3); }
+
+    /* Loading skeleton shimmer */
+    .shimmer {
+      background: linear-gradient(90deg, rgba(255,215,0,0.04) 25%, rgba(255,215,0,0.1) 50%, rgba(255,215,0,0.04) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+    /* Entrance animations */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.6s ease forwards;
+    }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    .hero-card { animation: fadeUp 0.6s ease forwards; }
+    .hero-card:nth-child(2) { animation-delay: 0.1s; }
+    .gate-card { opacity: 0; animation: fadeUp 0.5s ease forwards; }
+    .gate-card:nth-child(1){animation-delay:.1s} .gate-card:nth-child(2){animation-delay:.18s}
+    .gate-card:nth-child(3){animation-delay:.26s} .gate-card:nth-child(4){animation-delay:.34s}
+    .gate-card:nth-child(5){animation-delay:.42s}
+  </style>
+</head>
+<body>
+
+<!-- ==================== TOPBAR ==================== -->
+<header id="topbar">
+  <button id="menuToggle" aria-label="القائمة">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div id="topLogo">AlQurmani X</div>
+
+  <div id="topbarRight">
+    <div id="onlineIndicator">
+      <div id="onlineDot"></div>
+      <span id="onlineLabel" data-i18n="online">متصل</span>
+    </div>
+
+    <div id="globeContainer" title="تغيير اللغة">
+      <div id="globe">
+        <div class="lang-label" id="currentLangLabel">🌍</div>
+      </div>
+      <div id="langDropdown">
+        <div class="lang-item" data-lang="ar">🇸🇦 العربية</div>
+        <div class="lang-item" data-lang="en">🇬🇧 English</div>
+        <div class="lang-item" data-lang="de">🇩🇪 Deutsch</div>
+        <div class="lang-item" data-lang="it">🇮🇹 Italiano</div>
+        <div class="lang-item" data-lang="es">🇪🇸 Español</div>
+        <div class="lang-item" data-lang="fr">🇫🇷 Français</div>
+        <div class="lang-item" data-lang="ko">🇰🇷 한국어</div>
+        <div class="lang-item" data-lang="hi">🇮🇳 हिन्दी</div>
+        <div class="lang-item" data-lang="zh">🇨🇳 中文</div>
+        <div class="lang-item" data-lang="ru">🇷🇺 Русский</div>
+        <div class="lang-item" data-lang="ja">🇯🇵 日本語</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ==================== SIDEBAR OVERLAY ==================== -->
+<div id="sidebarOverlay"></div>
+
+<!-- ==================== SIDEBAR ==================== -->
+<nav id="sidebar">
+  <div class="sidebar-stripes"></div>
+  <button id="sidebarClose">✕</button>
+
+  <!-- DateTime -->
+  <div id="sidebarDatetime">
+    <div id="sidebarTime">00:00:00</div>
+    <div id="sidebarDate">...</div>
+  </div>
+
+  <!-- User info -->
+  <div id="sidebarUser">
+    <img id="sidebarAvatar" src="assets/user-avatar.png" alt="صورة المستخدم" />
+    <div>
+      <div id="sidebarUserName">...</div>
+      <div id="sidebarUserSub" data-i18n="vip_member">عضو VIP</div>
+    </div>
+  </div>
+
+  <!-- Nav items -->
+  <div class="nav-section">
+    <a class="nav-item" href="profile.html">
+      <span class="nav-emoji">👤</span>
+      <div class="nav-item-inner">
+        <span class="nav-label" data-i18n="nav_profile">الملف الشخصي</span>
+        <span class="nav-sub">AlQurmani X VIP</span>
+      </div>
+    </a>
+
+    <a class="nav-item" href="settings.html">
+      <span class="nav-emoji">⚙️</span>
+      <span class="nav-label" data-i18n="nav_settings">الإعدادات</span>
+    </a>
+
+    <a class="nav-item" href="preferences.html">
+      <span class="nav-emoji">🔔</span>
+      <span class="nav-label" data-i18n="nav_preferences">التفضيلات والإشعارات</span>
+    </a>
+
+    <a class="nav-item" href="policies.html">
+      <span class="nav-emoji">📜</span>
+      <div class="nav-item-inner">
+        <span class="nav-label" data-i18n="nav_policies">سياسات وقوانين</span>
+        <span class="nav-sub">AlQurmani X</span>
+      </div>
+    </a>
+
+    <div class="nav-separator"></div>
+
+    <a class="nav-item" href="inbox.html">
+      <span class="nav-emoji">📬</span>
+      <span class="nav-label" data-i18n="nav_inbox">صندوق الوارد الموحد</span>
+    </a>
+
+    <a class="nav-item" href="referrals.html">
+      <span class="nav-emoji">🤝</span>
+      <span class="nav-label" data-i18n="nav_referrals">الإحالات والفريق</span>
+    </a>
+
+    <div class="nav-separator"></div>
+
+    <a class="nav-item" href="points.html">
+      <span class="nav-emoji">💰</span>
+      <div class="nav-item-inner">
+        <span class="nav-label" data-i18n="nav_points">نقاط AlQurmani X</span>
+      </div>
+    </a>
+
+    <a class="nav-item" href="earn-points.html">
+      <span class="nav-emoji">🎯</span>
+      <span class="nav-label" data-i18n="nav_earn">اربح نقاط</span>
+    </a>
+
+    <a class="nav-item" href="share-earn.html">
+      <span class="nav-emoji">🚀</span>
+      <span class="nav-label" data-i18n="nav_share">تشارك واربح</span>
+    </a>
+
+    <a class="nav-item" href="jobs.html">
+      <span class="nav-emoji">💼</span>
+      <span class="nav-label" data-i18n="nav_jobs">الوظائف</span>
+    </a>
+
+    <div class="nav-separator"></div>
+
+    <div class="nav-item logout-item" id="logoutBtn">
+      <span class="nav-emoji">🔒</span>
+      <span class="nav-label" data-i18n="nav_logout">تسجيل الخروج الآمن</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ==================== MAIN PAGE CONTENT ==================== -->
+<main id="pageContent">
+
+  <!-- Hero: User card + Points -->
+  <section id="heroSection">
+    <div class="hero-card" id="userCard">
+      <img id="mainAvatar" src="assets/user-avatar.png" alt="صورة المستخدم" />
+      <div>
+        <div id="mainUserName">...</div>
+        <div id="mainUserSub" data-i18n="vip_member">عضو AlQurmani X VIP</div>
+      </div>
+    </div>
+
+    <div class="hero-card" id="pointsCard">
+      <div class="points-title" data-i18n="points_title">نقاطك المتراكمة</div>
+      <div id="pointsValue">0</div>
+      <div class="points-actions">
+        <a class="points-btn" href="redeem-points.html" data-i18n="btn_redeem">سحب</a>
+        <a class="points-btn" href="exchange-points.html" data-i18n="btn_exchange">تبديل</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gates -->
+  <h2 class="section-title" data-i18n="gates_title">البوابات</h2>
+
+  <div id="gatesGrid">
+    <a class="gate-card" href="employee-portal.html">
+      <div class="gate-emoji">🏛️</div>
+      <div class="gate-name" data-i18n="gate_employees">بوابة الموظفين</div>
+      <div class="gate-desc" data-i18n="gate_employees_desc">إدارة الفريق، الرواتب، والمهام الداخلية بكفاءة عالية</div>
+    </a>
+
+    <a class="gate-card" href="client-portal.html">
+      <div class="gate-emoji">🤵</div>
+      <div class="gate-name" data-i18n="gate_clients">بوابة العملاء</div>
+      <div class="gate-desc" data-i18n="gate_clients_desc">تتبع طلباتك، فواتيرك، وتواصل مع فريق الدعم المميز</div>
+    </a>
+
+    <a class="gate-card" href="business-portal.html">
+      <div class="gate-emoji">📊</div>
+      <div class="gate-name" data-i18n="gate_business">بوابة التجارة والأعمال</div>
+      <div class="gate-desc" data-i18n="gate_business_desc">أدوات قوية لإدارة أعمالك وتوسيع شراكاتك التجارية</div>
+    </a>
+
+    <a class="gate-card" href="social-portal.html">
+      <div class="gate-emoji">🌐</div>
+      <div class="gate-name" data-i18n="gate_social">البوابة الاجتماعية</div>
+      <div class="gate-desc" data-i18n="gate_social_desc">تواصل مع مجتمع القرماني، شارك وتفاعل مع الأحداث</div>
+    </a>
+  </div>
+
+  <!-- Store / Services / Platforms -->
+  <div id="extraSection">
+    <a class="extra-card" href="store.html">
+      <div class="extra-emoji">🛒</div>
+      <div class="extra-name" data-i18n="extra_store">متجرنا</div>
+      <div class="extra-desc" data-i18n="extra_store_desc">تسوق المنتجات الحصرية</div>
+    </a>
+
+    <a class="extra-card" href="services.html">
+      <div class="extra-emoji">⚡</div>
+      <div class="extra-name" data-i18n="extra_services">خدماتنا</div>
+      <div class="extra-desc" data-i18n="extra_services_desc">اكتشف باقة خدماتنا المتكاملة</div>
+    </a>
+
+    <a class="extra-card" href="platforms.html">
+      <div class="extra-emoji">🖥️</div>
+      <div class="extra-name" data-i18n="extra_platforms">منصاتنا</div>
+      <div class="extra-desc" data-i18n="extra_platforms_desc">استكشف منظومتنا الرقمية</div>
+    </a>
+  </div>
+
+  <!-- Footer CTA -->
+  <a id="footerBanner" href="all-portals.html">
+    <div class="footer-banner-title" data-i18n="footer_cta">✨ عالمك كله في مكان واحد — اكتشف كل بواباتنا الآن</div>
+    <div class="footer-banner-sub" data-i18n="footer_cta_sub">نحن لا نقدم مجرد منصة، بل نصنع لك تجربة لا تُنسى في كل خطوة</div>
+    <span class="footer-banner-arrow">⬇️</span>
+  </a>
+
+</main>
+
+<!-- ==================== FLOATING PRAYER ICON ==================== -->
+<button id="prayerIcon" aria-label="دعاء">🤲</button>
+
+<!-- ==================== PRAYER MODAL ==================== -->
+<div id="prayerModal" role="dialog" aria-modal="true">
+  <div class="modal-backdrop" id="prayerBackdrop"></div>
+  <div class="modal-box">
+    <button id="prayerClose">✕</button>
+    <span class="prayer-icon-big">🌙</span>
+    <div id="prayerText" dir="rtl">
+      اللهم اجعل هذا العمل شاهداً لي لا عليّ،<br/>
+      اللهم انفع به كل من يزوره ويتعامل معه،<br/>
+      اللهم بارك فيه وفي أهله وفي كل من ساهم فيه،<br/>
+      اللهم اجعله صدقةً جاريةً تبقى ببقاء الزمان،<br/>
+      واجعله خالصاً لوجهك الكريم يا أرحم الراحمين.
+    </div>
+    <div class="prayer-divider"></div>
+  </div>
+</div>
+
+
+<!-- ==================== TYPESCRIPT LOGIC (compiled to JS) ==================== -->
+<script>
+// ============================================================
+// TypeScript compiled — Full logic for main.html
+// All type annotations preserved as JSDoc for documentation
+// ============================================================
+
+"use strict";
+
+// ---- Types (JSDoc) ---
+/**
+ * @typedef {{ name: string, photoURL: string, points: number, uid: string }} UserProfile
+ * @typedef {{ [key: string]: { [token: string]: string } }} Translations
+ */
+
+// ============================================================
+// TRANSLATIONS (i18n) — 11 languages full native
+// ============================================================
+/** @type {Translations} */
+const TRANSLATIONS = {
+  ar: {
+    online: "متصل",
+    vip_member: "عضو AlQurmani X VIP",
+    nav_profile: "الملف الشخصي",
+    nav_settings: "الإعدادات",
+    nav_preferences: "التفضيلات والإشعارات",
+    nav_policies: "سياسات وقوانين",
+    nav_inbox: "صندوق الوارد الموحد",
+    nav_referrals: "الإحالات والفريق",
+    nav_points: "نقاط AlQurmani X",
+    nav_earn: "اربح نقاط",
+    nav_share: "تشارك واربح",
+    nav_jobs: "الوظائف",
+    nav_logout: "تسجيل الخروج الآمن",
+    points_title: "نقاطك المتراكمة",
+    btn_redeem: "سحب",
+    btn_exchange: "تبديل",
+    gates_title: "البوابات",
+    gate_employees: "بوابة الموظفين",
+    gate_employees_desc: "إدارة الفريق، الرواتب، والمهام الداخلية بكفاءة عالية",
+    gate_clients: "بوابة العملاء",
+    gate_clients_desc: "تتبع طلباتك، فواتيرك، وتواصل مع فريق الدعم المميز",
+    gate_business: "بوابة التجارة والأعمال",
+    gate_business_desc: "أدوات قوية لإدارة أعمالك وتوسيع شراكاتك التجارية",
+    gate_social: "البوابة الاجتماعية",
+    gate_social_desc: "تواصل مع مجتمع القرماني، شارك وتفاعل مع الأحداث",
+    extra_store: "متجرنا",
+    extra_store_desc: "تسوق المنتجات الحصرية",
+    extra_services: "خدماتنا",
+    extra_services_desc: "اكتشف باقة خدماتنا المتكاملة",
+    extra_platforms: "منصاتنا",
+    extra_platforms_desc: "استكشف منظومتنا الرقمية",
+    footer_cta: "✨ عالمك كله في مكان واحد — اكتشف كل بواباتنا الآن",
+    footer_cta_sub: "نحن لا نقدم مجرد منصة، بل نصنع لك تجربة لا تُنسى في كل خطوة",
+    prayer_text: "اللهم اجعل هذا العمل شاهداً لي لا عليّ،\nاللهم انفع به كل من يزوره ويتعامل معه،\nاللهم بارك فيه وفي أهله وفي كل من ساهم فيه،\nاللهم اجعله صدقةً جاريةً تبقى ببقاء الزمان،\nواجعله خالصاً لوجهك الكريم يا أرحم الراحمين."
+  },
+  en: {
+    online: "Online",
+    vip_member: "AlQurmani X VIP Member",
+    nav_profile: "Profile",
+    nav_settings: "Settings",
+    nav_preferences: "Preferences & Notifications",
+    nav_policies: "Policies & Terms",
+    nav_inbox: "Unified Inbox",
+    nav_referrals: "Referrals & Team",
+    nav_points: "AlQurmani X Points",
+    nav_earn: "Earn Points",
+    nav_share: "Share & Earn",
+    nav_jobs: "Jobs",
+    nav_logout: "Secure Logout",
+    points_title: "Your Accumulated Points",
+    btn_redeem: "Redeem",
+    btn_exchange: "Exchange",
+    gates_title: "Portals",
+    gate_employees: "Employee Portal",
+    gate_employees_desc: "Manage your team, payroll, and internal tasks with high efficiency",
+    gate_clients: "Client Portal",
+    gate_clients_desc: "Track orders, invoices, and connect with premium support",
+    gate_business: "Commerce & Business Portal",
+    gate_business_desc: "Powerful tools to manage and expand your business partnerships",
+    gate_social: "Social Portal",
+    gate_social_desc: "Connect with the AlQurmani community, share and engage with events",
+    extra_store: "Our Store",
+    extra_store_desc: "Shop exclusive products",
+    extra_services: "Our Services",
+    extra_services_desc: "Discover our integrated service packages",
+    extra_platforms: "Our Platforms",
+    extra_platforms_desc: "Explore our digital ecosystem",
+    footer_cta: "✨ Your whole world in one place — Explore all our portals now",
+    footer_cta_sub: "We don't just offer a platform, we craft an unforgettable experience at every step",
+    prayer_text: "O Allah, make this work a witness for me, not against me,\nO Allah, benefit all who visit and deal with it,\nO Allah, bless it and its people and all who contributed to it,\nO Allah, make it a continuing charity that endures through time,\nAnd make it purely for Your noble countenance, O Most Merciful."
+  },
+  de: {
+    online: "Online",
+    vip_member: "AlQurmani X VIP-Mitglied",
+    nav_profile: "Profil",
+    nav_settings: "Einstellungen",
+    nav_preferences: "Präferenzen & Benachrichtigungen",
+    nav_policies: "Richtlinien & Bedingungen",
+    nav_inbox: "Einheitlicher Posteingang",
+    nav_referrals: "Empfehlungen & Team",
+    nav_points: "AlQurmani X Punkte",
+    nav_earn: "Punkte verdienen",
+    nav_share: "Teilen & Verdienen",
+    nav_jobs: "Stellenangebote",
+    nav_logout: "Sicheres Abmelden",
+    points_title: "Deine gesammelten Punkte",
+    btn_redeem: "Einlösen",
+    btn_exchange: "Tauschen",
+    gates_title: "Portale",
+    gate_employees: "Mitarbeiterportal",
+    gate_employees_desc: "Verwalte dein Team, Gehälter und interne Aufgaben effizient",
+    gate_clients: "Kundenportal",
+    gate_clients_desc: "Verfolge Bestellungen, Rechnungen und erhalte Premium-Support",
+    gate_business: "Handels- & Geschäftsportal",
+    gate_business_desc: "Leistungsstarke Tools zur Verwaltung deiner Geschäftspartnerschaften",
+    gate_social: "Soziales Portal",
+    gate_social_desc: "Verbinde dich mit der AlQurmani-Community",
+    extra_store: "Unser Shop",
+    extra_store_desc: "Exklusive Produkte kaufen",
+    extra_services: "Unsere Dienste",
+    extra_services_desc: "Entdecke unser integriertes Servicepaket",
+    extra_platforms: "Unsere Plattformen",
+    extra_platforms_desc: "Erkunde unser digitales Ökosystem",
+    footer_cta: "✨ Deine ganze Welt an einem Ort — Erkunde jetzt alle Portale",
+    footer_cta_sub: "Wir bieten nicht nur eine Plattform, wir schaffen ein unvergessliches Erlebnis",
+    prayer_text: "O Allah, mach diese Arbeit zu einem Zeugnis für mich, nicht gegen mich,\nO Allah, segne alle, die sie besuchen,\nO Allah, segne sie und alle, die dazu beigetragen haben,\nO Allah, mach sie zu einer andauernden Wohltat,\nUnd mach sie aufrichtig für Dein edles Antlitz, O Barmherzigster."
+  },
+  it: {
+    online: "Online",
+    vip_member: "Membro VIP AlQurmani X",
+    nav_profile: "Profilo",
+    nav_settings: "Impostazioni",
+    nav_preferences: "Preferenze e Notifiche",
+    nav_policies: "Politiche e Termini",
+    nav_inbox: "Posta in Arrivo Unificata",
+    nav_referrals: "Referral e Team",
+    nav_points: "Punti AlQurmani X",
+    nav_earn: "Guadagna Punti",
+    nav_share: "Condividi e Guadagna",
+    nav_jobs: "Lavori",
+    nav_logout: "Disconnessione Sicura",
+    points_title: "I Tuoi Punti Accumulati",
+    btn_redeem: "Riscatta",
+    btn_exchange: "Scambia",
+    gates_title: "Portali",
+    gate_employees: "Portale Dipendenti",
+    gate_employees_desc: "Gestisci il tuo team, paghe e attività interne con alta efficienza",
+    gate_clients: "Portale Clienti",
+    gate_clients_desc: "Traccia ordini, fatture e connettiti al supporto premium",
+    gate_business: "Portale Commercio & Affari",
+    gate_business_desc: "Strumenti potenti per gestire e ampliare le tue partnership commerciali",
+    gate_social: "Portale Sociale",
+    gate_social_desc: "Connettiti con la community AlQurmani",
+    extra_store: "Il Nostro Negozio",
+    extra_store_desc: "Acquista prodotti esclusivi",
+    extra_services: "I Nostri Servizi",
+    extra_services_desc: "Scopri il nostro pacchetto di servizi integrati",
+    extra_platforms: "Le Nostre Piattaforme",
+    extra_platforms_desc: "Esplora il nostro ecosistema digitale",
+    footer_cta: "✨ Il tuo intero mondo in un posto — Esplora tutti i nostri portali ora",
+    footer_cta_sub: "Non offriamo solo una piattaforma, creiamo un'esperienza indimenticabile",
+    prayer_text: "O Allah, rendi questo lavoro una testimonianza per me non contro di me,\nO Allah, benefica chiunque lo visiti,\nO Allah, benedicilo e tutti coloro che vi hanno contribuito,\nO Allah, rendilo una carità continua nel tempo,\nE rendilo puro per il Tuo nobile volto, O Misericordiosissimo."
+  },
+  es: {
+    online: "En línea",
+    vip_member: "Miembro VIP AlQurmani X",
+    nav_profile: "Perfil",
+    nav_settings: "Configuración",
+    nav_preferences: "Preferencias y Notificaciones",
+    nav_policies: "Políticas y Términos",
+    nav_inbox: "Bandeja de Entrada Unificada",
+    nav_referrals: "Referencias y Equipo",
+    nav_points: "Puntos AlQurmani X",
+    nav_earn: "Ganar Puntos",
+    nav_share: "Compartir y Ganar",
+    nav_jobs: "Empleos",
+    nav_logout: "Cerrar Sesión Seguro",
+    points_title: "Tus Puntos Acumulados",
+    btn_redeem: "Canjear",
+    btn_exchange: "Intercambiar",
+    gates_title: "Portales",
+    gate_employees: "Portal de Empleados",
+    gate_employees_desc: "Administra tu equipo, nóminas y tareas internas con alta eficiencia",
+    gate_clients: "Portal de Clientes",
+    gate_clients_desc: "Rastrea pedidos, facturas y conéctate con soporte premium",
+    gate_business: "Portal de Comercio y Negocios",
+    gate_business_desc: "Herramientas poderosas para gestionar y expandir tus asociaciones comerciales",
+    gate_social: "Portal Social",
+    gate_social_desc: "Conéctate con la comunidad AlQurmani",
+    extra_store: "Nuestra Tienda",
+    extra_store_desc: "Compra productos exclusivos",
+    extra_services: "Nuestros Servicios",
+    extra_services_desc: "Descubre nuestro paquete de servicios integrados",
+    extra_platforms: "Nuestras Plataformas",
+    extra_platforms_desc: "Explora nuestro ecosistema digital",
+    footer_cta: "✨ Tu mundo entero en un lugar — Explora todos nuestros portales ahora",
+    footer_cta_sub: "No solo ofrecemos una plataforma, creamos una experiencia inolvidable en cada paso",
+    prayer_text: "Oh Allah, haz de este trabajo un testigo a mi favor no en mi contra,\nOh Allah, beneficia a todos los que lo visiten,\nOh Allah, bendícelo y a todos los que contribuyeron a él,\nOh Allah, hazlo una caridad continua que perdure en el tiempo,\nY hazlo puro para Tu noble semblante, Oh el Más Misericordioso."
+  },
+  fr: {
+    online: "En ligne",
+    vip_member: "Membre VIP AlQurmani X",
+    nav_profile: "Profil",
+    nav_settings: "Paramètres",
+    nav_preferences: "Préférences et Notifications",
+    nav_policies: "Politiques et Conditions",
+    nav_inbox: "Boîte de Réception Unifiée",
+    nav_referrals: "Références et Équipe",
+    nav_points: "Points AlQurmani X",
+    nav_earn: "Gagner des Points",
+    nav_share: "Partager et Gagner",
+    nav_jobs: "Emplois",
+    nav_logout: "Déconnexion Sécurisée",
+    points_title: "Vos Points Accumulés",
+    btn_redeem: "Échanger",
+    btn_exchange: "Convertir",
+    gates_title: "Portails",
+    gate_employees: "Portail Employés",
+    gate_employees_desc: "Gérez votre équipe, salaires et tâches internes avec une haute efficacité",
+    gate_clients: "Portail Clients",
+    gate_clients_desc: "Suivez vos commandes, factures et connectez-vous au support premium",
+    gate_business: "Portail Commerce & Affaires",
+    gate_business_desc: "Outils puissants pour gérer et développer vos partenariats commerciaux",
+    gate_social: "Portail Social",
+    gate_social_desc: "Connectez-vous avec la communauté AlQurmani",
+    extra_store: "Notre Boutique",
+    extra_store_desc: "Achetez des produits exclusifs",
+    extra_services: "Nos Services",
+    extra_services_desc: "Découvrez notre gamme de services intégrés",
+    extra_platforms: "Nos Plateformes",
+    extra_platforms_desc: "Explorez notre écosystème numérique",
+    footer_cta: "✨ Tout votre monde en un seul endroit — Explorez tous nos portails maintenant",
+    footer_cta_sub: "Nous n'offrons pas seulement une plateforme, nous créons une expérience inoubliable",
+    prayer_text: "Ô Allah, fais de ce travail un témoin pour moi et non contre moi,\nÔ Allah, profite à tous ceux qui le visitent,\nÔ Allah, bénis-le et tous ceux qui y ont contribué,\nÔ Allah, fais-en une aumône continue qui dure dans le temps,\nEt fais-en quelque chose de pur pour Ton noble visage, Ô le Plus Miséricordieux."
+  },
+  ko: {
+    online: "온라인",
+    vip_member: "AlQurmani X VIP 회원",
+    nav_profile: "프로필",
+    nav_settings: "설정",
+    nav_preferences: "환경설정 및 알림",
+    nav_policies: "정책 및 약관",
+    nav_inbox: "통합 받은편지함",
+    nav_referrals: "추천 및 팀",
+    nav_points: "AlQurmani X 포인트",
+    nav_earn: "포인트 적립",
+    nav_share: "공유하고 적립",
+    nav_jobs: "채용",
+    nav_logout: "안전 로그아웃",
+    points_title: "누적 포인트",
+    btn_redeem: "환급",
+    btn_exchange: "교환",
+    gates_title: "포털",
+    gate_employees: "직원 포털",
+    gate_employees_desc: "팀, 급여, 내부 업무를 효율적으로 관리",
+    gate_clients: "고객 포털",
+    gate_clients_desc: "주문, 청구서 추적 및 프리미엄 지원 연결",
+    gate_business: "상업 및 비즈니스 포털",
+    gate_business_desc: "비즈니스 파트너십 관리 및 확장을 위한 강력한 도구",
+    gate_social: "소셜 포털",
+    gate_social_desc: "AlQurmani 커뮤니티와 연결",
+    extra_store: "우리 스토어",
+    extra_store_desc: "독점 제품 쇼핑",
+    extra_services: "우리 서비스",
+    extra_services_desc: "통합 서비스 패키지 발견",
+    extra_platforms: "우리 플랫폼",
+    extra_platforms_desc: "디지털 생태계 탐색",
+    footer_cta: "✨ 모든 것이 한 곳에 — 지금 모든 포털을 탐색하세요",
+    footer_cta_sub: "우리는 단순한 플랫폼이 아닌 잊을 수 없는 경험을 만듭니다",
+    prayer_text: "오 알라, 이 일이 나를 위한 증거가 되게 하소서,\n오 알라, 방문하는 모든 이에게 유익이 되게 하소서,\n오 알라, 이를 축복하시고 기여한 모든 이를 축복하소서,\n오 알라, 시간이 지나도 계속되는 자선이 되게 하소서,\n오 가장 자비로우신 분이여, 순수하게 하소서."
+  },
+  hi: {
+    online: "ऑनलाइन",
+    vip_member: "AlQurmani X VIP सदस्य",
+    nav_profile: "प्रोफ़ाइल",
+    nav_settings: "सेटिंग्स",
+    nav_preferences: "प्राथमिकताएं और सूचनाएं",
+    nav_policies: "नीतियां और शर्तें",
+    nav_inbox: "एकीकृत इनबॉक्स",
+    nav_referrals: "रेफरल और टीम",
+    nav_points: "AlQurmani X पॉइंट्स",
+    nav_earn: "पॉइंट्स कमाएं",
+    nav_share: "शेयर करें और कमाएं",
+    nav_jobs: "नौकरियां",
+    nav_logout: "सुरक्षित लॉगआउट",
+    points_title: "आपके संचित पॉइंट्स",
+    btn_redeem: "रिडीम",
+    btn_exchange: "एक्सचेंज",
+    gates_title: "पोर्टल",
+    gate_employees: "कर्मचारी पोर्टल",
+    gate_employees_desc: "उच्च दक्षता के साथ टीम, वेतन और कार्यों का प्रबंधन",
+    gate_clients: "ग्राहक पोर्टल",
+    gate_clients_desc: "ऑर्डर, बिलों को ट्रैक करें और प्रीमियम सपोर्ट से जुड़ें",
+    gate_business: "व्यापार और व्यवसाय पोर्टल",
+    gate_business_desc: "व्यावसायिक भागीदारी प्रबंधित करने के लिए शक्तिशाली उपकरण",
+    gate_social: "सोशल पोर्टल",
+    gate_social_desc: "AlQurmani समुदाय से जुड़ें",
+    extra_store: "हमारा स्टोर",
+    extra_store_desc: "एक्सक्लूसिव उत्पाद खरीदें",
+    extra_services: "हमारी सेवाएं",
+    extra_services_desc: "हमारे एकीकृत सेवा पैकेज की खोज करें",
+    extra_platforms: "हमारे प्लेटफ़ॉर्म",
+    extra_platforms_desc: "हमारे डिजिटल पारिस्थितिकी तंत्र का अन्वेषण करें",
+    footer_cta: "✨ आपकी पूरी दुनिया एक जगह — अभी सभी पोर्टल एक्सप्लोर करें",
+    footer_cta_sub: "हम सिर्फ एक प्लेटफ़ॉर्म नहीं देते, हर कदम पर एक अविस्मरणीय अनुभव बनाते हैं",
+    prayer_text: "हे अल्लाह, इस काम को मेरे पक्ष में गवाह बनाओ न कि मेरे विरुद्ध,\nहे अल्लाह, इसे देखने वालों को लाभ दो,\nहे अल्लाह, इसे और इसमें योगदान देने वालों को आशीर्वाद दो,\nहे अल्लाह, इसे एक सतत दान बनाओ,\nहे सबसे दयालु, इसे अपने शुभ चेहरे के लिए शुद्ध बनाओ।"
+  },
+  zh: {
+    online: "在线",
+    vip_member: "AlQurmani X VIP 会员",
+    nav_profile: "个人资料",
+    nav_settings: "设置",
+    nav_preferences: "偏好和通知",
+    nav_policies: "政策与条款",
+    nav_inbox: "统一收件箱",
+    nav_referrals: "推荐与团队",
+    nav_points: "AlQurmani X 积分",
+    nav_earn: "赚取积分",
+    nav_share: "分享赚取",
+    nav_jobs: "工作",
+    nav_logout: "安全退出",
+    points_title: "您的累积积分",
+    btn_redeem: "兑换",
+    btn_exchange: "交换",
+    gates_title: "门户",
+    gate_employees: "员工门户",
+    gate_employees_desc: "高效管理团队、薪资和内部任务",
+    gate_clients: "客户门户",
+    gate_clients_desc: "跟踪订单、发票并连接高级支持",
+    gate_business: "商业与贸易门户",
+    gate_business_desc: "管理和扩展商业合作的强大工具",
+    gate_social: "社交门户",
+    gate_social_desc: "与 AlQurmani 社区连接",
+    extra_store: "我们的商店",
+    extra_store_desc: "购买独家产品",
+    extra_services: "我们的服务",
+    extra_services_desc: "探索我们的综合服务套餐",
+    extra_platforms: "我们的平台",
+    extra_platforms_desc: "探索我们的数字生态系统",
+    footer_cta: "✨ 您的整个世界在一个地方 — 立即探索所有门户",
+    footer_cta_sub: "我们不只提供平台，我们在每一步都创造难忘的体验",
+    prayer_text: "哦阿拉，让这项工作成为支持我的见证，而非反对我，\n哦阿拉，让所有访问它的人受益，\n哦阿拉，祝福它和所有贡献者，\n哦阿拉，让它成为持续的慈善，\n最仁慈的主啊，让它纯粹为了您的崇高容颜。"
+  },
+  ru: {
+    online: "В сети",
+    vip_member: "VIP-участник AlQurmani X",
+    nav_profile: "Профиль",
+    nav_settings: "Настройки",
+    nav_preferences: "Настройки и уведомления",
+    nav_policies: "Политика и условия",
+    nav_inbox: "Единый почтовый ящик",
+    nav_referrals: "Рефералы и команда",
+    nav_points: "Очки AlQurmani X",
+    nav_earn: "Заработать очки",
+    nav_share: "Делитесь и зарабатывайте",
+    nav_jobs: "Вакансии",
+    nav_logout: "Безопасный выход",
+    points_title: "Ваши накопленные очки",
+    btn_redeem: "Обменять",
+    btn_exchange: "Конвертировать",
+    gates_title: "Порталы",
+    gate_employees: "Портал сотрудников",
+    gate_employees_desc: "Управляйте командой, зарплатами и задачами с высокой эффективностью",
+    gate_clients: "Клиентский портал",
+    gate_clients_desc: "Отслеживайте заказы, счета и подключайтесь к премиум-поддержке",
+    gate_business: "Портал торговли и бизнеса",
+    gate_business_desc: "Мощные инструменты для управления деловыми партнёрствами",
+    gate_social: "Социальный портал",
+    gate_social_desc: "Общайтесь с сообществом AlQurmani",
+    extra_store: "Наш магазин",
+    extra_store_desc: "Покупайте эксклюзивные товары",
+    extra_services: "Наши услуги",
+    extra_services_desc: "Откройте для себя наш интегрированный пакет услуг",
+    extra_platforms: "Наши платформы",
+    extra_platforms_desc: "Исследуйте нашу цифровую экосистему",
+    footer_cta: "✨ Весь ваш мир в одном месте — Изучите все наши порталы прямо сейчас",
+    footer_cta_sub: "Мы предлагаем не просто платформу, мы создаём незабываемый опыт на каждом шагу",
+    prayer_text: "О Аллах, сделай эту работу свидетелем в мою пользу, а не против меня,\nО Аллах, принеси пользу всем, кто её посещает,\nО Аллах, благослови её и всех, кто в ней участвовал,\nО Аллах, сделай её непрекращающейся милостыней,\nИ сделай её чистой ради Твоего благородного лика, О Милостивейший."
+  },
+  ja: {
+    online: "オンライン",
+    vip_member: "AlQurmani X VIPメンバー",
+    nav_profile: "プロフィール",
+    nav_settings: "設定",
+    nav_preferences: "設定と通知",
+    nav_policies: "ポリシーと利用規約",
+    nav_inbox: "統合受信トレイ",
+    nav_referrals: "紹介とチーム",
+    nav_points: "AlQurmani Xポイント",
+    nav_earn: "ポイントを獲得",
+    nav_share: "シェアして獲得",
+    nav_jobs: "求人",
+    nav_logout: "安全なログアウト",
+    points_title: "あなたの累積ポイント",
+    btn_redeem: "換金",
+    btn_exchange: "交換",
+    gates_title: "ポータル",
+    gate_employees: "社員ポータル",
+    gate_employees_desc: "チーム、給与、内部タスクを高効率で管理",
+    gate_clients: "顧客ポータル",
+    gate_clients_desc: "注文、請求書を追跡しプレミアムサポートに接続",
+    gate_business: "商業・ビジネスポータル",
+    gate_business_desc: "ビジネスパートナーシップを管理・拡大する強力なツール",
+    gate_social: "ソーシャルポータル",
+    gate_social_desc: "AlQurmaniコミュニティとつながる",
+    extra_store: "私たちのストア",
+    extra_store_desc: "限定商品を購入",
+    extra_services: "私たちのサービス",
+    extra_services_desc: "統合サービスパッケージを発見",
+    extra_platforms: "私たちのプラットフォーム",
+    extra_platforms_desc: "デジタルエコシステムを探索",
+    footer_cta: "✨ あなたの世界すべてが一か所に — 今すぐすべてのポータルを探索",
+    footer_cta_sub: "単なるプラットフォームではなく、すべてのステップで忘れられない体験を",
+    prayer_text: "おお、アッラーよ、この仕事が私の味方となる証人となりますように、\nおお、アッラーよ、訪れるすべての人に利益をもたらしてください、\nおお、アッラーよ、これとすべての貢献者を祝福してください、\nおお、アッラーよ、時を超えて続く慈善にしてください、\nそして最も慈悲深い方よ、あなたの崇高なお顔のために純粋にしてください。"
+  }
+};
+
+// ============================================================
+// STATE
+// ============================================================
+/** @type {string} */
+let currentLang = "ar";
+/** @type {boolean} */
+let sidebarOpen = false;
+
+// ============================================================
+// LANGUAGE SYSTEM
+// ============================================================
+/**
+ * @param {string} lang
+ */
+function applyLanguage(lang) {
+  if (!TRANSLATIONS[lang]) lang = "ar";
+  currentLang = lang;
+  sessionStorage.setItem("qx_lang", lang);
+
+  const isRTL = ["ar"].includes(lang);
+  document.documentElement.lang = lang;
+  document.body.dir = isRTL ? "rtl" : "ltr";
+  document.documentElement.dir = isRTL ? "rtl" : "ltr";
+
+  // Update all i18n elements
+  document.querySelectorAll("[data-i18n]").forEach((/** @type {HTMLElement} */ el) => {
+    const key = el.getAttribute("data-i18n");
+    if (key && TRANSLATIONS[lang][key]) {
+      el.textContent = TRANSLATIONS[lang][key];
+    }
+  });
+
+  // Update prayer modal text
+  const prayerTextEl = document.getElementById("prayerText");
+  if (prayerTextEl && TRANSLATIONS[lang].prayer_text) {
+    const lines = TRANSLATIONS[lang].prayer_text.split("\n");
+    prayerTextEl.innerHTML = lines.join("<br/>");
+    prayerTextEl.dir = isRTL ? "rtl" : "ltr";
+  }
+
+  // Update globe label
+  const flags = { ar:"🇸🇦", en:"🇬🇧", de:"🇩🇪", it:"🇮🇹", es:"🇪🇸", fr:"🇫🇷", ko:"🇰🇷", hi:"🇮🇳", zh:"🇨🇳", ru:"🇷🇺", ja:"🇯🇵" };
+  const globeLabel = document.getElementById("currentLangLabel");
+  if (globeLabel) globeLabel.textContent = flags[lang] || "🌍";
+}
+
+// ============================================================
+// SIDEBAR
+// ============================================================
+function openSidebar() {
+  sidebarOpen = true;
+  document.getElementById("sidebar").classList.add("open");
+  document.getElementById("sidebarOverlay").classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeSidebar() {
+  sidebarOpen = false;
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("sidebarOverlay").classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+// ============================================================
+// CLOCK
+// ============================================================
+function updateClock() {
+  const now = new Date();
+  const timeEl = document.getElementById("sidebarTime");
+  const dateEl = document.getElementById("sidebarDate");
+  if (!timeEl || !dateEl) return;
+
+  // Time in visitor's locale
+  timeEl.textContent = now.toLocaleTimeString(currentLang === "ar" ? "ar-SA" : navigator.language, { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+
+  // Full date
+  const dateLocale = {
+    ar: "ar-SA", en: "en-GB", de: "de-DE", it: "it-IT", es: "es-ES",
+    fr: "fr-FR", ko: "ko-KR", hi: "hi-IN", zh: "zh-CN", ru: "ru-RU", ja: "ja-JP"
+  };
+  dateEl.textContent = now.toLocaleDateString(dateLocale[currentLang] || navigator.language, {
+    weekday: "long", year: "numeric", month: "long", day: "numeric"
+  });
+}
+
+// ============================================================
+// PRAYER MODAL
+// ============================================================
+function openPrayer() {
+  document.getElementById("prayerModal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closePrayer() {
+  document.getElementById("prayerModal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+// ============================================================
+// USER DATA LOADER (from Firebase / user-data.js fallback)
+// ============================================================
+/**
+ * Load user profile and populate UI
+ * @param {Object} user - Firebase auth user
+ * @param {Object} db   - Firestore instance
+ */
+async function loadUserProfile(user, db, docFn, getDocFn) {
+  try {
+    const userDoc = await getDocFn(docFn(db, "users", user.uid));
+    if (userDoc.exists()) {
+      const data = userDoc.data();
+
+      // Name
+      const displayName = data.displayName || data.name || user.displayName || "المستخدم";
+      [document.getElementById("mainUserName"), document.getElementById("sidebarUserName")].forEach(el => {
+        if (el) el.textContent = displayName;
+      });
+
+      // Avatar
+      const photoURL = data.photoURL || user.photoURL || "assets/user-avatar.png";
+      [document.getElementById("mainAvatar"), document.getElementById("sidebarAvatar")].forEach((/** @type {HTMLImageElement|null} */ el) => {
+        if (el) {
+          el.src = photoURL;
+          el.onerror = () => { el.src = "assets/user-avatar.png"; };
+        }
+      });
+
+      // Points
+      const pointsEl = document.getElementById("pointsValue");
+      if (pointsEl) {
+        const pts = data.points || data.xp || 0;
+        animatePoints(pointsEl, 0, pts, 1200);
+      }
+    }
+  } catch (err) {
+    console.warn("Could not load user profile:", err);
+  }
+}
+
+/**
+ * Animate a number counter
+ * @param {HTMLElement} el
+ * @param {number} from
+ * @param {number} to
+ * @param {number} duration
+ */
+function animatePoints(el, from, to, duration) {
+  const start = performance.now();
+  function step(ts) {
+    const progress = Math.min((ts - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(from + (to - from) * eased).toLocaleString();
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// ============================================================
+// MAIN INIT
+// ============================================================
+/**
+ * @param {Object} auth
+ * @param {Object} db
+ * @param {Function} signOut
+ * @param {Function} onAuthStateChanged
+ * @param {Function} docFn
+ * @param {Function} getDocFn
+ * @param {Function} updateDocFn
+ * @param {Function} serverTimestampFn
+ */
+function initPage(auth, db, signOut, onAuthStateChanged, docFn, getDocFn, updateDocFn, serverTimestampFn) {
+
+  // ---- Apply saved language ----
+  const savedLang = sessionStorage.getItem("qx_lang") || navigator.language.slice(0,2) || "ar";
+  applyLanguage(Object.keys(TRANSLATIONS).includes(savedLang) ? savedLang : "ar");
+
+  // ---- Auth guard ----
+  onAuthStateChanged(auth, async (user) => {
+    if (!user || !user.emailVerified) {
+      sessionStorage.clear();
+      window.location.replace("index.html");
+      return;
+    }
+
+    // Check session 24h
+    const sessionStart = sessionStorage.getItem("qx_session_start");
+    if (sessionStart && Date.now() - parseInt(sessionStart, 10) > 86400000) {
+      sessionStorage.clear();
+      await signOut(auth);
+      window.location.replace("index.html");
+      return;
+    }
+
+    await loadUserProfile(user, db, docFn, getDocFn);
+
+    // Update last activity
+    try {
+      await updateDocFn(docFn(db, "users", user.uid), {
+        lastActivity: serverTimestampFn()
+      });
+    } catch (_) {}
+  });
+
+  // ---- Clock ----
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // ---- Sidebar toggle ----
+  document.getElementById("menuToggle").addEventListener("click", openSidebar);
+  document.getElementById("sidebarClose").addEventListener("click", closeSidebar);
+  document.getElementById("sidebarOverlay").addEventListener("click", closeSidebar);
+
+  // ---- Logout ----
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    closeSidebar();
+    sessionStorage.clear();
+    if (window.__firebaseSignOut) await window.__firebaseSignOut();
+    window.location.replace("index.html");
+  });
+
+  // ---- Language dropdown ----
+  const globeContainer = document.getElementById("globeContainer");
+  const langDropdown = document.getElementById("langDropdown");
+
+  globeContainer.addEventListener("click", (e) => {
+    e.stopPropagation();
+    langDropdown.classList.toggle("open");
+  });
+
+  document.addEventListener("click", () => langDropdown.classList.remove("open"));
+
+  document.querySelectorAll(".lang-item").forEach((el) => {
+    el.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const lang = el.getAttribute("data-lang");
+      applyLanguage(lang);
+      langDropdown.classList.remove("open");
     });
+  });
 
-    window.onclick = () => m.classList.remove("on");
+  // ---- Prayer modal ----
+  document.getElementById("prayerIcon").addEventListener("click", openPrayer);
+  document.getElementById("prayerClose").addEventListener("click", closePrayer);
+  document.getElementById("prayerBackdrop").addEventListener("click", closePrayer);
+
+  // ---- Prevent history back to main without auth ----
+  history.pushState(null, "", window.location.href);
+  window.addEventListener("popstate", () => {
+    history.pushState(null, "", window.location.href);
+  });
+}
 </script>
-
 </body>
 </html>
