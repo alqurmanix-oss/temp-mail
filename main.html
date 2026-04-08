@@ -683,18 +683,38 @@ const auth = getAuth(FB);
 const db   = getFirestore(FB);
 
 // ─────────────────────────────────────────────────────────
-// SESSION GUARD (لا توقف المستخدم — فقط يتحقق من Firebase)
+// SESSION GUARD - استقرار 24 ساعة (تعديل القرماني)
 // ─────────────────────────────────────────────────────────
-/**
- * تحقق من صحة الجلسة — يرجع true إذا الجلسة صالحة
- * @returns {boolean}
- */
 function sessionValid() {
-  const start = sessionStorage.getItem("qx_start");
-  if (!start) return false;
-  // 24 ساعة
-  return (Date.now() - Number(start)) < 86_400_000;
+  const loginTime = localStorage.getItem("qx_login_time");
+  if (!loginTime) return false;
+  const dayInMs = 24 * 60 * 60 * 1000; 
+  return (Date.now() - Number(loginTime)) < dayInMs;
 }
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    // تسجيل وقت أول دخول شرعي في المتصفح
+    if (!localStorage.getItem("qx_login_time")) {
+      localStorage.setItem("qx_login_time", Date.now().toString());
+    }
+
+    // فحص صلاحية الـ 24 ساعة
+    if (!sessionValid()) {
+      await signOut(auth);
+      localStorage.clear();
+      window.location.replace("index.html");
+      return;
+    }
+
+    // الدخول مستقر -> تحميل البيانات
+    await loadUser(user);
+    touchActivity(user.uid);
+  } else {
+    // لو مفيش مستخدم مسجل ارجع للرئيسية
+    window.location.replace("index.html");
+  }
+});
 
 // ─────────────────────────────────────────────────────────
 // AUTH STATE — المحرك الأساسي
