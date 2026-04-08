@@ -3,31 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlQurmani X | بوابات العبور</title>
-    
-    <script>
-        // نظام الأمان القاطع - لا طرد بعد اليوم
-        function checkAccess() {
-            const key = localStorage.getItem("portal_access_key");
-            const card = document.getElementById("mainCard");
-
-            if (key === "AlQurmani_VIP_2026") {
-                // المفتاح سليم: أظهر الصفحة وامسح المفتاح للأمان
-                card.style.display = "block";
-                localStorage.removeItem("portal_access_key");
-
-                // العودة التلقائية بعد 15 ثانية
-                setTimeout(() => { window.location.href = "main.html"; }, 15000);
-            } else {
-                // طرد فوري للمتسلل
-                window.location.replace("main.html");
-            }
-        }
-        // تشغيل الفحص فوراً
-        window.onload = checkAccess;
-    </script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <title>AlQurmani X | مركز العمليات</title>
     
     <style>
         :root {
@@ -45,12 +21,10 @@
             justify-content: center;
             overflow: hidden;
             text-align: center;
+            opacity: 0; /* الصفحة مخفية تماماً في البداية */
+            transition: opacity 0.5s ease;
         }
-        /* إخفاء الكارت افتراضياً حتى التأكد من الهوية */
-        #mainCard {
-            display: none;
-            position: relative;
-            z-index: 10;
+        .portal-card {
             padding: 60px 40px;
             border: 1px solid rgba(255, 215, 0, 0.2);
             background: rgba(8, 11, 24, 0.95);
@@ -69,24 +43,43 @@
         }
         .msg { font-size: 1.4rem; line-height: 1.8; margin-bottom: 40px; }
         .highlight { color: #FFD700; font-weight: bold; }
-        .loader-bar { width: 100%; height: 3px; background: rgba(255, 215, 0, 0.1); margin: 20px 0; }
+        .loader-bar { width: 100%; height: 3px; background: rgba(255, 215, 0, 0.1); margin: 20px 0; position: relative; }
         .loader-fill { height: 100%; width: 0; background: var(--gold); animation: progress 15s linear forwards; }
         @keyframes progress { to { width: 100%; } }
-        .back-link { display: inline-block; color: #FFD700; text-decoration: none; border-bottom: 1px solid #FFD700; }
+        .back-link { display: inline-block; color: #FFD700; text-decoration: none; border-bottom: 1px solid #FFD700; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div id="mainCard">
+    <div class="portal-card">
         <h1>صالة السيادة</h1>
         <p class="msg">
-            أهلاً بك في المنطقة المؤمنة لـ <span class="highlight">AlQurmani X</span>.<br>
+            مرحباً بك في المنطقة المؤمنة لـ <span class="highlight">AlQurmani X</span>.<br>
             يتم الآن تجهيز البوابات الرقمية لسيادتكم.<br>
             <span class="highlight">تمتع بالرؤية.. سيعاد توجيهك تلقائياً بعد 15 ثانية.</span>
         </p>
         <div class="loader-bar"><div class="loader-fill"></div></div>
         <a href="main.html" class="back-link">العودة يدوياً الآن</a>
     </div>
+
+    <script>
+        // الفحص القاطع فوراً
+        const key = localStorage.getItem("portal_access_key");
+        
+        if (key === "AlQurmani_VIP_2026") {
+            // المفتاح صح -> أظهر الصفحة فوراً
+            document.body.style.opacity = "1";
+            localStorage.removeItem("portal_access_key"); // مسحه للأمان
+
+            // العودة التلقائية لـ main.html
+            setTimeout(() => {
+                window.location.href = "main.html";
+            }, 15000);
+        } else {
+            // المفتاح غلط أو داخل من الرابط -> طرد فوري
+            window.location.replace("main.html");
+        }
+    </script>
 
 </body>
 </html>
