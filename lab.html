@@ -197,5 +197,58 @@ body::after{
 </style>`;
 }
 
+   /**
+ * AlQurmani X - Topbar & UI Components
+ */
+
+export function injectTopbarStyles(): string {
+    return `
+<style id="alqurmani-topbar">
+/* الشريط العلوي */
+#topbar {
+    position: fixed; top: 0; left: 0; right: 0; height: var(--th); z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 18px;
+    background: rgba(2, 4, 9, 0.97); border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+    box-shadow: 0 2px 30px rgba(255, 215, 0, 0.07);
+}
+
+/* اللوجو المتحرك */
+#logo {
+    font-family: 'Cinzel Decorative', cursive; font-weight: 900;
+    font-size: clamp(16px, 3.2vw, 26px); letter-spacing: 2px;
+    background: linear-gradient(90deg, var(--g6), var(--g1), var(--g5), var(--g2), var(--g8), var(--g3), var(--g4), var(--g1));
+    background-size: 400% 100%; -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; background-clip: text;
+    animation: goldShift 4s linear infinite; user-select: none;
+}
+@keyframes goldShift { 0% { background-position: 0% 50% } 100% { background-position: 400% 50% } }
+
+/* مؤشر النشاط */
+#onlineDot {
+    width: 9px; height: 9px; border-radius: 50%; background: var(--neon);
+    box-shadow: 0 0 7px var(--neon), 0 0 14px rgba(57, 255, 20, 0.45);
+    animation: blink 1.5s ease-in-out infinite;
+}
+@keyframes blink { 0%, 100% { opacity: 1 } 50% { opacity: .15 } }
+
+/* الكرة الأرضية */
+#globeEl {
+    width: 50px; height: 50px; border-radius: 50%;
+    background: conic-gradient(from 0deg, #0d1b4a, #1a3a6e, #0d2a5c, #0d1b4a);
+    border: 1.5px solid var(--border);
+    animation: spinY 14s linear infinite; display: flex; align-items: center; justify-content: center;
+}
+@keyframes spinY { from { transform: rotateY(0) } to { transform: rotateY(360deg) } }
+
+/* الستارة */
+#overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.68); z-index: 1500;
+    opacity: 0; pointer-events: none; transition: opacity .4s; backdrop-filter: blur(5px);
+}
+#overlay.on { opacity: 1; pointer-events: all; }
+</style>
+    `;
+} 
 
     
