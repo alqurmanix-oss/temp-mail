@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlQurmani X | التحفة القادمة</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* درجات الذهبي الـ 8 للوجو والمؤثرات */
+            --g1: #FFE78F; --g2: #FFD700; --g3: #C49B01; --g4: #A37F00;
+            --g5: #CBA135; --g6: #E6B11F; --g7: #F7D061; --g8: #FFFFFF;
+            --main-bg: #000000;
+            --text-gold: #FFD700;
+            --text-white: rgba(255,255,255,0.85);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--main-bg);
+            font-family: 'Cairo', sans-serif;
+            overflow: hidden; /* لمنع السكرول وضمان الهيبة */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* حاوية النقاط الذهبية العشوائية */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* الحاوية الرئيسية للمحتوى */
+        .main-container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 800px;
+            padding: 20px;
+            background: rgba(0,0,0,0.6); /* خلفية شبه شفافة لزيادة التركيز */
+            border-radius: 15px;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.1);
+        }
+
+        /* --- تصميم اللوجو الذهبي المتحرك --- */
+        .logo-box {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* خط إنجليزي حاد */
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            background-image: linear-gradient(
+                to right,
+                var(--g1), var(--g2), var(--g3), var(--g4),
+                var(--g5), var(--g6), var(--g7), var(--g8),
+                var(--g1) /* تكرار الأول لضمان النعومة */
+            );
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 7s linear infinite; /* الأنيميشن عبر الـ 8 درجات في 7 ثواني */
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        /* --- تنسيق النصوص --- */
+        .primary-text {
+            color: var(--text-gold);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.3));
+        }
+
+        .secondary-text {
+            color: var(--text-white);
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 25px;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards 1s; /* تظهر بعد ثانية */
+        }
+
+        .prayer-text {
+            color: rgba(255,255,255,0.6);
+            font-size: 1rem;
+            font-style: italic;
+            font-weight: 300;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+            padding-top: 20px;
+        }
+
+        /* --- تصميم العداد الاحترافي --- */
+        .countdown-box {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 40px;
+        }
+
+        #timer-num {
+            font-size: 2rem;
+            color: var(--text-gold);
+            font-weight: 700;
+            margin: 0 10px;
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+
+        /* --- حاوية الإعلانات الاحترافية في الأسفل --- */
+        .ads-section {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            opacity: 0.6; /* تقليل السطوع لعدم التشويش */
+            transition: opacity 0.3s ease;
+        }
+        
+        .ads-section:hover {
+            opacity: 1; /* تظهر بالكامل عند التحويم */
+        }
+
+        .ad-container {
+            background: rgba(15, 15, 15, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            padding: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        /* أنيميشن الظهور */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes pulseCount {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); color: #fff; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="main-container">
+        <div class="logo-box">AlQurmani X</div>
+
+        <div class="primary-text">التميز لا يقبل العجلة.. نجهز لك ما يليق بطموحك.</div>
+        <div class="secondary-text">ابقَ قريباً.. ما سيظهر هنا سيغير قواعد اللعبة.</div>
+
+        <div class="prayer-text">
+            اللهم اجعل هذا العمل شاهداً لي لا عليّ، واجعله نافعاً لعبادك، ومباركاً في أثره، وخالصاً لوجهك الكريم.
+        </div>
+
+        <div class="countdown-box">
+            جاري تحويلك تلقائياً خلال <span id="timer-num">15</span> ثانية...
+        </div>
+    </div>
+
+    <div class="ads-section">
+        
+        <div class="ad-container" style="width: 300px; height: 250px;">
+            <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="pa7acda22b7" data-domain="//data527.click" data-affquery="/683625d43596b818e752/a7acda22b7/?placementName=default">
+                <script src="//data527.click/js/responsive.js" async></script>
+            </ins>
+        </div>
+
+        <div class="ad-container" style="width: 320px; height: 50px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+            <script type="text/javascript" src="//cdn-server.live/b17fdc633185091d29e6/2104835e2b/?placementName=default"></script>
+        </div>
+
+    </div>
+
+    <script>
+        // === 1. نظام النقاط الذهبية العشوائية (Sparkles) ===
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5; // حجم عشوائي صغير
+                this.speedX = Math.random() * 0.5 - 0.25; // حركة بطيئة جداً
+                this.speedY = Math.random() * 0.5 - 0.25;
+                // لون ذهبي بدرجات عشوائية خفيفة
+                this.color = `rgba(255, ${200 + Math.random() * 55}, ${Math.random() * 100}, ${Math.random()})`; 
+                this.alpha = Math.random(); // شفافية عشوائية للوميض
+                this.blinkSpeed = Math.random() * 0.02 + 0.005;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // الوميض
+                this.alpha += this.blinkSpeed;
+                if (this.alpha > 1 || this.alpha < 0) this.blinkSpeed = -this.blinkSpeed;
+
+                // إعادة التدوير إذا خرجت النقطة من الشاشة
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 150; i++) { // عدد النقاط في الشاشة
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+
+
+        // === 2. نظام العداد والتحويل التلقائي ===
+        let timeLeft = 15;
+        const timerEl = document.getElementById('timer-num');
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            timerEl.innerText = timeLeft;
+            
+            // إضافة نبضة خفيفة للرقم عند التغير
+            timerEl.style.animation = 'pulseCount 0.2s ease';
+            setTimeout(() => timerEl.style.animation = '', 200);
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                
+                // الحصول على الصفحة التي جاء منها الزائر
+                const referrer = document.referrer;
+
+                // إذا كان جاي من رابط مباشر (لا يوجد referrer) وده مستحيل في حالتك
+                // ممكن نوديه لصفحة الـ login مثلاً.
+                if (!referrer || referrer === "" || referrer.includes(window.location.hostname + window.location.pathname)) {
+                    // تحويل افتراضي لصفحة الدخول إذا لم يجد مصدر
+                    window.location.replace("index.html"); 
+                } else {
+                    // التحويل للصفحة المصدر
+                    window.location.replace(referrer);
+                }
+            }
+        }, 1000); // يتناقص كل ثانية
+
+    </script>
+</body>
+</html>
