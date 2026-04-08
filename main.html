@@ -682,6 +682,11 @@ const FB = initializeApp({
 const auth = getAuth(FB);
 const db   = getFirestore(FB);
 
+  window.addEventListener("storage", e => {
+  if (e.key === "logout") {
+    window.location.reload();
+  }
+}); 
 // ─────────────────────────────────────────────────────────
 // SESSION GUARD - استقرار 24 ساعة (تعديل القرماني)
 // ─────────────────────────────────────────────────────────
