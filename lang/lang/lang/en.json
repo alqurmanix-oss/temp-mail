@@ -1,0 +1,17 @@
+{
+  "title": "AlqurmanixX | Digital Fortress",
+  "login_tab": "Login",
+  "register_tab": "Sign Up",
+  "email_placeholder": "Royal Email Address",
+  "password_placeholder": "Security PIN",
+  "confirm_password_placeholder": "Confirm PIN",
+  "login_btn": "Secure Entry",
+  "register_btn": "Activate Fortress",
+  "forgot_password": "Forgot Password?",
+  "status_connected": "System Online",
+  "footer_support": "Technical Support",
+  "footer_security": "Security Alerts",
+  "footer_about": "About Us",
+  "welcome_back": "Welcome back, {user}",
+  "verify_email_msg": "Please verify your email to proceed."
+}
