@@ -3,7 +3,9 @@ import {
     getFirestore as _g,
     collection as _c,
     addDoc as _a,
-    serverTimestamp as _t
+    serverTimestamp as _t,
+    doc as _d,
+    getDoc as _gd
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -24,9 +26,6 @@ const SystemLogger = (() => {
     // منع التكرار
     const cache = new Map();
 
-    // session storage (خفيف داخل الذاكرة)
-    const sessionStore = new Map();
-
     // =========================
     // UTIL: IDs
     // =========================
@@ -34,28 +33,43 @@ const SystemLogger = (() => {
     const genId = (prefix = "") =>
         `${prefix}${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 
-    const getSessionId = (userId) => {
-        if (!sessionStore.has(userId)) {
-            sessionStore.set(userId, {
+    const getSessionId = async (userId) => {
+        // احصل على session من Firestore أو أنشئ واحدة جديدة
+        const sessionRef = _d(db, "Sessions", userId);
+        const sessionSnap = await _gd(sessionRef);
+
+        let session;
+        if (!sessionSnap.exists()) {
+            // إنشاء جلسة جديدة إذا لم توجد
+            session = {
                 sessionId: genId("sess_"),
+                createdAt: _t(),
                 lastSeen: Date.now()
+            };
+            await addDoc(_c(db, "Sessions"), {
+                userId,
+                ...session
+            });
+        } else {
+            // تحديث الجلسة الحالية
+            session = sessionSnap.data();
+            if (Date.now() - session.lastSeen > 30 * 60 * 1000) {
+                session.sessionId = genId("sess_");
+            }
+            session.lastSeen = Date.now();
+            await addDoc(_c(db, "Sessions"), {
+                userId,
+                ...session,
+                updated: _t()
             });
         }
-
-        const session = sessionStore.get(userId);
-
-        // إعادة تجديد الجلسة بعد 30 دقيقة خمول
-        if (Date.now() - session.lastSeen > 30 * 60 * 1000) {
-            session.sessionId = genId("sess_");
-        }
-
-        session.lastSeen = Date.now();
         return session.sessionId;
     };
 
     const getCorrelationId = (sessionId) => {
-        // correlation لكل سلسلة أحداث داخل نفس session
-        return `${sessionId}_${genId("corr_")}`;
+        // correlation ثابت لكل سلسلة أحداث داخل نفس session
+        // استخدم sessionId لتتبع السلسلة
+        return sessionId; // إعادة استخدام sessionId كـ correlation
     };
 
     const isDuplicate = (key, limitMs = 2500) => {
@@ -101,8 +115,8 @@ const SystemLogger = (() => {
         if (!action || !userId) return;
         if (typeof risk !== "number") return;
 
-        const sessionId = getSessionId(userId);
-        const correlationId = getCorrelationId(sessionId);
+        const sessionId = await getSessionId(userId); // session من Firestore
+        const correlationId = getCorrelationId(sessionId); // correlation ثابت
 
         const key = `${action}_${userId}_${risk}`;
 
