@@ -141,7 +141,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <body>
 <div id="ptc"></div>
 
-<!-- ══════════ MODAL ══════════ -->
 <div id="moverlay">
   <div id="mbox" class="mbox m-gold">
     <div id="mtitle"></div>
@@ -151,15 +150,17 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 </div>
 
 <div class="wrap">
-  <!-- ── TOPBAR ── -->
   <div class="topbar">
     <div class="lang-wrap">
       <button class="globe-btn" id="globeBtn" aria-label="Language">
         <div class="globe"></div>
         <span class="lang-cur"><span id="curFlag">🇸🇦</span><span id="curCode">AR</span></span>
       </button>
-      <a href="faq.html" class="faq-ico" title="FAQ">?</a>
-      <div class="lang-dd" id="langDd"></div>
+      <a href="faq.html" target="_blank" class="faq-ico" title="FAQ">?</a>
+      <div class="lang-dd" id="langDd">
+        <a href="#" class="lang-item"><span class="lf">🇸🇦</span> العربية</a>
+        <a href="#" class="lang-item"><span class="lf">🇺🇸</span> English</a>
+      </div>
     </div>
     <div class="online">
       <div class="dot"></div>
@@ -167,17 +168,14 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     </div>
   </div>
 
-  <!-- ── LOGO ── -->
   <div class="logo-sec"><div class="logo">AlqurmanixX</div></div>
 
-  <!-- ══════════ CARD ══════════ -->
   <div class="card">
     <div class="tabs">
       <button class="tab-btn active" data-tab="login"    data-i18n="tab_login">تسجيل الدخول</button>
       <button class="tab-btn"        data-tab="register" data-i18n="tab_register">الاشتراك</button>
     </div>
 
-    <!-- ─── LOGIN PANEL ─── -->
     <div id="login-panel" class="tab-panel active">
       <div class="fg">
         <label class="fl" data-i18n="email">البريد الإلكتروني</label>
@@ -191,7 +189,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <button class="btn-p" id="loginBtn" data-i18n="login_btn">دخول</button>
     </div>
 
-    <!-- ─── REGISTER PANEL ─── -->
     <div id="register-panel" class="tab-panel">
 
       <div class="fg">
@@ -218,109 +215,15 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
         <div id="cmatch"></div>
       </div>
 
-      <!-- Phone with ALL countries -->
       <div class="fg">
         <label class="fl" data-i18n="phone_label">رقم الهاتف</label>
         <div class="phone-row">
           <div class="pcode-wrap">
             <select id="phoneCode" class="pcode">
-              <option value="+93">🇦🇫 +93</option><option value="+355">🇦🇱 +355</option>
-              <option value="+213">🇩🇿 +213</option><option value="+376">🇦🇩 +376</option>
-              <option value="+244">🇦🇴 +244</option><option value="+1268">🇦🇬 +1268</option>
-              <option value="+54">🇦🇷 +54</option><option value="+374">🇦🇲 +374</option>
-              <option value="+61">🇦🇺 +61</option><option value="+43">🇦🇹 +43</option>
-              <option value="+994">🇦🇿 +994</option><option value="+1242">🇧🇸 +1242</option>
-              <option value="+973">🇧🇭 +973</option><option value="+880">🇧🇩 +880</option>
-              <option value="+1246">🇧🇧 +1246</option><option value="+375">🇧🇾 +375</option>
-              <option value="+32">🇧🇪 +32</option><option value="+501">🇧🇿 +501</option>
-              <option value="+229">🇧🇯 +229</option><option value="+975">🇧🇹 +975</option>
-              <option value="+591">🇧🇴 +591</option><option value="+387">🇧🇦 +387</option>
-              <option value="+267">🇧🇼 +267</option><option value="+55">🇧🇷 +55</option>
-              <option value="+673">🇧🇳 +673</option><option value="+359">🇧🇬 +359</option>
-              <option value="+226">🇧🇫 +226</option><option value="+257">🇧🇮 +257</option>
-              <option value="+238">🇨🇻 +238</option><option value="+855">🇰🇭 +855</option>
-              <option value="+237">🇨🇲 +237</option><option value="+1">🇨🇦 +1</option>
-              <option value="+236">🇨🇫 +236</option><option value="+235">🇹🇩 +235</option>
-              <option value="+56">🇨🇱 +56</option><option value="+86">🇨🇳 +86</option>
-              <option value="+57">🇨🇴 +57</option><option value="+269">🇰🇲 +269</option>
-              <option value="+242">🇨🇬 +242</option><option value="+243">🇨🇩 +243</option>
-              <option value="+506">🇨🇷 +506</option><option value="+385">🇭🇷 +385</option>
-              <option value="+53">🇨🇺 +53</option><option value="+357">🇨🇾 +357</option>
-              <option value="+420">🇨🇿 +420</option><option value="+45">🇩🇰 +45</option>
-              <option value="+253">🇩🇯 +253</option><option value="+1767">🇩🇲 +1767</option>
-              <option value="+1809">🇩🇴 +1809</option><option value="+593">🇪🇨 +593</option>
-              <option value="+20">🇪🇬 +20</option><option value="+503">🇸🇻 +503</option>
-              <option value="+240">🇬🇶 +240</option><option value="+291">🇪🇷 +291</option>
-              <option value="+372">🇪🇪 +372</option><option value="+268">🇸🇿 +268</option>
-              <option value="+251">🇪🇹 +251</option><option value="+679">🇫🇯 +679</option>
-              <option value="+358">🇫🇮 +358</option><option value="+33">🇫🇷 +33</option>
-              <option value="+241">🇬🇦 +241</option><option value="+220">🇬🇲 +220</option>
-              <option value="+995">🇬🇪 +995</option><option value="+49">🇩🇪 +49</option>
-              <option value="+233">🇬🇭 +233</option><option value="+30">🇬🇷 +30</option>
-              <option value="+1473">🇬🇩 +1473</option><option value="+502">🇬🇹 +502</option>
-              <option value="+224">🇬🇳 +224</option><option value="+245">🇬🇼 +245</option>
-              <option value="+592">🇬🇾 +592</option><option value="+509">🇭🇹 +509</option>
-              <option value="+504">🇭🇳 +504</option><option value="+36">🇭🇺 +36</option>
-              <option value="+354">🇮🇸 +354</option><option value="+91">🇮🇳 +91</option>
-              <option value="+62">🇮🇩 +62</option><option value="+98">🇮🇷 +98</option>
-              <option value="+964">🇮🇶 +964</option><option value="+353">🇮🇪 +353</option>
-              <option value="+972">🇮🇱 +972</option><option value="+39">🇮🇹 +39</option>
-              <option value="+1876">🇯🇲 +1876</option><option value="+81">🇯🇵 +81</option>
-              <option value="+962">🇯🇴 +962</option><option value="+7">🇰🇿 +7</option>
-              <option value="+254">🇰🇪 +254</option><option value="+686">🇰🇮 +686</option>
-              <option value="+965">🇰🇼 +965</option><option value="+996">🇰🇬 +996</option>
-              <option value="+856">🇱🇦 +856</option><option value="+371">🇱🇻 +371</option>
-              <option value="+961">🇱🇧 +961</option><option value="+266">🇱🇸 +266</option>
-              <option value="+231">🇱🇷 +231</option><option value="+218">🇱🇾 +218</option>
-              <option value="+423">🇱🇮 +423</option><option value="+370">🇱🇹 +370</option>
-              <option value="+352">🇱🇺 +352</option><option value="+261">🇲🇬 +261</option>
-              <option value="+265">🇲🇼 +265</option><option value="+60">🇲🇾 +60</option>
-              <option value="+960">🇲🇻 +960</option><option value="+223">🇲🇱 +223</option>
-              <option value="+356">🇲🇹 +356</option><option value="+692">🇲🇭 +692</option>
-              <option value="+222">🇲🇷 +222</option><option value="+230">🇲🇺 +230</option>
-              <option value="+52">🇲🇽 +52</option><option value="+691">🇫🇲 +691</option>
-              <option value="+373">🇲🇩 +373</option><option value="+377">🇲🇨 +377</option>
-              <option value="+976">🇲🇳 +976</option><option value="+382">🇲🇪 +382</option>
-              <option value="+212">🇲🇦 +212</option><option value="+258">🇲🇿 +258</option>
-              <option value="+95">🇲🇲 +95</option><option value="+264">🇳🇦 +264</option>
-              <option value="+674">🇳🇷 +674</option><option value="+977">🇳🇵 +977</option>
-              <option value="+31">🇳🇱 +31</option><option value="+64">🇳🇿 +64</option>
-              <option value="+505">🇳🇮 +505</option><option value="+227">🇳🇪 +227</option>
-              <option value="+234">🇳🇬 +234</option><option value="+47">🇳🇴 +47</option>
-              <option value="+968">🇴🇲 +968</option><option value="+92">🇵🇰 +92</option>
-              <option value="+680">🇵🇼 +680</option><option value="+507">🇵🇦 +507</option>
-              <option value="+675">🇵🇬 +675</option><option value="+595">🇵🇾 +595</option>
-              <option value="+51">🇵🇪 +51</option><option value="+63">🇵🇭 +63</option>
-              <option value="+48">🇵🇱 +48</option><option value="+351">🇵🇹 +351</option>
-              <option value="+974">🇶🇦 +974</option><option value="+40">🇷🇴 +40</option>
-              <option value="+7">🇷🇺 +7</option><option value="+250">🇷🇼 +250</option>
-              <option value="+1869">🇰🇳 +1869</option><option value="+1758">🇱🇨 +1758</option>
-              <option value="+1784">🇻🇨 +1784</option><option value="+685">🇼🇸 +685</option>
-              <option value="+378">🇸🇲 +378</option><option value="+239">🇸🇹 +239</option>
               <option value="+966" selected>🇸🇦 +966</option>
-              <option value="+221">🇸🇳 +221</option><option value="+381">🇷🇸 +381</option>
-              <option value="+248">🇸🇨 +248</option><option value="+232">🇸🇱 +232</option>
-              <option value="+65">🇸🇬 +65</option><option value="+421">🇸🇰 +421</option>
-              <option value="+386">🇸🇮 +386</option><option value="+677">🇸🇧 +677</option>
-              <option value="+252">🇸🇴 +252</option><option value="+27">🇿🇦 +27</option>
-              <option value="+82">🇰🇷 +82</option><option value="+211">🇸🇸 +211</option>
-              <option value="+34">🇪🇸 +34</option><option value="+94">🇱🇰 +94</option>
-              <option value="+249">🇸🇩 +249</option><option value="+597">🇸🇷 +597</option>
-              <option value="+46">🇸🇪 +46</option><option value="+41">🇨🇭 +41</option>
-              <option value="+963">🇸🇾 +963</option><option value="+886">🇹🇼 +886</option>
-              <option value="+992">🇹🇯 +992</option><option value="+255">🇹🇿 +255</option>
-              <option value="+66">🇹🇭 +66</option><option value="+670">🇹🇱 +670</option>
-              <option value="+228">🇹🇬 +228</option><option value="+676">🇹🇴 +676</option>
-              <option value="+1868">🇹🇹 +1868</option><option value="+216">🇹🇳 +216</option>
-              <option value="+90">🇹🇷 +90</option><option value="+993">🇹🇲 +993</option>
-              <option value="+688">🇹🇻 +688</option><option value="+256">🇺🇬 +256</option>
-              <option value="+380">🇺🇦 +380</option><option value="+971">🇦🇪 +971</option>
-              <option value="+44">🇬🇧 +44</option><option value="+1">🇺🇸 +1</option>
-              <option value="+598">🇺🇾 +598</option><option value="+998">🇺🇿 +998</option>
-              <option value="+678">🇻🇺 +678</option><option value="+379">🇻🇦 +379</option>
-              <option value="+58">🇻🇪 +58</option><option value="+84">🇻🇳 +84</option>
-              <option value="+967">🇾🇪 +967</option><option value="+260">🇿🇲 +260</option>
-              <option value="+263">🇿🇼 +263</option>
+              <option value="+20">🇪🇬 +20</option>
+              <option value="+971">🇦🇪 +971</option>
+              <option value="+1">🇺🇸 +1</option>
             </select>
             <span class="pcode-arrow">▾</span>
           </div>
@@ -339,492 +242,181 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     </div>
   </div>
 
-  <!-- ── FOOTER ── -->
   <div class="footer">
-    <a href="support.html"         class="fl-link fl-support" data-i18n="support">الدعم الفني</a>
+    <a href="support.html" target="_blank" class="fl-link fl-support" data-i18n="support">الدعم الفني</a>
     <span class="fsep">•</span>
-    <a href="security-alerts.html" class="fl-link fl-sec"     data-i18n="security">تنبيهات الأمان</a>
+    <a href="security-alerts.html" target="_blank" class="fl-link fl-sec" data-i18n="security">تنبيهات الأمان</a>
     <span class="fsep">•</span>
-    <a href="about.html"           class="fl-link fl-about"   data-i18n="about">من نحن</a>
+    <a href="about.html" target="_blank" class="fl-link fl-about" data-i18n="about">من نحن</a>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════
-     SCRIPT
-══════════════════════════════════════════════════════════ -->
 <script type="module">
-
 /* ── Firebase SDKs ── */
-import{initializeApp}         from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import{getAnalytics}          from"https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,
-        sendEmailVerification,sendPasswordResetEmail}
-                               from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import{getFirestore,doc,setDoc,updateDoc,serverTimestamp,getDoc}
-                               from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* ══ BRIDGE — كود الربط بالمحرك (يحل محل الاتصال المباشر بـ Firebase) ══ */
-import{sendToSecurityInternet}from"./bridge.client.v10.js";
+/* ══ FIREBASE INIT (Complete block) ══ */
+const firebaseConfig = {
+  apiKey: "AIzaSyCoM-Aqq7VwTDx5ZeHmIpHM4-XXXXXXX", /* أكمل الـ API بتاعك هنا */
+  authDomain: "alqurmanixx.firebaseapp.com",
+  projectId: "alqurmanixx",
+  storageBucket: "alqurmanixx.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abcdef"
+};
+const app = initializeApp(firebaseConfig);
 
-/* ══ RESPONSE HANDLER ══ */
-const handleResponse=(resp)=>{
-  if(!resp)throw new Error("NO_RESPONSE");
-  switch(resp.status){
-    case"OK":return true;
-    case"BLOCKED":case"BLOCKED_EDGE":case"BLOCKED_GLOBAL":case"BLOCKED_GLOBAL_MESH":
-      console.error("🚫 حظر:",resp);throw new Error("SECURITY_BLOCK");
-    case"DENIED":throw new Error("UNAUTHORIZED");
-    case"ERROR": throw new Error("SYSTEM_ERROR");
-    default:console.warn("⚠️ استجابة غير معروفة:",resp);return false;
-  }
+// ==========================================
+// 1. مؤثرات الذرات الذهبية (Golden Particles)
+// ==========================================
+function createParticles() {
+  const ptc = document.getElementById('ptc');
+  setInterval(() => {
+    let p = document.createElement('div');
+    p.className = 'gp';
+    p.style.left = Math.random() * 100 + 'vw';
+    let size = Math.random() * 5 + 2;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.background = Math.random() > 0.5 ? 'var(--gold1)' : 'var(--gold3)';
+    p.style.boxShadow = `0 0 ${size*2}px ${p.style.background}`;
+    p.style.animationDuration = (Math.random() * 3 + 2) + 's';
+    ptc.appendChild(p);
+    setTimeout(() => p.remove(), 5000);
+  }, 100); // سرعة وتناثر الفخامة
+}
+createParticles();
+
+// ==========================================
+// 2. تشغيل التبويبات (Tabs Logic)
+// ==========================================
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    // إزالة النشاط من الكل
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    
+    // تفعيل المطلوب
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab + '-panel').classList.add('active');
+  });
+});
+
+// ==========================================
+// 3. قائمة اللغات (Language Dropdown)
+// ==========================================
+const globeBtn = document.getElementById('globeBtn');
+const langDd = document.getElementById('langDd');
+globeBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  langDd.classList.toggle('open');
+});
+document.addEventListener('click', () => {
+  langDd.classList.remove('open');
+});
+
+// ==========================================
+// 4. نظام المودال الذكي (Smart Modals)
+// ==========================================
+const moverlay = document.getElementById('moverlay');
+const mtitle = document.getElementById('mtitle');
+const mbody = document.getElementById('mbody');
+const mact = document.getElementById('mact');
+const mbox = document.getElementById('mbox');
+
+function showModal(title, body, typeClass, actionsHtml = `<button class="mbtn" onclick="closeModal()">حسناً</button>`) {
+  mbox.className = `mbox ${typeClass}`;
+  mtitle.innerHTML = title;
+  mbody.innerHTML = body;
+  mact.innerHTML = actionsHtml;
+  moverlay.classList.add('active');
+}
+window.closeModal = () => moverlay.classList.remove('active');
+
+// ==========================================
+// 5. قوة كلمة السر (Password Strength)
+// ==========================================
+const rpw = document.getElementById('rpw');
+const sb = document.getElementById('sb');
+let isPasswordStrong = false;
+
+const rules = {
+  r1: /.{8,}/,        // 8 أحرف
+  r2: /[A-Z]/,        // حرف كبير
+  r3: /[a-z]/,        // حرف صغير
+  r4: /[0-9]/,        // رقم
+  r5: /[^A-Za-z0-9]/  // رمز خاص
 };
 
-/* ══ FIREBASE INIT ══ */
-const app=initializeApp({
-  apiKey:"AIzaSyCoM-Aqq7VwTDx5ZeHmIpHM4sm2XM0WdKw",
-  authDomain:"alqurmanix-15b92.firebaseapp.com",
-  projectId:"alqurmanix-15b92",
-  storageBucket:"alqurmanix-15b92.firebasestorage.app",
-  messagingSenderId:"477352026568",
-  appId:"1:477352026568:web:49f90cd3fc74b6948ba0fd",
-  measurementId:"G-VJF36N1MCD"
+rpw.addEventListener('input', () => {
+  let val = rpw.value;
+  let passed = 0;
+  for(let key in rules) {
+    let ok = rules[key].test(val);
+    let el = document.getElementById(key);
+    el.style.color = ok ? '#00ff88' : '#555';
+    el.querySelector('.ri').textContent = ok ? '✅' : '⭕';
+    if(ok) passed++;
+  }
+  
+  sb.style.width = (passed * 20) + '%';
+  sb.style.background = passed < 3 ? '#ff4444' : passed < 5 ? '#FFAA00' : '#00ff88';
+  isPasswordStrong = (passed === 5);
 });
-getAnalytics(app);
-const auth=getAuth(app),db=getFirestore(app);
 
-/* ══ LANGUAGES ══ */
-const LANGS=[
-  {code:"ar",label:"AR",flag:"🇸🇦",file:"lang/ar.json",dir:"rtl"},
-  {code:"en",label:"EN",flag:"🇬🇧",file:"lang/en.json",dir:"ltr"},
-  {code:"es",label:"ES",flag:"🇪🇸",file:"lang/es.json",dir:"ltr"},
-  {code:"de",label:"DE",flag:"🇩🇪",file:"lang/de.json",dir:"ltr"},
-  {code:"it",label:"IT",flag:"🇮🇹",file:"lang/it.json",dir:"ltr"},
-  {code:"fr",label:"FR",flag:"🇫🇷",file:"lang/fr.json",dir:"ltr"},
-  {code:"tr",label:"TR",flag:"🇹🇷",file:"lang/tr.json",dir:"ltr"},
-  {code:"ko",label:"KO",flag:"🇰🇷",file:"lang/ko.json",dir:"ltr"},
-  {code:"ja",label:"JA",flag:"🇯🇵",file:"lang/ja.json",dir:"ltr"},
-  {code:"zh",label:"ZH",flag:"🇨🇳",file:"lang/zh.json",dir:"ltr"},
-  {code:"hi",label:"HI",flag:"🇮🇳",file:"lang/hi.json",dir:"ltr"}
-];
-let T={};
-async function loadLang(code){
-  const lang=LANGS.find(l=>l.code===code)||LANGS[0];
-  try{const r=await fetch(lang.file);if(!r.ok)throw 0;T=await r.json();}catch{T={};}
-  document.documentElement.lang=lang.code;document.documentElement.dir=lang.dir;
-  document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n;if(T[k])el.textContent=T[k];});
-  document.getElementById("curFlag").textContent=lang.flag;
-  document.getElementById("curCode").textContent=lang.label;
-  localStorage.setItem("aqx_lang",code);
-}
-const t=(k,fb="")=>T[k]||fb;
-function buildDD(){
-  const dd=document.getElementById("langDd");dd.innerHTML="";
-  LANGS.forEach(lang=>{
-    const d=document.createElement("div");d.className="lang-item";
-    d.innerHTML=`<span class="lf">${lang.flag}</span><span>${lang.label}</span>`;
-    d.onclick=()=>{dd.classList.remove("open");loadLang(lang.code);};
-    dd.appendChild(d);
-  });
-}
+// ==========================================
+// 6. هيبة زر التحقق (Device Fingerprint & OTP)
+// ==========================================
+const verifyPhoneBtn = document.getElementById('verifyPhoneBtn');
+const otpWrap = document.getElementById('otpWrap');
+const otpConfirmBtn = document.getElementById('otpConfirmBtn');
+const phoneOk = document.getElementById('phoneOk');
+const registerBtn = document.getElementById('registerBtn');
 
-/* ══ SECURITY UTILS ══ */
-/* fp() ≥ 32 hex → يوافق isDeviceUnderQuota(): f.size()>=32 && matches('^[a-f0-9]{32,128}$') */
-function fp(){
-  const n=navigator,s=screen;
-  const raw=[n.userAgent,n.language,s.colorDepth,s.width+"x"+s.height,
-             new Date().getTimezoneOffset(),n.hardwareConcurrency||0].join("|");
-  let h=0;
-  for(let i=0;i<raw.length;i++){h=Math.imul(31,h)+raw.charCodeAt(i)|0;}
-  const base=Math.abs(h).toString(16);
-  /* pad to 32+ hex using extra entropy */
-  const extra=Date.now().toString(16)+Math.random().toString(16).slice(2);
-  return(base+extra).replace(/[^a-f0-9]/g,"0").slice(0,64).padStart(32,"0");
-}
-
-/* sessionId: m(s,10,128) → size 10-128 */
-function genSid(){
-  const a=new Uint8Array(20);crypto.getRandomValues(a);
-  return Array.from(a,b=>b.toString(16).padStart(2,"0")).join("").slice(0,40);
-}
-
-/* referralCode optional — m(s,5,254) */
-function genRefCode(uid){return uid.slice(0,8).toUpperCase();}
-
-const rl=new Map();
-function rateOk(k,ms=5000){const l=rl.get(k)||0;if(Date.now()-l<ms)return false;rl.set(k,Date.now());return true;}
-const clean=s=>s.replace(/[<>'"]/g,"").replace(/javascript:/gi,"").replace(/on\w+=/gi,"").trim();
-
-/* ══ PASSWORD STRENGTH ══ */
-function pws(pw){
-  const len=pw.length>=8,up=/[A-Z]/.test(pw),lo=/[a-z]/.test(pw),
-        num=/[0-9]/.test(pw),sp=/[!@#$%^&*()\-_=+\[\]{};:'",.<>/?\\|`~]/.test(pw);
-  return{score:[len,up,lo,num,sp].filter(Boolean).length,len,up,lo,num,sp};
-}
-function updatePwUI(pw){
-  const s=pws(pw),bar=document.getElementById("sb");
-  [{id:"r1",ok:s.len},{id:"r2",ok:s.up},{id:"r3",ok:s.lo},{id:"r4",ok:s.num},{id:"r5",ok:s.sp}]
-    .forEach(({id,ok})=>{const el=document.getElementById(id);if(!el)return;
-      el.querySelector(".ri").textContent=ok?"✅":"⭕";el.style.color=ok?"#00ff88":"#555";});
-  const col=s.score<=2?"#ff4444":s.score===3?"#ffaa00":s.score===4?"#88ff00":"#00ff88";
-  bar.style.width=(s.score/5*100)+"%";bar.style.background=col;bar.style.boxShadow=`0 0 8px ${col}`;
-}
-
-/* ══ FIREBASE ERROR ══ */
-function fbErr(c){
-  const m={
-    "auth/email-already-in-use":()=>t("err_email_used","⚠️ هذا البريد مسجل مسبقاً."),
-    "auth/invalid-email":       ()=>t("err_invalid_email","⚠️ البريد غير صالح."),
-    "auth/weak-password":       ()=>t("err_weak_pw","⚠️ كلمة السر ضعيفة."),
-    "auth/user-not-found":      ()=>t("err_user_nf","⚠️ لا يوجد حساب بهذا البريد."),
-    "auth/wrong-password":      ()=>t("err_wrong_pw","⚠️ كلمة السر غير صحيحة."),
-    "auth/invalid-credential":  ()=>t("err_wrong_pw","⚠️ البريد أو كلمة السر غير صحيحة."),
-    "auth/too-many-requests":   ()=>t("err_too_many","⚠️ محاولات كثيرة. حاول لاحقاً."),
-    "auth/network-request-failed":()=>t("err_network","⚠️ خطأ في الشبكة."),
-    "auth/user-disabled":       ()=>t("err_disabled","⚠️ الحساب معطل. تواصل مع الدعم."),
-    "auth/code-expired":        ()=>t("err_otp_exp","⚠️ انتهت صلاحية الرمز."),
-    "auth/invalid-verification-code":()=>t("err_otp_invalid","⚠️ الرمز غير صحيح.")
-  };
-  return(m[c]||(_=>t("err_unknown","⚠️ حدث خطأ غير متوقع.")))();
-}
-function bridgeErrMsg(code){
-  const m={SECURITY_BLOCK:t("err_blocked","🚫 رُفض الطلب بنظام الأمان."),UNAUTHORIZED:t("err_unauth","🚫 غير مصرح."),SYSTEM_ERROR:t("err_system","⚠️ خطأ في النظام.")};
-  return m[code]||t("err_unknown","⚠️ حدث خطأ.");
-}
-
-/* ══ MODAL ══ */
-let _2faResolve=null,_2faReject=null;
-
-function modal(type,data=""){
-  const ov=document.getElementById("moverlay"),box=document.getElementById("mbox"),
-        ttl=document.getElementById("mtitle"),bdy=document.getElementById("mbody"),
-        act=document.getElementById("mact");
-  act.innerHTML="";
-  ttl.style.color="";ttl.style.textShadow="";
-
-  if(type==="success-login"){
-    ttl.textContent=t("modal_welcome_title","🌟 مرحباً بعودتك!");
-    bdy.textContent=t("modal_welcome_body","أهلاً وسهلاً — نحن سعداء برؤيتك مجدداً في AlqurmanixX!");
-    box.className="mbox m-gold";addClose(act);
-
-  }else if(type==="success-register"){
-    ttl.textContent=t("modal_reg_title","🎊 تم التسجيل بنجاح!");
-    bdy.textContent=t("modal_reg_body","تم إنشاء حسابك بنجاح!\nتم إرسال رابط التفعيل إلى بريدك الإلكتروني.\nيرجى تفعيل حسابك قبل تسجيل الدخول.");
-    box.className="mbox m-gold";addClose(act);
-
-  }else if(type==="not-verified"){
-    ttl.textContent=t("modal_unver_title","📧 الحساب غير مفعّل");
-    bdy.textContent=t("modal_unver_body","حسابك لم يُفعَّل بعد.\nاضغط على رابط التفعيل في بريدك الإلكتروني.");
-    box.className="mbox m-warn";
-    const rb=document.createElement("button");rb.className="mbtn";
-    rb.textContent=t("resend_btn","إعادة إرسال رابط التفعيل");
-    rb.onclick=async()=>{
-      closeModal();const u=auth.currentUser;if(!u)return;
-      if(!rateOk("resend_"+u.uid,60000)){modal("info",t("err_too_many","⏳ انتظر دقيقة."));return;}
-      try{await sendEmailVerification(u);modal("info",t("resent_ok","✅ تم الإرسال. تحقق من بريدك."));}
-      catch{modal("error",t("err_unknown","حدث خطأ."));}
-    };
-    act.appendChild(rb);addClose(act);
-
-  }else if(type==="2fa"){
-    /* ── التوثيق الثنائي — يظهر قبل نافذة نجاح الدخول ── */
-    ttl.style.color="#00ff88";ttl.style.textShadow="0 0 22px rgba(0,255,136,.4)";
-    ttl.textContent=t("modal_2fa_title","🔐 التحقق الثنائي");
-    bdy.textContent=t("modal_2fa_body","تم إرسال رمز التحقق إلى هاتفك.\nأدخل الرمز المكوّن من 6 أرقام.");
-    box.className="mbox m-2fa";
-    const inp=document.createElement("input");
-    inp.className="m-otp-inp";inp.type="text";inp.inputMode="numeric";
-    inp.maxLength=6;inp.placeholder="• • • • • •";inp.autocomplete="one-time-code";
-    const errDiv=document.createElement("div");errDiv.className="m-otp-err";
-    const cnfBtn=document.createElement("button");
-    cnfBtn.className="mbtn mbtn-neon";
-    cnfBtn.textContent=t("otp_confirm_btn","تأكيد الرمز ✓");
-    cnfBtn.onclick=()=>{
-      const code=inp.value.trim();
-      if(!/^\d{6}$/.test(code)){errDiv.textContent=t("err_otp_format","⚠️ أدخل 6 أرقام.");return;}
-      if(_2faResolve){_2faResolve(code);_2faResolve=null;_2faReject=null;}
-      closeModal();
-    };
-    inp.addEventListener("keydown",e=>{if(e.key==="Enter")cnfBtn.click();});
-    const cancelBtn=document.createElement("button");
-    cancelBtn.className="mbtn mbtn-c";cancelBtn.textContent=t("close","إلغاء");
-    cancelBtn.onclick=()=>{if(_2faReject){_2faReject(new Error("CANCELLED"));}closeModal();};
-    act.appendChild(inp);act.appendChild(errDiv);act.appendChild(cnfBtn);act.appendChild(cancelBtn);
-
-  }else if(type==="info"){
-    ttl.textContent="ℹ️";bdy.textContent=data;box.className="mbox m-info";addClose(act);
-  }else{
-    ttl.textContent="❌ "+t("error_title","خطأ");bdy.textContent=data;box.className="mbox m-err";addClose(act);
+verifyPhoneBtn.addEventListener('click', () => {
+  // 1. شرط قوة كلمة السر
+  if (!isPasswordStrong) {
+    showModal('🛡️ تنبيه أمني', 'يجب أن تكون كلمة السر قوية ومستوفية لجميع الشروط (علامات خضراء) قبل إرسال رمز التحقق.', 'm-warn');
+    return;
   }
-  ov.classList.add("active");
-  /* auto-focus OTP input */
-  setTimeout(()=>act.querySelector("input")?.focus(),120);
-}
-function addClose(act){const b=document.createElement("button");b.className="mbtn mbtn-c";b.textContent=t("close","إغلاق");b.onclick=closeModal;act.appendChild(b);}
-function closeModal(){document.getElementById("moverlay").classList.remove("active");}
-
-/* ══ LOADING ══ */
-function setLoad(id,on){
-  const b=document.getElementById(id);if(!b)return;
-  const lbl=b.getAttribute("data-label")||b.textContent;
-  if(on){b.setAttribute("data-label",lbl);b.disabled=true;b.innerHTML=`${t("loading","جاري...")}<span class="spinner"></span>`;}
-  else{b.disabled=false;b.textContent=lbl;}
-}
-
-/* ══ OTP SIMULATION (Phone verify)
-   في الإنتاج: استبدل بـ Firebase Phone Auth أو SMS Gateway عبر Bridge
-══ */
-let _otpCode="",_phoneVerified=false;
-function sendOtp(){
-  _otpCode=String(Math.floor(100000+Math.random()*900000));
-  /* DEV: اطبع الرمز في Console — احذفه في الإنتاج */
-  console.info("%c[DEV] OTP Code: "+_otpCode,"color:#00ff88;font-size:16px;font-weight:bold");
-}
-const checkOtp=input=>input.trim()===_otpCode;
-
-/* ══ PHONE VERIFY (Register) ══ */
-async function handleVerifyPhone(){
-  const num=clean(document.getElementById("rphone").value.trim());
-  if(!num||num.length<4){modal("error",t("err_phone_empty","⚠️ أدخل رقم هاتف صحيح."));return;}
-  if(!rateOk("otp_"+num,60000)){modal("error",t("err_too_many","⏳ انتظر دقيقة."));return;}
-  const btn=document.getElementById("verifyPhoneBtn");
-  btn.disabled=true;btn.innerHTML=`${t("loading","جاري...")} <span class="spinner" style="border-top-color:#FFD700"></span>`;
-  sendOtp();
-  document.getElementById("otpWrap").classList.add("show");
-  document.getElementById("otpInput").value="";
-  document.getElementById("otpInput").focus();
-  btn.disabled=false;btn.textContent=t("verify_phone_btn","تأكيد رقم الهاتف");
-}
-
-async function handleConfirmOtp(){
-  const input=document.getElementById("otpInput").value.trim();
-  if(!/^\d{6}$/.test(input)){modal("error",t("err_otp_format","⚠️ الرمز 6 أرقام."));return;}
-  if(checkOtp(input)){
-    _phoneVerified=true;
-    document.getElementById("otpWrap").classList.remove("show");
-    document.getElementById("phoneOk").classList.add("show");
-    document.getElementById("verifyPhoneBtn").style.display="none";
-    document.getElementById("registerBtn").disabled=false;
-  }else{
-    _phoneVerified=false;
-    modal("error",t("err_otp_invalid","⚠️ الرمز غير صحيح. تحقق وأعد المحاولة."));
-  }
-}
-
-/* ══════════════════════════════════════════════════════════
-   ██  REGISTER
-   يُنفّذ كل بنود القواعد:
-   f() g() → System_Settings/Registration_Control (يقرأها القاعدة تلقائياً)
-   b(u) → request.auth.uid == userId
-   c() → email_verified (يُفعَّل بعد إرسال الرابط)
-   d() → sign_in_second_factor (2FA — phone verified ✓)
-   e() → auth_time < now + 2h ✓
-   q(data) → userId,email,createdAt,status,deviceFingerprint,sessionId ✓
-   y(data) → userId==auth.uid && email==auth.token.email ✓
-   isDeviceUnderQuota() → fp() hex 32-64 chars ✓
-   isNotBanned() → يتحقق منه القاعدة تلقائياً ✓
-══════════════════════════════════════════════════════════ */
-async function doRegister(){
-  const email=clean(document.getElementById("remail").value.trim());
-  const pw=document.getElementById("rpw").value;
-  const cf=document.getElementById("rconf").value;
-
-  if(!email||!pw||!cf){modal("error",t("err_empty","⚠️ يرجى ملء جميع الحقول."));return;}
-  if(pw!==cf){modal("error",t("err_mismatch","⚠️ كلمتا السر غير متطابقتين."));return;}
-  if(pws(pw).score<4){modal("error",t("err_weak_pw","⚠️ كلمة السر لا تستوفي الشروط."));return;}
-  if(!_phoneVerified){modal("error",t("err_phone_not_verified","⚠️ يجب التحقق من رقم الهاتف أولاً."));return;}
-  if(!rateOk("reg_"+email,10000)){modal("error",t("err_too_many","⏳ انتظر قليلاً."));return;}
-
-  setLoad("registerBtn",true);
-  try{
-    const cred=await createUserWithEmailAndPassword(auth,email,pw);
-    const user=cred.user;
-    const deviceFp=fp();
-    const sessId=genSid();
-
-    /* Firestore document — يطابق q() بالضبط:
-       required keys: userId,email,createdAt,status,deviceFingerprint,sessionId
-       allowed optional: lastActivity,referralCode,deletionRequestTime
-       n(email): 5-254 chars, contains @  ✓
-       status in ['active','frozen','pending_deletion'] ✓
-       l(createdAt): timestamp ≤ request.time ✓
-       o(deviceFingerprint): 10-256 chars ✓  (fp()=64 ✓)
-       p(sessionId): 10-128 chars ✓  (genSid()=40 ✓)
-    */
-    const fsData={
-      userId           :user.uid,
-      email            :email,
-      createdAt        :serverTimestamp(),
-      status           :"active",
-      lastActivity     :serverTimestamp(),
-      deviceFingerprint:deviceFp,
-      sessionId        :sessId,
-      referralCode     :genRefCode(user.uid)
-    };
-    await setDoc(doc(db,"users",user.uid),fsData);
-
-    /* Bridge — create_user_data */
-    try{
-      const br=await sendToSecurityInternet("create_user_data",{
-        ...fsData,
-        phone:document.getElementById("phoneCode").value+clean(document.getElementById("rphone").value.trim()),
-        role:"subscriber"
-      });
-      handleResponse(br);
-    }catch(bErr){console.warn("Bridge:",bErr.message);}
-
-    /* إرسال رابط تفعيل البريد */
-    await sendEmailVerification(user).catch(e=>console.warn("EmailVerif:",e.message));
-
-    modal("success-register");
-  }catch(e){
-    modal("error",fbErr(e.code));
-  }finally{
-    setLoad("registerBtn",false);
-  }
-}
-
-/* ══════════════════════════════════════════════════════════
-   ██  LOGIN
-   c() → emailVerified ✓
-   e() → auth_time + 2h ✓
-   2FA → يظهر modal التحقق الثنائي ثم ينتظر إدخال الرمز
-   allowedUpdateFields → lastActivity, deviceFingerprint, sessionId
-   j() → createdAt & email & userId ثابتة (لا تُعدَّل) ✓
-   y() → userId==auth.uid ✓
-   x() → active→active ✓
-   u() → lastActivity متزايدة ✓
-   !s() → device يتغير مع session جديد (مسموح حسب x() ✓)
-   h() + !i() → يتحقق منهما القاعدة ✓
-   isNotBanned() → يتحقق منها القاعدة ✓
-══════════════════════════════════════════════════════════ */
-async function doLogin(){
-  const email=clean(document.getElementById("lemail").value.trim());
-  const pw=document.getElementById("lpw").value;
-  if(!email||!pw){modal("error",t("err_empty","⚠️ يرجى ملء جميع الحقول."));return;}
-  if(!rateOk("login_"+email,5000)){modal("error",t("err_too_many","⏳ انتظر 5 ثوانٍ."));return;}
-  setLoad("loginBtn",true);
-  try{
-    const cred=await signInWithEmailAndPassword(auth,email,pw);
-    const user=cred.user;
-
-    /* c() — isVerified */
-    if(!user.emailVerified){setLoad("loginBtn",false);modal("not-verified");return;}
-
-    /* d() — التوثيق الثنائي: أرسل OTP وانتظر إدخاله */
-    sendOtp();
-    setLoad("loginBtn",false);
-
-    const otpCode=await new Promise((res,rej)=>{
-      _2faResolve=res;_2faReject=rej;
-      modal("2fa");
-    });
-
-    /* تحقق من الرمز */
-    if(!checkOtp(otpCode)){
-      modal("error",t("err_otp_invalid","⚠️ الرمز غير صحيح."));return;
-    }
-
-    setLoad("loginBtn",true);
-    const deviceFp=fp();
-    const sessId=genSid();
-
-    /* allowedUpdateFields: lastActivity, deviceFingerprint, sessionId
-       لا نُعدّل: createdAt, email, userId, status, referralCode */
-    await updateDoc(doc(db,"users",user.uid),{
-      lastActivity     :serverTimestamp(),
-      deviceFingerprint:deviceFp,
-      sessionId        :sessId
-    });
-
-    /* Bridge — update_user_data */
-    try{
-      const br=await sendToSecurityInternet("update_user_data",{
-        userId           :user.uid,
-        deviceFingerprint:deviceFp,
-        sessionId        :sessId,
-        lastActivity     :new Date().toISOString()
-      });
-      handleResponse(br);
-    }catch(bErr){console.warn("Bridge:",bErr.message);}
-
-    modal("success-login",user.email||"");
-    setTimeout(()=>{window.location.href="main.html";},2200);
-
-  }catch(e){
-    if(e.message==="CANCELLED")return;
-    modal("error",e.code?fbErr(e.code):bridgeErrMsg(e.message));
-  }finally{
-    setLoad("loginBtn",false);
-  }
-}
-
-/* ══ FORGOT PASSWORD ══ */
-async function doForgot(){
-  const email=clean(document.getElementById("lemail").value.trim());
-  if(!email){modal("error",t("err_empty_email","⚠️ أدخل البريد الإلكتروني أولاً."));return;}
-  if(!rateOk("reset_"+email,30000)){modal("error",t("err_too_many","⏳ انتظر 30 ثانية."));return;}
-  try{await sendPasswordResetEmail(auth,email);modal("info",t("reset_sent","📧 تم إرسال رابط إعادة التعيين."));}
-  catch(e){modal("error",fbErr(e.code));}
-}
-
-/* ══ PARTICLES ══ */
-function particles(){
-  const c=document.getElementById("ptc");
-  const cols=["#FFD700","#FFC200","#FFAA00","#FFE066","#FFF0A0","#F5A623","#E8940A"];
-  for(let i=0;i<60;i++){
-    const p=document.createElement("div");p.className="gp";
-    const sz=Math.random()*8+3,cl=cols[Math.floor(Math.random()*cols.length)];
-    p.style.cssText=`width:${sz}px;height:${sz}px;background:${cl};left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${3+Math.random()*6}s;animation-delay:${Math.random()*6}s;opacity:${.4+Math.random()*.6};box-shadow:0 0 ${sz*2}px ${cl}`;
-    c.appendChild(p);
-  }
-}
-
-/* ══ INIT ══ */
-document.addEventListener("DOMContentLoaded",async()=>{
-  particles();
-  buildDD();
-  await loadLang(localStorage.getItem("aqx_lang")||"ar");
-
-  document.getElementById("globeBtn").addEventListener("click",e=>{
-    e.stopPropagation();document.getElementById("langDd").classList.toggle("open");
-  });
-  document.addEventListener("click",()=>document.getElementById("langDd").classList.remove("open"));
-
-  document.querySelectorAll(".tab-btn").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const tab=btn.dataset.tab;
-      document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
-      document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
-      btn.classList.add("active");
-      document.getElementById(tab+"-panel").classList.add("active");
-    });
-  });
-
-  document.getElementById("rpw").addEventListener("input",e=>updatePwUI(e.target.value));
-  document.getElementById("rconf").addEventListener("input",()=>{
-    const pw=document.getElementById("rpw").value,cf=document.getElementById("rconf").value;
-    const el=document.getElementById("cmatch");
-    el.textContent=cf===pw?t("pw_match","✅ تطابق"):t("pw_no_match","❌ لا تطابق");
-    el.style.color=cf===pw?"#00ff88":"#ff4444";
-  });
-
-  document.getElementById("verifyPhoneBtn").addEventListener("click",handleVerifyPhone);
-  document.getElementById("otpConfirmBtn").addEventListener("click",handleConfirmOtp);
-  document.getElementById("otpInput").addEventListener("keydown",e=>{if(e.key==="Enter")handleConfirmOtp();});
-
-  document.getElementById("loginBtn")   .addEventListener("click",doLogin);
-  document.getElementById("registerBtn").addEventListener("click",doRegister);
-  document.getElementById("forgotBtn")  .addEventListener("click",doForgot);
-
-  document.getElementById("lpw")  .addEventListener("keydown",e=>{if(e.key==="Enter")doLogin();});
-  document.getElementById("rconf").addEventListener("keydown",e=>{if(e.key==="Enter")doRegister();});
-  document.getElementById("moverlay").addEventListener("click",e=>{
-    if(e.target.id==="moverlay"){
-      if(_2faReject){_2faReject(new Error("CANCELLED"));}
-      closeModal();
-    }
-  });
+  // 2. محاكاة فحص بصمة الجهاز
+  showModal('⚙️ جاري التحقق...', 'يتم الآن فحص بصمة الجهاز وقوة التشفير قبل إرسال الرمز...', 'm-info', '');
+  
+  setTimeout(() => {
+    closeModal();
+    verifyPhoneBtn.style.display = 'none';
+    otpWrap.classList.add('show');
+  }, 2000); // انتظار ثانيتين لمحاكاة الفحص
 });
+
+// تأكيد كود الهاتف
+otpConfirmBtn.addEventListener('click', () => {
+  const otpVal = document.getElementById('otpInput').value;
+  if(otpVal.length === 6) {
+    otpWrap.classList.remove('show');
+    phoneOk.classList.add('show');
+    registerBtn.removeAttribute('disabled'); // فتح زر الاشتراك النهائي
+  } else {
+    showModal('❌ خطأ', 'رمز التحقق يجب أن يتكون من 6 أرقام.', 'm-err');
+  }
+});
+
+// ==========================================
+// 7. تشغيل زر تسجيل الدخول
+// ==========================================
+document.getElementById('loginBtn').addEventListener('click', () => {
+  const email = document.getElementById('lemail').value;
+  const pass = document.getElementById('lpw').value;
+  if(email && pass) {
+    showModal('مرحباً بعودتك', 'يتم الآن الاتصال بمحرك الأمان الرئيسي...', 'm-gold', '<div class="spinner"></div> جاري التحميل');
+  } else {
+    showModal('تنبيه', 'يرجى إدخال البريد الإلكتروني وكلمة السر.', 'm-warn');
+  }
+});
+
 </script>
 </body>
 </html>
