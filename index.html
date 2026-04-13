@@ -1,428 +1,58 @@
-
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AlqurmanixX</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet"/>
-<style>
-:root{
-  --gold1:#FFD700;--gold2:#FFC200;--gold3:#FFAA00;--gold4:#FFE066;
-  --gold5:#F5A623;--gold6:#E8940A;--gold7:#FFF0A0;
-  --neon:#00ff88;--bg:#020408;--card:rgba(8,14,26,0.97);
-  --border:rgba(255,215,0,0.22);
-  --shadow:0 0 50px rgba(255,170,0,0.15),0 8px 40px rgba(0,0,0,0.75);
-  --fh:'Cinzel Decorative',serif;--fb:'Tajawal',sans-serif;
+{
+  "online": "Online",
+  "tab_login": "Anmelden",
+  "tab_register": "Registrieren",
+  "email": "E-Mail-Adresse",
+  "password": "Passwort",
+  "forgot": "Passwort vergessen?",
+  "login_btn": "Einloggen",
+  "confirm_pw": "Passwort bestätigen",
+  "register_btn": "Konto erstellen",
+  "rule_len": "Mindestens 8 Zeichen",
+  "rule_upper": "Großbuchstabe (A-Z)",
+  "rule_lower": "Kleinbuchstabe (a-z)",
+  "rule_num": "Zahl (0-9)",
+  "rule_special": "Sonderzeichen (!@#$...)",
+  "pw_match": "✅ Übereinstimmung",
+  "pw_no_match": "❌ Keine Übereinstimmung",
+  "support": "Support",
+  "security": "Sicherheitswarnungen",
+  "about": "Über uns",
+  "close": "Schließen",
+  "loading": "Laden...",
+  "modal_welcome_title": "🌟 Willkommen zurück!",
+  "modal_welcome_body": "Schön, dich wieder bei AlqurmanixX zu sehen!",
+  "modal_reg_title": "🎊 Registrierung erfolgreich!",
+  "modal_reg_body": "Dein Konto wurde erstellt!\nEin Bestätigungslink wurde an deine E-Mail gesendet.\nBitte verifiziere dein Konto vor dem Einloggen.",
+  "modal_unver_title": "📧 Konto nicht verifiziert",
+  "modal_unver_body": "Dein Konto ist noch nicht verifiziert.\nKlicke auf den Bestätigungslink in deiner E-Mail.",
+  "resend_btn": "Bestätigungslink erneut senden",
+  "resent_ok": "✅ Gesendet! Überprüfe deinen Posteingang.",
+  "reset_sent": "📧 Passwort-Reset-Link wurde an deine E-Mail gesendet.",
+  "error_title": "Fehler",
+  "err_empty": "⚠️ Bitte alle Felder ausfüllen.",
+  "err_empty_email": "⚠️ Bitte zuerst E-Mail eingeben.",
+  "err_mismatch": "⚠️ Passwörter stimmen nicht überein.",
+  "err_weak_pw": "⚠️ Passwort erfüllt nicht die Anforderungen.",
+  "err_too_many": "⏳ Zu viele Versuche. Bitte später versuchen.",
+  "err_email_used": "⚠️ Diese E-Mail ist bereits registriert.",
+  "err_invalid_email": "⚠️ Ungültige E-Mail-Adresse.",
+  "err_user_nf": "⚠️ Kein Konto mit dieser E-Mail gefunden.",
+  "err_wrong_pw": "⚠️ E-Mail oder Passwort falsch.",
+  "err_network": "⚠️ Netzwerkfehler. Verbindung prüfen.",
+  "err_disabled": "⚠️ Konto deaktiviert. Support kontaktieren.",
+  "err_unknown": "⚠️ Ein unerwarteter Fehler ist aufgetreten.",
+  "phone_label": "Telefonnummer",
+  "verify_phone_btn": "Telefon bestätigen",
+  "otp_note": "✅ Code gesendet — eingeben",
+  "otp_confirm_btn": "Bestätigen ✓",
+  "phone_verified": "✅ Telefon verifiziert 🎉",
+  "modal_2fa_title": "🔐 Zwei-Faktor-Verifizierung",
+  "modal_2fa_body": "Code an dein Telefon gesendet.\n6-stelligen Code eingeben.",
+  "err_phone_empty": "⚠️ Gültige Nummer eingeben.",
+  "err_phone_not_verified": "⚠️ Telefon zuerst verifizieren.",
+  "err_otp_format": "⚠️ 6 Ziffern erforderlich.",
+  "err_otp_invalid": "⚠️ Falscher Code.",
+  "err_blocked": "🚫 Vom Sicherheitssystem blockiert.",
+  "err_system": "⚠️ Systemfehler."
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{min-height:100vh;background:var(--bg);font-family:var(--fb);color:#e8dcc8;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(ellipse 80% 55% at 50% -5%,rgba(255,175,0,.09) 0%,transparent 68%),
-    radial-gradient(ellipse 55% 40% at 85% 92%,rgba(255,130,0,.06) 0%,transparent 55%),
-    radial-gradient(ellipse 40% 30% at 8% 78%,rgba(255,195,0,.05) 0%,transparent 50%),
-    linear-gradient(140deg,#020408 0%,#05091a 45%,#07101e 72%,#030609 100%)}
-#ptc{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.gp{position:absolute;border-radius:50%;animation:fp linear infinite}
-@keyframes fp{0%{transform:translateY(0) translateX(0) scale(1);opacity:.8}30%{transform:translateY(-50px) translateX(18px) scale(1.2)}60%{transform:translateY(-110px) translateX(-12px) scale(.8);opacity:.4}100%{transform:translateY(-200px) translateX(8px) scale(.4);opacity:0}}
-.wrap{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 16px 70px}
-.topbar{width:100%;max-width:1080px;display:flex;justify-content:space-between;align-items:center;padding:20px 0 0}
-.online{display:flex;align-items:center;gap:9px;background:rgba(0,255,136,.06);border:1px solid rgba(0,255,136,.2);border-radius:30px;padding:7px 16px;backdrop-filter:blur(8px)}
-.dot{width:11px;height:11px;border-radius:50%;background:var(--neon);box-shadow:0 0 10px var(--neon),0 0 20px var(--neon);animation:pulse 1.6s ease-in-out infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 10px var(--neon),0 0 22px var(--neon);opacity:1}50%{box-shadow:0 0 3px var(--neon),0 0 7px var(--neon);opacity:.45}}
-.online-txt{font-size:13px;font-weight:700;color:var(--neon);letter-spacing:1px;text-shadow:0 0 8px var(--neon)}
-.lang-wrap{position:relative;display:flex;align-items:center;gap:10px}
-.globe-btn{cursor:pointer;background:none;border:none;display:flex;align-items:center;gap:8px;padding:0}
-.globe{width:46px;height:46px;border-radius:50%;background:radial-gradient(circle at 34% 34%,#2299ff 0%,#0055dd 38%,#002288 72%,#001050 100%);box-shadow:0 0 14px rgba(30,120,255,.45),inset -5px -5px 10px rgba(0,0,50,.5),inset 3px 3px 7px rgba(110,170,255,.2);animation:gSpin 9s linear infinite;position:relative;overflow:hidden}
-.globe::before{content:'';position:absolute;inset:0;border-radius:50%;background:repeating-linear-gradient(0deg,transparent 0,transparent 5px,rgba(255,255,255,.06) 5px,rgba(255,255,255,.06) 6px),repeating-linear-gradient(90deg,transparent 0,transparent 9px,rgba(255,255,255,.04) 9px,rgba(255,255,255,.04) 10px)}
-.globe::after{content:'';position:absolute;top:6px;left:11px;width:13px;height:8px;background:rgba(255,255,255,.16);border-radius:50%;filter:blur(2px)}
-@keyframes gSpin{0%{filter:hue-rotate(0deg)}100%{filter:hue-rotate(18deg)}}
-.lang-cur{font-size:13px;font-weight:900;color:#e8dcc8;display:flex;align-items:center;gap:5px}
-#curFlag{font-size:20px}
-.lang-dd{display:none;position:absolute;top:58px;left:0;background:rgba(5,10,22,.98);border:1px solid var(--border);border-radius:14px;padding:8px 0;min-width:155px;z-index:1000;box-shadow:0 12px 55px rgba(0,0,0,.85),0 0 22px rgba(255,195,0,.08);backdrop-filter:blur(22px)}
-.lang-dd.open{display:block;animation:ddIn .25s ease}
-@keyframes ddIn{from{opacity:0;transform:translateY(-10px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
-.lang-item{display:flex;align-items:center;gap:10px;padding:9px 18px;text-decoration:none;color:#bbb;font-size:13px;font-weight:700;transition:all .2s;cursor:pointer;user-select:none}
-.lang-item:hover{background:rgba(255,195,0,.1);color:var(--gold1)}
-.lf{font-size:18px}
-.faq-ico{cursor:pointer;font-size:21px;font-weight:900;width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid;animation:faqC 3s linear infinite;text-decoration:none}
-@keyframes faqC{0%{color:#FFD700;border-color:#FFD700;box-shadow:0 0 10px #FFD700}25%{color:#00ff88;border-color:#00ff88;box-shadow:0 0 10px #00ff88}50%{color:#ff4488;border-color:#ff4488;box-shadow:0 0 10px #ff4488}75%{color:#00aaff;border-color:#00aaff;box-shadow:0 0 10px #00aaff}100%{color:#FFD700;border-color:#FFD700;box-shadow:0 0 10px #FFD700}}
-.logo-sec{margin:38px 0 10px;text-align:center}
-.logo{font-family:var(--fh);font-size:clamp(2.1rem,5.5vw,4rem);font-weight:900;letter-spacing:4px;animation:gShift 4s ease-in-out infinite;user-select:none;text-shadow:0 0 22px rgba(255,175,0,.5),0 0 55px rgba(255,135,0,.18),0 4px 22px rgba(0,0,0,.9)}
-@keyframes gShift{0%{color:#FFD700}14%{color:#FFC200}28%{color:#FFAA00}42%{color:#FFE066}56%{color:#F5A623}70%{color:#E8940A}85%{color:#FFF0A0}100%{color:#FFD700}}
-.card{width:100%;max-width:490px;background:var(--card);border:1px solid var(--border);border-radius:24px;padding:36px 32px;box-shadow:var(--shadow),inset 0 1px 0 rgba(255,215,0,.07);backdrop-filter:blur(30px);position:relative;overflow:hidden;margin-top:10px}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold2),var(--gold1),var(--gold3),transparent);border-radius:24px 24px 0 0}
-.tabs{display:flex;background:rgba(255,255,255,.03);border:1px solid rgba(255,195,0,.11);border-radius:14px;padding:4px;margin-bottom:28px}
-.tab-btn{flex:1;padding:11px 10px;background:none;border:none;border-radius:11px;font-family:var(--fb);font-size:15px;font-weight:700;color:#777;cursor:pointer;transition:all .3s;letter-spacing:.5px}
-.tab-btn.active{background:linear-gradient(135deg,rgba(255,175,0,.18),rgba(255,135,0,.07));color:var(--gold1);box-shadow:0 2px 16px rgba(255,175,0,.14);border:1px solid rgba(255,195,0,.2)}
-.tab-panel{display:none}
-.tab-panel.active{display:block;animation:fadeUp .35s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.fg{margin-bottom:18px}
-.fl{display:block;font-size:12px;font-weight:700;color:rgba(255,195,0,.7);margin-bottom:7px;letter-spacing:.8px}
-.fi{width:100%;padding:13px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,195,0,.14);border-radius:12px;color:#e8dcc8;font-family:var(--fb);font-size:15px;outline:none;transition:all .3s;direction:ltr}
-.fi:focus{border-color:rgba(255,195,0,.5);background:rgba(255,195,0,.04);box-shadow:0 0 0 3px rgba(255,175,0,.09)}
-.fi::placeholder{color:rgba(200,175,115,.3)}
-.sb-wrap{height:6px;background:rgba(255,255,255,.07);border-radius:6px;margin:10px 0 4px;overflow:hidden}
-#sb{height:100%;width:0%;border-radius:6px;transition:width .4s,background .4s}
-.pw-rules{margin-top:10px;display:flex;flex-direction:column;gap:4px}
-.pw-rule{font-size:12px;display:flex;align-items:center;gap:7px;color:#555;transition:color .3s}
-.ri{font-size:14px}
-#cmatch{font-size:12px;margin-top:5px;font-weight:700}
-.btn-p{width:100%;padding:14px;background:linear-gradient(135deg,#c8860a,#FFD700,#f0a000,#FFD700);background-size:200% 200%;border:none;border-radius:13px;font-family:var(--fb);font-size:16px;font-weight:900;color:#1a0a00;cursor:pointer;letter-spacing:.8px;animation:btnS 3s ease infinite;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 22px rgba(255,175,0,.35);margin-top:8px}
-@keyframes btnS{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,175,0,.5)}
-.btn-p:active{transform:translateY(0)}
-.btn-p:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.fbtn{background:none;border:none;cursor:pointer;color:rgba(255,175,0,.6);font-size:12px;font-family:var(--fb);text-decoration:underline;margin-top:8px;transition:color .2s;display:block;text-align:center;width:100%}
-.fbtn:hover{color:var(--gold1)}
-.footer{display:flex;justify-content:center;align-items:center;gap:20px;flex-wrap:wrap;margin-top:26px}
-.fl-link{font-size:13px;font-weight:700;text-decoration:none;transition:all .3s;letter-spacing:.5px}
-.fl-support{animation:supp 4s linear infinite}
-@keyframes supp{0%{color:#FFD700}25%{color:#ff4488}50%{color:#00ccff}75%{color:#00ff88}100%{color:#FFD700}}
-.fl-sec{color:rgba(255,115,0,.8)}.fl-sec:hover{color:#ff8800}
-.fl-about{color:rgba(175,155,255,.8)}.fl-about:hover{color:#bb99ff}
-.fsep{color:rgba(255,195,0,.2);font-size:16px}
-#moverlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.84);backdrop-filter:blur(20px);align-items:center;justify-content:center}
-#moverlay.active{display:flex;animation:fO .3s ease}
-@keyframes fO{from{opacity:0}to{opacity:1}}
-.mbox{width:90%;max-width:450px;border-radius:26px;padding:42px 38px 34px;position:relative;text-align:center;animation:mPop .4s cubic-bezier(.34,1.56,.64,1);overflow:hidden}
-@keyframes mPop{from{opacity:0;transform:scale(.65) translateY(30px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.m-gold{background:linear-gradient(155deg,rgba(10,16,28,.99),rgba(18,13,4,.99));border:1px solid rgba(255,195,0,.38);box-shadow:0 0 70px rgba(255,175,0,.18),0 0 130px rgba(255,135,0,.09),inset 0 1px 0 rgba(255,215,0,.13),0 22px 65px rgba(0,0,0,.85)}
-.m-gold::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:26px 26px 0 0;background:linear-gradient(90deg,transparent,#FFD700,#FFC200,#FFD700,transparent);animation:gL 2s ease infinite alternate}
-@keyframes gL{from{opacity:.65}to{opacity:1}}
-.m-warn{background:linear-gradient(155deg,rgba(10,16,28,.99),rgba(18,10,4,.99));border:1px solid rgba(255,135,0,.38);box-shadow:0 0 65px rgba(255,95,0,.18),0 22px 65px rgba(0,0,0,.85)}
-.m-err{background:linear-gradient(155deg,rgba(10,16,28,.99),rgba(18,4,4,.99));border:1px solid rgba(255,55,55,.32);box-shadow:0 0 60px rgba(255,0,0,.13),0 22px 65px rgba(0,0,0,.85)}
-.m-info{background:linear-gradient(155deg,rgba(10,16,28,.99),rgba(4,9,18,.99));border:1px solid rgba(0,175,255,.32);box-shadow:0 0 60px rgba(0,145,255,.13),0 22px 65px rgba(0,0,0,.85)}
-#mtitle{font-family:var(--fh);font-size:1.3rem;color:var(--gold1);margin-bottom:16px;text-shadow:0 0 22px rgba(255,195,0,.38)}
-#mbody{font-size:15px;line-height:1.75;color:#d2c09e;margin-bottom:24px;white-space:pre-line}
-#mact{display:flex;flex-direction:column;gap:10px}
-.mbtn{padding:12px 24px;background:linear-gradient(135deg,rgba(255,175,0,.14),rgba(255,135,0,.07));border:1px solid rgba(255,195,0,.28);border-radius:12px;cursor:pointer;font-family:var(--fb);font-size:14px;font-weight:700;color:var(--gold1);transition:all .25s;letter-spacing:.5px}
-.mbtn:hover{background:linear-gradient(135deg,rgba(255,175,0,.24),rgba(255,135,0,.14));box-shadow:0 4px 22px rgba(255,175,0,.18);transform:translateY(-1px)}
-.mbtn-c{color:#777;border-color:rgba(255,255,255,.09);background:rgba(255,255,255,.03)}
-.mbtn-c:hover{color:#bbb}
-.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(26,10,0,.3);border-top-color:#1a0a00;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-left:6px}
-@keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:520px){.card{padding:26px 16px}.logo{font-size:1.9rem}.topbar{padding:14px 4px 0}}
-</style>
-</head>
-<body>
-<div id="ptc"></div>
-<div id="moverlay">
-  <div id="mbox" class="mbox m-gold">
-    <div id="mtitle"></div>
-    <div id="mbody"></div>
-    <div id="mact"></div>
-  </div>
-</div>
-<div class="wrap">
-  <div class="topbar">
-    <div class="lang-wrap">
-      <button class="globe-btn" id="globeBtn" aria-label="Language">
-        <div class="globe"></div>
-        <span class="lang-cur"><span id="curFlag">🇸🇦</span><span id="curCode">AR</span></span>
-      </button>
-      <a href="faq.html" class="faq-ico" title="FAQ">?</a>
-      <div class="lang-dd" id="langDd"></div>
-    </div>
-    <div class="online">
-      <div class="dot"></div>
-      <span class="online-txt" data-i18n="online">متصل</span>
-    </div>
-  </div>
-  <div class="logo-sec"><div class="logo">AlqurmanixX</div></div>
-  <div class="card">
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="login" data-i18n="tab_login">تسجيل الدخول</button>
-      <button class="tab-btn" data-tab="register" data-i18n="tab_register">الاشتراك</button>
-    </div>
-    <div id="login-panel" class="tab-panel active">
-      <div class="fg">
-        <label class="fl" data-i18n="email">البريد الإلكتروني</label>
-        <input id="lemail" type="email" class="fi" placeholder="example@mail.com" autocomplete="off"/>
-      </div>
-      <div class="fg">
-        <label class="fl" data-i18n="password">كلمة السر</label>
-        <input id="lpw" type="password" class="fi" placeholder="••••••••" autocomplete="new-password"/>
-      </div>
-      <button class="fbtn" id="forgotBtn" data-i18n="forgot">نسيت كلمة السر؟</button>
-      <button class="btn-p" id="loginBtn" data-i18n="login_btn">دخول</button>
-    </div>
-    <div id="register-panel" class="tab-panel">
-      <div class="fg">
-        <label class="fl" data-i18n="email">البريد الإلكتروني</label>
-        <input id="remail" type="email" class="fi" placeholder="example@mail.com" autocomplete="off"/>
-      </div>
-      <div class="fg">
-        <label class="fl" data-i18n="password">كلمة السر</label>
-        <input id="rpw" type="password" class="fi" placeholder="••••••••" autocomplete="new-password"/>
-        <div class="sb-wrap"><div id="sb"></div></div>
-        <div class="pw-rules">
-          <div class="pw-rule" id="r1"><span class="ri">⭕</span><span data-i18n="rule_len">8 أحرف على الأقل</span></div>
-          <div class="pw-rule" id="r2"><span class="ri">⭕</span><span data-i18n="rule_upper">حرف كبير (A-Z)</span></div>
-          <div class="pw-rule" id="r3"><span class="ri">⭕</span><span data-i18n="rule_lower">حرف صغير (a-z)</span></div>
-          <div class="pw-rule" id="r4"><span class="ri">⭕</span><span data-i18n="rule_num">رقم (0-9)</span></div>
-          <div class="pw-rule" id="r5"><span class="ri">⭕</span><span data-i18n="rule_special">رمز خاص (!@#$...)</span></div>
-        </div>
-      </div>
-      <div class="fg">
-        <label class="fl" data-i18n="confirm_pw">تأكيد كلمة السر</label>
-        <input id="rconf" type="password" class="fi" placeholder="••••••••" autocomplete="new-password"/>
-        <div id="cmatch"></div>
-      </div>
-      <button class="btn-p" id="registerBtn" data-i18n="register_btn">إنشاء حساب</button>
-    </div>
-  </div>
-  <div class="footer">
-    <a href="support.html"         class="fl-link fl-support" data-i18n="support">الدعم الفني</a>
-    <span class="fsep">•</span>
-    <a href="security-alerts.html" class="fl-link fl-sec"     data-i18n="security">تنبيهات الأمان</a>
-    <span class="fsep">•</span>
-    <a href="about.html"           class="fl-link fl-about"   data-i18n="about">من نحن</a>
-  </div>
-</div>
-
-<script type="module">
-import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import{getAnalytics}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,sendEmailVerification,sendPasswordResetEmail}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import{getFirestore,doc,setDoc,updateDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const app=initializeApp({apiKey:"AIzaSyCoM-Aqq7VwTDx5ZeHmIpHM4sm2XM0WdKw",authDomain:"alqurmanix-15b92.firebaseapp.com",projectId:"alqurmanix-15b92",storageBucket:"alqurmanix-15b92.firebasestorage.app",messagingSenderId:"477352026568",appId:"1:477352026568:web:49f90cd3fc74b6948ba0fd",measurementId:"G-VJF36N1MCD"});
-getAnalytics(app);
-const auth=getAuth(app),db=getFirestore(app);
-
-/* ── اللغات ──────────────────────────────────────────────── */
-const LANGS=[
-  {code:"ar",label:"AR",flag:"🇸🇦",file:"lang/ar.json",dir:"rtl"},
-  {code:"en",label:"EN",flag:"🇬🇧",file:"lang/en.json",dir:"ltr"},
-  {code:"es",label:"ES",flag:"🇪🇸",file:"lang/es.json",dir:"ltr"},
-  {code:"de",label:"DE",flag:"🇩🇪",file:"lang/de.json",dir:"ltr"},
-  {code:"it",label:"IT",flag:"🇮🇹",file:"lang/it.json",dir:"ltr"},
-  {code:"fr",label:"FR",flag:"🇫🇷",file:"lang/fr.json",dir:"ltr"},
-  {code:"tr",label:"TR",flag:"🇹🇷",file:"lang/tr.json",dir:"ltr"},
-  {code:"ko",label:"KO",flag:"🇰🇷",file:"lang/ko.json",dir:"ltr"},
-  {code:"ja",label:"JA",flag:"🇯🇵",file:"lang/ja.json",dir:"ltr"},
-  {code:"zh",label:"ZH",flag:"🇨🇳",file:"lang/zh.json",dir:"ltr"},
-  {code:"hi",label:"HI",flag:"🇮🇳",file:"lang/hi.json",dir:"ltr"}
-];
-let T={};
-
-async function loadLang(code){
-  const lang=LANGS.find(l=>l.code===code)||LANGS[0];
-  try{const r=await fetch(lang.file);if(!r.ok)throw 0;T=await r.json();}catch{T={};}
-  document.documentElement.lang=lang.code;
-  document.documentElement.dir=lang.dir;
-  document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n;if(T[k])el.textContent=T[k];});
-  document.getElementById("curFlag").textContent=lang.flag;
-  document.getElementById("curCode").textContent=lang.label;
-  localStorage.setItem("aqx_lang",code);
-}
-function t(k,fb=""){return T[k]||fb;}
-function buildDD(){
-  const dd=document.getElementById("langDd");dd.innerHTML="";
-  LANGS.forEach(lang=>{
-    const d=document.createElement("div");d.className="lang-item";
-    d.innerHTML=`<span class="lf">${lang.flag}</span><span>${lang.label}</span>`;
-    d.onclick=()=>{dd.classList.remove("open");loadLang(lang.code);};
-    dd.appendChild(d);
-  });
-}
-
-/* ── أمان ────────────────────────────────────────────────── */
-function fp(){
-  const n=navigator,s=screen;
-  const raw=[n.userAgent,n.language,s.colorDepth,s.width+"x"+s.height,new Date().getTimezoneOffset(),n.hardwareConcurrency||0].join("|");
-  let h=0;for(let i=0;i<raw.length;i++){h=(h<<5)-h+raw.charCodeAt(i);h|=0;}
-  return Math.abs(h).toString(16).padStart(16,"0");
-}
-const rl=new Map();
-function rateOk(k,ms=5000){const l=rl.get(k)||0;if(Date.now()-l<ms)return false;rl.set(k,Date.now());return true;}
-function clean(s){return s.replace(/[<>'"]/g,"").replace(/javascript:/gi,"").replace(/on\w+=/gi,"").trim();}
-
-/* ── قوة كلمة السر ───────────────────────────────────────── */
-function pws(pw){
-  const len=pw.length>=8,up=/[A-Z]/.test(pw),lo=/[a-z]/.test(pw),
-        num=/[0-9]/.test(pw),sp=/[!@#$%^&*()\-_=+\[\]{};:'",.<>/?\\|`~]/.test(pw);
-  return{score:[len,up,lo,num,sp].filter(Boolean).length,len,up,lo,num,sp};
-}
-function updatePwUI(pw){
-  const s=pws(pw),bar=document.getElementById("sb");
-  [{id:"r1",ok:s.len},{id:"r2",ok:s.up},{id:"r3",ok:s.lo},{id:"r4",ok:s.num},{id:"r5",ok:s.sp}]
-    .forEach(({id,ok})=>{const el=document.getElementById(id);if(!el)return;el.querySelector(".ri").textContent=ok?"✅":"⭕";el.style.color=ok?"#00ff88":"#555";});
-  const col=s.score<=2?"#ff4444":s.score===3?"#ffaa00":s.score===4?"#88ff00":"#00ff88";
-  bar.style.width=(s.score/5*100)+"%";bar.style.background=col;bar.style.boxShadow=`0 0 8px ${col}`;
-}
-
-/* ── أخطاء Firebase ──────────────────────────────────────── */
-function fbErr(c){
-  const m={"auth/email-already-in-use":()=>t("err_email_used","⚠️ هذا البريد مسجل مسبقاً."),"auth/invalid-email":()=>t("err_invalid_email","⚠️ البريد غير صالح."),"auth/weak-password":()=>t("err_weak_pw","⚠️ كلمة السر ضعيفة."),"auth/user-not-found":()=>t("err_user_nf","⚠️ لا يوجد حساب بهذا البريد."),"auth/wrong-password":()=>t("err_wrong_pw","⚠️ كلمة السر غير صحيحة."),"auth/invalid-credential":()=>t("err_wrong_pw","⚠️ البريد أو كلمة السر غير صحيحة."),"auth/too-many-requests":()=>t("err_too_many","⚠️ محاولات كثيرة. حاول لاحقاً."),"auth/network-request-failed":()=>t("err_network","⚠️ خطأ في الشبكة."),"auth/user-disabled":()=>t("err_disabled","⚠️ الحساب معطل. تواصل مع الدعم.")};
-  return(m[c]||(_=>t("err_unknown","⚠️ حدث خطأ غير متوقع.")))();
-}
-
-/* ── Modal ───────────────────────────────────────────────── */
-function modal(type,data=""){
-  const ov=document.getElementById("moverlay"),box=document.getElementById("mbox"),
-        ttl=document.getElementById("mtitle"),bdy=document.getElementById("mbody"),act=document.getElementById("mact");
-  act.innerHTML="";
-  if(type==="success-login"){
-    ttl.textContent=t("modal_welcome_title","🌟 مرحباً بعودتك!");
-    bdy.textContent=t("modal_welcome_body","أهلاً وسهلاً — نحن سعداء برؤيتك مجدداً في AlqurmanixX!");
-    box.className="mbox m-gold";addClose(act);
-  }else if(type==="success-register"){
-    ttl.textContent=t("modal_reg_title","🎊 تم التسجيل بنجاح!");
-    bdy.textContent=t("modal_reg_body","تم إنشاء حسابك بنجاح!\nتم إرسال رابط التفعيل إلى بريدك الإلكتروني.\nيرجى تفعيل حسابك قبل تسجيل الدخول.");
-    box.className="mbox m-gold";addClose(act);
-  }else if(type==="not-verified"){
-    ttl.textContent=t("modal_unver_title","📧 الحساب غير مفعّل");
-    bdy.textContent=t("modal_unver_body","حسابك لم يُفعَّل بعد.\nاضغط على رابط التفعيل في بريدك الإلكتروني.");
-    box.className="mbox m-warn";
-    const rb=document.createElement("button");rb.className="mbtn";
-    rb.textContent=t("resend_btn","إعادة إرسال رابط التفعيل");
-    rb.onclick=async()=>{
-      closeModal();const u=auth.currentUser;if(!u)return;
-      if(!rateOk("resend_"+u.uid,60000)){modal("info",t("err_too_many","⏳ انتظر دقيقة."));return;}
-      try{await sendEmailVerification(u);modal("info",t("resent_ok","✅ تم الإرسال. تحقق من بريدك."));}
-      catch{modal("error",t("err_unknown","حدث خطأ."));}
-    };
-    act.appendChild(rb);addClose(act);
-  }else if(type==="info"){
-    ttl.textContent="ℹ️";bdy.textContent=data;box.className="mbox m-info";addClose(act);
-  }else{
-    ttl.textContent="❌ "+t("error_title","خطأ");bdy.textContent=data;box.className="mbox m-err";addClose(act);
-  }
-  ov.classList.add("active");
-}
-function addClose(act){const b=document.createElement("button");b.className="mbtn mbtn-c";b.textContent=t("close","إغلاق");b.onclick=closeModal;act.appendChild(b);}
-function closeModal(){document.getElementById("moverlay").classList.remove("active");}
-
-/* ── Loading ─────────────────────────────────────────────── */
-function setLoad(id,on){
-  const b=document.getElementById(id);if(!b)return;
-  const lbl=b.getAttribute("data-label")||b.textContent;
-  if(on){b.setAttribute("data-label",lbl);b.disabled=true;b.innerHTML=`${t("loading","جاري...")}<span class="spinner"></span>`;}
-  else{b.disabled=false;b.textContent=lbl;}
-}
-
-/* ══════════════════════════════════════════════════════════
-   ██  REGISTER — منفّذ بدقة لكل بنود قواعد Firestore
-══════════════════════════════════════════════════════════ */
-async function doRegister(){
-  const email=clean(document.getElementById("remail").value.trim());
-  const pw=document.getElementById("rpw").value;
-  const cf=document.getElementById("rconf").value;
-  if(!email||!pw||!cf){modal("error",t("err_empty","⚠️ يرجى ملء جميع الحقول."));return;}
-  if(pw!==cf){modal("error",t("err_mismatch","⚠️ كلمتا السر غير متطابقتين."));return;}
-  if(pws(pw).score<4){modal("error",t("err_weak_pw","⚠️ كلمة السر لا تستوفي الشروط."));return;}
-  if(!rateOk("reg_"+email,10000)){modal("error",t("err_too_many","⏳ انتظر قليلاً."));return;}
-  setLoad("registerBtn",true);
-  try{
-    const cred=await createUserWithEmailAndPassword(auth,email,pw);
-    const user=cred.user;
-    // allow create: email==auth.token.email ✓ createdAt==request.time ✓ status=="pending" ✓
-    // loggedDevicesCount<=5 ✓ deviceFingerprint is string && size>=16 ✓
-    setDoc(doc(db,"users",user.uid),{
-      email            :email,
-      createdAt        :serverTimestamp(),
-      status           :"pending",
-      inactivityStatus :"active",
-      deviceFingerprint:fp(),
-      lastKnownDevice  :navigator.userAgent,
-      loggedDevicesCount:1,
-      lastActivity     :serverTimestamp(),
-      lastLogin        :serverTimestamp()
-    }).catch(err=>console.warn("FS:",err));
-    await sendEmailVerification(user).catch(err=>console.warn("Mail:",err));  // إرسال رابط التفعيل فوراً
-    modal("success-register");
-  }catch(e){modal("error",fbErr(e.code));}
-  finally{setLoad("registerBtn",false);}
-}
-
-/* ══════════════════════════════════════════════════════════
-   ██  LOGIN — يتحقق من isVerified + يحدّث allowedUpdateFields
-══════════════════════════════════════════════════════════ */
-async function doLogin(){
-  const email=clean(document.getElementById("lemail").value.trim());
-  const pw=document.getElementById("lpw").value;
-  if(!email||!pw){modal("error",t("err_empty","⚠️ يرجى ملء جميع الحقول."));return;}
-  if(!rateOk("login_"+email,5000)){modal("error",t("err_too_many","⏳ انتظر 5 ثوانٍ."));return;}
-  setLoad("loginBtn",true);
-  try{
-    const cred=await signInWithEmailAndPassword(auth,email,pw);
-    const user=cred.user;
-    // isVerified() — شرط إلزامي في القواعد
-    if(!user.emailVerified){setLoad("loginBtn",false);modal("not-verified");return;}
-    // allowedUpdateFields() — فقط الحقول المسموح بها
-    updateDoc(doc(db,"users",user.uid),{
-      lastActivity     :serverTimestamp(),
-      lastLogin        :serverTimestamp(),
-      deviceFingerprint:fp(),
-      lastKnownDevice  :navigator.userAgent
-    }).catch(err=>console.warn("FS:",err));
-    modal("success-login",user.email||"");
-    setTimeout(()=>{window.location.href="main.html";},2200);
-  }catch(e){modal("error",fbErr(e.code));}
-  finally{setLoad("loginBtn",false);}
-}
-
-/* ── Forgot Password ─────────────────────────────────────── */
-async function doForgot(){
-  const email=clean(document.getElementById("lemail").value.trim());
-  if(!email){modal("error",t("err_empty_email","⚠️ أدخل البريد الإلكتروني أولاً."));return;}
-  if(!rateOk("reset_"+email,30000)){modal("error",t("err_too_many","⏳ انتظر 30 ثانية."));return;}
-  try{await sendPasswordResetEmail(auth,email);modal("info",t("reset_sent","📧 تم إرسال رابط إعادة التعيين."));}
-  catch(e){modal("error",fbErr(e.code));}
-}
-
-/* ── Particles ───────────────────────────────────────────── */
-function particles(){
-  const c=document.getElementById("ptc");
-  const cols=["#FFD700","#FFC200","#FFAA00","#FFE066","#FFF0A0","#F5A623","#E8940A"];
-  for(let i=0;i<60;i++){
-    const p=document.createElement("div");p.className="gp";
-    const sz=Math.random()*8+3,cl=cols[Math.floor(Math.random()*cols.length)];
-    p.style.cssText=`width:${sz}px;height:${sz}px;background:${cl};left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${3+Math.random()*6}s;animation-delay:${Math.random()*6}s;opacity:${.4+Math.random()*.6};box-shadow:0 0 ${sz*2}px ${cl}`;
-    c.appendChild(p);
-  }
-}
-
-/* ── Init ────────────────────────────────────────────────── */
-document.addEventListener("DOMContentLoaded",async()=>{
-  particles();
-  buildDD();
-  await loadLang(localStorage.getItem("aqx_lang")||"ar");
-
-  document.getElementById("globeBtn").addEventListener("click",e=>{e.stopPropagation();document.getElementById("langDd").classList.toggle("open");});
-  document.addEventListener("click",()=>document.getElementById("langDd").classList.remove("open"));
-
-  document.querySelectorAll(".tab-btn").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const tab=btn.dataset.tab;
-      document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
-      document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
-      btn.classList.add("active");
-      document.getElementById(tab+"-panel").classList.add("active");
-    });
-  });
-
-  document.getElementById("rpw").addEventListener("input",e=>updatePwUI(e.target.value));
-  document.getElementById("rconf").addEventListener("input",()=>{
-    const pw=document.getElementById("rpw").value,cf=document.getElementById("rconf").value;
-    const el=document.getElementById("cmatch");
-    el.textContent=cf===pw?t("pw_match","✅ تطابق"):t("pw_no_match","❌ لا تطابق");
-    el.style.color=cf===pw?"#00ff88":"#ff4444";
-  });
-
-  document.getElementById("loginBtn").addEventListener("click",doLogin);
-  document.getElementById("registerBtn").addEventListener("click",doRegister);
-  document.getElementById("forgotBtn").addEventListener("click",doForgot);
-
-  document.getElementById("lpw").addEventListener("keydown",e=>{if(e.key==="Enter")doLogin();});
-  document.getElementById("rconf").addEventListener("keydown",e=>{if(e.key==="Enter")doRegister();});
-  document.getElementById("moverlay").addEventListener("click",e=>{if(e.target.id==="moverlay")closeModal();});
-});
-</script>
-</body>
-</html>
