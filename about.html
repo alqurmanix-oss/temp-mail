@@ -3,135 +3,359 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alqurmani X | الميثاق الفاخر</title>
+    <title>Alqurmani X | رؤية تتجاوز الحدود الرقمية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* التنسيق الملكي - السواد الفاخر والذهب */
-        body {
-            background-color: #050505; /* سواد عميق */
-            color: #d4af37; /* لون الذهب الملكي */
-            font-family: 'Times New Roman', Times, serif; /* خط كلاسيكي وقور */
+        :root {
+            --gold-primary: #D4AF37;
+            --gold-secondary: #FFD700;
+            --royal-black: #050505;
+            --deep-gray: #1a1a1a;
+            --text-silver: #e0e0e0;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--royal-black);
+            color: var(--text-silver);
+            font-family: 'Cairo', sans-serif;
             line-height: 1.8;
-            text-align: justify;
-        }
-
-        /* خلفية النقاط الذهبية المتطايرة */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            top: 0;
-            left: 0;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 100px auto;
-            padding: 40px;
-            background: rgba(10, 10, 10, 0.8); /* شفافية بسيطة لإظهار النقاط */
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.1); /* توهج ذهبي خافت */
+            overflow-x: hidden;
             position: relative;
         }
 
-        h1, h2 {
-            color: #f1d37e;
+        h1, h2, h3 {
+            font-family: 'Amiri', serif;
+            color: var(--gold-primary);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* --- نـجـوم ذهـبـيـة مـتـطـايـرة --- */
+        #star-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: radial-gradient(circle, var(--gold-secondary) 0%, rgba(255,215,0,0) 70%);
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: moveStar linear infinite;
+        }
+
+        @keyframes moveStar {
+            from { transform: translateY(0) translateX(0); opacity: 1; }
+            to { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        /* --- الـتـنـسـيـق الـمـلـكـي لـلـمـحـتـوى --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 50px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
             text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-            padding-bottom: 20px;
+            padding-bottom: 60px;
+            border-bottom: 2px solid var(--gold-primary);
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        header::after {
+            content: "◈";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--royal-black);
+            padding: 0 15px;
+            color: var(--gold-primary);
+            font-size: 24px;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .section-box {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 40px;
             margin-bottom: 40px;
+            border-radius: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .section-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold-primary);
         }
 
         .section-title {
-            font-size: 1.8em;
-            margin-top: 60px;
-            display: block;
-            color: #ffffff; /* أبيض لؤلؤي للعناوين */
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .content-text {
-            font-size: 1.25em;
-            color: #c0c0c0; /* فضي خافت للنصوص الطويلة */
-            margin-bottom: 30px;
+        .section-title i {
+            font-size: 1.5rem;
         }
 
-        .prayer {
-            text-align: center;
+        .founder-word {
+            font-family: 'Amiri', serif;
             font-style: italic;
-            color: #f1d37e;
-            font-size: 1.5em;
-            margin: 50px 0;
-            padding: 20px;
-            border-top: 1px double #d4af37;
-            border-bottom: 1px double #d4af37;
+            font-size: 1.4rem;
+            color: var(--gold-secondary);
+            text-align: center;
+            padding: 30px;
+            border-right: 4px solid var(--gold-primary);
+            background: rgba(212, 175, 55, 0.05);
+            margin: 40px 0;
         }
 
-        .founder-signature {
-            text-align: left;
-            margin-top: 100px;
-            font-size: 1.2em;
-            color: #f1d37e;
+        .legal-footer {
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            color: #888;
         }
 
-        /* تأثير الحركة للذهب */
-        @keyframes gold-shimmer {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
+        /* --- الـسـهـم الـتـلقائي (العودة للخلف) --- */
+        .back-nav {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
         }
+
+        .btn-back {
+            background: transparent;
+            border: 2px solid var(--gold-primary);
+            color: var(--gold-primary);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background: var(--gold-primary);
+            color: var(--royal-black);
+            box-shadow: 0 0 15px var(--gold-primary);
+        }
+
+        /* --- الـسـهـم الـذكـي (Back to Top) --- */
+        #backToTop {
+            position: fixed;
+            bottom: 40px;
+            left: 40px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--gold-primary);
+            color: var(--royal-black);
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.5s ease;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            animation: float 3s ease-in-out infinite, colorShift 8s infinite;
+        }
+
+        /* تشقلبة السهم عند الضغط */
+        #backToTop.flip {
+            animation: flipAnimation 0.8s ease-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* تغيير الألوان الذكي */
+        @keyframes colorShift {
+            0% { background-color: #D4AF37; } /* ذهبي */
+            25% { background-color: #E5E4E2; } /* بلاتيني */
+            50% { background-color: #C0C0C0; } /* فضي */
+            75% { background-color: #CD7F32; } /* برونزي ملكي */
+            100% { background-color: #D4AF37; }
+        }
+
+        @keyframes flipAnimation {
+            0% { transform: rotate(0) scale(1); }
+            50% { transform: rotate(360deg) scale(1.5); }
+            100% { transform: rotate(720deg) scale(1); }
+        }
+
+        /* تحسينات القوائم */
+        ul {
+            list-style: none;
+            padding-right: 20px;
+        }
+
+        li {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        li::before {
+            content: "✦";
+            color: var(--gold-primary);
+            position: absolute;
+            right: -20px;
+        }
+
+        strong {
+            color: var(--gold-secondary);
+        }
+
     </style>
 </head>
 <body>
 
-    <div id="particles-js"></div>
+    <div id="star-container"></div>
 
-    <div class="container">
-        <h1>ALQURMANI X</h1>
-        <h2>وثيقة الهيبة والاعتمار التقني</h2>
-
-        <div class="prayer">
-            "اللهم اجعل هذا العمل شاهداً لي لا علي، واجعله خالصاً لوجهك الكريم، وانفع به عبادك، واجعله حجّةً لي يوم ألقاك، ولا تجعل فيه حظاً لنفسي ولا للشيطان، وتوفنا وأنت راضٍ عنا يا أرحم الراحمين."
-        </div>
-
-        <span class="section-title">فصل في الكرامة والحرية</span>
-        <div class="content-text">
-            لقد أراد الحق سبحانه وتعالى لهذا الكون أن يقوم على مبدأ الحرية المطلقة، فخلقنا الله أحراراً بفتطرتنا، لا نقبل الضيم ولا نرتضي التبعية. الحرية في Alqurmani X ليست خياراً تقنياً، بل هي عقيدة برمجية. وكما قال الفاروق عمر بن الخطاب رضي الله عنه: "متى استعبدتم الناس وقد ولدتهم أمهاتهم أحراراً؟". بناءً على هذا المبدأ، قمنا بصياغة هذا الفضاء الرقمي ليكون ملاذاً لكل من ينشد الكرامة في التعامل مع التكنولوجيا. نحن هنا لنحرر العقل من قيود البرمجيات الاحتكارية، ونعيد بناء جسور الثقة بين الإنسان وما يبدعه من أدوات.
-            <br><br>
-            إننا نؤمن يقيناً أن الغاية من وجودنا هي تعمير هذه الأرض بالحق والعدل. "لقد خلقنا الله أحراراً لنعمر الأرض لا لنفسدها"، والتعمير لا يكون إلا بالعلم الرصين والعمل المتقن. لقد جعل الله الناس طبقات، ليس ليتسلط البعض على البعض، بل ليكمل كل منا الآخر في رحلة البناء. فالمبرمج يسند المستثمر، والمزارع يمد المبتكر بوقود الحياة، وفي هذا التماسك تكمن العظمة البشرية. نحن في Alqurmani X نسعى لأن نكون تلك الطبقة التي تحمل الأمانة وتصون حقوق الآخرين، بعيداً عن الاستغلال أو التهميش.
-        </div>
-
-        <span class="section-title">فصل في الهندسة والابتكار</span>
-        <div class="content-text">
-            يعتمد نظامنا على معايير تقنية تفوق التوقعات، حيث ندمج بين القوة البرمجية الفائقة وبين التصميم الجمالي المهيب. "محرك الأمان" الذي قمنا بتطويره ليس مجرد كود، بل هو حارس شخصي لكل مستخدم. نستخدم بروتوكولات تشفير تربط الهوية الرقمية بالواقع الفيزيائي، مما يجعل من اختراق هذا الفضاء أمراً مستحيلاً من الناحية المنطقية.
-            <br><br>
-            (هنا يتم استكمال النصوص القانونية والتقنية لتتجاوز الـ 2500 كلمة، متضمنة شرحاً وافياً لآليات الاستثمار الزراعي، وربط الأصول الرقمية بمحاصيل النخيل والفواكه في مرسى مطروح، والسياسات المالية لعملة Alqurmani Coin القائمة على أصول عقارية ملموسة، مع الالتزام التام باللغة الرسمية القانونية التي تحفظ حقوق جميع الأطراف وتضع النقاط على الحروف في كل تعامل تقني).
-        </div>
-
-        <div class="founder-signature">
-            بكل فخر واعتزاز،<br>
-            <strong>محمد عبدالله محمد بسيوني (أبو عبدالله)</strong><br>
-            مؤسس Alqurmani X
-        </div>
+    <div class="back-nav">
+        <button class="btn-back" onclick="window.history.back()">
+            <i class="fas fa-arrow-right"></i> العودة للسابق
+        </button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <div class="container">
+        <header>
+            <h1 class="main-title">Alqurmani X</h1>
+            <p style="font-size: 1.5rem; color: var(--gold-secondary);">رؤية تتجاوز الحدود الرقمية</p>
+        </header>
+
+        <section class="section-box">
+            <h2 class="section-title"><i class="fas fa-landmark"></i> النشأة والرسالة</h2>
+            <p>تأسست هذه المنصة على يد المتخصص <strong>M. A</strong> (أبو عبد الله)، بهدف إعادة تعريف مفهوم الخدمات الرقمية المتكاملة. نحن لسنا مجرد موقع إلكتروني، بل نحن بيئة عمل هندسية متطورة تهدف إلى دمج الحلول البرمجية عالية التأمين بالفرص الاستثمارية الواقعية.</p>
+            <p>بدأت الفكرة من مدينة <strong>أسوان العريقة</strong>، مهد الحضارة، لتمتد وتتمركز اليوم في قلب <strong>مرسى مطروح</strong>، محملة بطموح يهدف إلى سد الفجوة بين التقنية المتقدمة واحتياجات المستخدم العربي والعالمي، واضعين نصب أعيننا الريادة لا التبعية.</p>
+        </section>
+
+        <section class="section-box">
+            <h2 class="section-title"><i class="fas fa-shield-halved"></i> فلسفة العمل: الابتكار القائم على الأمان</h2>
+            <p>نؤمن في <strong>Alqurmani X</strong> أن القيمة الحقيقية لأي مشروع تقني تكمن في صموده أمام التحديات الأمنية. لذلك، اعتمدنا نهجاً برمجياً صارماً يرتكز على بروتوكولات حماية متفردة، تم تصميمها خصيصاً لضمان خصوصية البيانات وسلامة الأصول الرقمية لمشتركينا.</p>
+            <p>نحن ندمج بين تقنيات <strong>الذكاء الاصطناعي المتطورة</strong> وبين البنية التحتية السحابية الأكثر استقراراً في العالم، لنقدم تجربة مستخدم تتسم بالسرعة، السلاسة، والأمان المطلق، حيث لا مكان للثغرات في قاموسنا الهندسي.</p>
+        </section>
+
+        <section class="section-box">
+            <h2 class="section-title"><i class="fas fa-layer-group"></i> تعدد المسارات والتوجهات</h2>
+            <ul>
+                <li><strong>التطوير البرمجي الفائق:</strong> بناء قواعد بيانات وأنظمة إدارة محتوى ذكية قادرة على التوسع والنمو لتشمل آلاف المنصات المتخصصة بموثوقية كاملة.</li>
+                <li><strong>الاستثمار الزراعي والواقعي:</strong> نؤمن بأن المستقبل الرقمي يجب أن يستند إلى أصول ملموسة؛ لذا نخطط لربط نجاحاتنا التقنية بمشاريع إنتاجية على أرض الواقع، مثل زراعة الفواكه التجارية والنخيل، لضمان استدامة حقيقية وعوائد ملموسة.</li>
+                <li><strong>الاقتصاد الرقمي المتطور:</strong> تطوير أدوات مالية رقمية (<strong>Alqurmani Coin</strong>) مرتبطة بأصول عقارية وزراعية، مما يوفر للمستثمرين استقراراً نادراً في سوق متقلب، بعيداً عن وهم المضاربات غير المستندة لواقع.</li>
+            </ul>
+        </section>
+
+        <section class="section-box">
+            <h2 class="section-title"><i class="fas fa-gem"></i> القيم الجوهرية</h2>
+            <p><strong>الشفافية المطلقة:</strong> نلتزم بوضوح تام في كافة التعاملات والخدمات المقدمة، ونضع المعايير القانونية والبرمجية فوق كل اعتبار.</p>
+            <p><strong>التميز الهندسي:</strong> لا نقبل بالحلول الجاهزة؛ بل نقوم بابتكار أدواتنا الخاصة وبرمجتها من الصفر لضمان التفوق والريادة في سوق التكنولوجيا العالمي.</p>
+            <p><strong>المسؤولية التقنية:</strong> ندرك حجم الأمانة الملقاة على عاتقنا في حماية بيانات المستخدمين، ونعتبرها التزاماً أخلاقياً قبل أن تكون واجباً مهنياً.</p>
+        </section>
+
+        <div class="founder-word">
+            "إن بناء مشروع تقني ناجح لا يتطلب فقط مهارات برمجية، بل يتطلب إيماناً راسخاً بالقدرة على التغيير وتقديم الأفضل. في Alqurmani X، نحن لا نبني أكواداً فحسب، بل نبني جسوراً من الثقة تربط بين طموحنا وواقع مستخدمينا."
+            <br>
+            <span style="font-size: 1.1rem; color: var(--gold-primary); block-size: 20px; display: block;">— المؤسس: أبو عبد الله</span>
+        </div>
+
+        <section class="section-box">
+            <h2 class="section-title"><i class="fas fa-eye"></i> الرؤية المستقبلية</h2>
+            <p>نتطلع في غضون الأشهر القادمة إلى التوسع ليصبح هذا المشروع المظلة الكبرى لآلاف المدونات المتخصصة والمنصات الخدمية التي تخدم ملايين المستخدمين حول العالم. هدفنا ليس فقط التواجد الرقمي، بل القيادة التقنية التي تلهم المبتكرين وتفتح آفاقاً جديدة للاستثمار والنمو الاقتصادي المستند إلى العلم والتكنولوجيا العالية.</p>
+        </section>
+
+        <footer class="legal-footer">
+            <p>تعمل جميع منصاتنا تحت مظلة الالتزام بالقوانين الرقمية المنظمة، مع احترام كامل لحقوق الملكية الفكرية ومعايير الأمن السيبراني الدولية. نحن نحتفظ بكافة الحقوق التقنية والبرمجية الخاصة بابتكاراتنا الفريدة التي تميزنا في السوق العالمي.</p>
+            <p style="margin-top: 20px; color: var(--gold-primary);">© 2026 Alqurmani X - All Rights Reserved</p>
+        </footer>
+    </div>
+
+    <div id="backToTop" title="العودة للقِمة">
+        <i class="fas fa-crown"></i>
+    </div>
+
     <script>
-        particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 80 },
-                "color": { "value": "#d4af37" }, /* لون الذهب */
-                "shape": { "type": "circle" },
-                "opacity": { "value": 0.5, "random": true },
-                "size": { "value": 3, "random": true },
-                "move": { "enable": true, "speed": 1.5, "direction": "bottom", "random": true, "straight": false }
-            },
-            "interactivity": { "events": { "onhover": { "enable": true, "mode": "repulse" } } }
-        });
+        // توليد النجوم الذهبية الصغيره المتطايرة
+        const starContainer = document.getElementById('star-container');
+        const starCount = 100;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            const size = Math.random() * 3 + 1 + 'px';
+            star.style.width = size;
+            star.style.height = size;
+            
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+            
+            star.style.animationDuration = Math.random() * 3 + 2 + 's';
+            star.style.animationDelay = Math.random() * 5 + 's';
+            
+            starContainer.appendChild(star);
+        }
+
+        // منطق سهم الصعود (Back to Top)
+        const backToTopBtn = document.getElementById('backToTop');
+
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTopBtn.style.display = "flex";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        };
+
+        backToTopBtn.onclick = function() {
+            // إضافة كلاس التشقلبة
+            backToTopBtn.classList.add('flip');
+            
+            // صعود ناعم
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            // إزالة الكلاس بعد انتهاء الحركة
+            setTimeout(() => {
+                backToTopBtn.classList.remove('flip');
+            }, 800);
+        };
     </script>
 </body>
 </html>
