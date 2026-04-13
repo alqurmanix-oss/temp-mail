@@ -1,0 +1,563 @@
+security-alerts.html
+
+
+
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>مركز تنبيهات الأمان | Alqurmani X Security Hub</title>
+
+    
+
+    <meta name="description" content="مركز عمليات الأمان لـ Alqurmani X. مراقبة لحظية، تقارير الثغرات، وتحديثات الحماية الفائقة.">
+
+    <meta name="robots" content="noindex, nofollow"> <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+
+    <style>
+
+        :root {
+
+            --gold: #D4AF37;
+
+            --bright-gold: #FFD700;
+
+            --royal-black: #050505;
+
+            --cyber-blue: #00A8FF; /* لمسة تقنية أمنية */
+
+            --text-silver: #e0e0e0;
+
+        }
+
+
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+
+
+        body {
+
+            background-color: var(--royal-black);
+
+            color: var(--text-silver);
+
+            font-family: 'Cairo', sans-serif;
+
+            overflow-x: hidden;
+
+            position: relative;
+
+        }
+
+
+
+        /* --- نجوم ذهبية متطايرة (نفس هوية الموقع الرئيسي) --- */
+
+        #star-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
+        .star { position: absolute; background: radial-gradient(circle, var(--gold) 0%, transparent 70%); border-radius: 50%; opacity: 0.6; animation: drift linear infinite; }
+
+        @keyframes drift { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-100vh); opacity: 0; } }
+
+
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; position: relative; z-index: 1; }
+
+
+
+        /* --- الهيدر الملكي --- */
+
+        header {
+
+            text-align: center;
+
+            padding-bottom: 40px;
+
+            border-bottom: 2px solid var(--gold);
+
+            margin-bottom: 50px;
+
+        }
+
+
+
+        .main-title {
+
+            font-family: 'Amiri', serif;
+
+            font-size: 3rem;
+
+            color: var(--gold);
+
+            text-transform: uppercase;
+
+            letter-spacing: 3px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+
+        .status-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            background: rgba(0, 168, 255, 0.1);
+
+            border: 1px solid var(--cyber-blue);
+
+            color: var(--cyber-blue);
+
+            padding: 8px 20px;
+
+            border-radius: 50px;
+
+            font-weight: bold;
+
+            font-size: 0.9rem;
+
+            animation: pulse 2s infinite;
+
+        }
+
+
+
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+
+
+
+        /* --- الأقسام الفاخرة --- */
+
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+
+
+
+        .security-card {
+
+            background: rgba(20, 20, 20, 0.9);
+
+            border: 1px solid rgba(212, 175, 55, 0.2);
+
+            padding: 35px;
+
+            border-radius: 10px;
+
+            transition: 0.4s;
+
+            position: relative;
+
+            overflow: hidden;
+
+        }
+
+
+
+        .security-card:hover {
+
+            border-color: var(--gold);
+
+            transform: translateY(-10px);
+
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.1);
+
+        }
+
+
+
+        .card-icon {
+
+            font-size: 2.5rem;
+
+            color: var(--gold);
+
+            margin-bottom: 20px;
+
+        }
+
+
+
+        .card-title {
+
+            font-family: 'Amiri', serif;
+
+            font-size: 1.8rem;
+
+            color: var(--gold);
+
+            margin-bottom: 15px;
+
+        }
+
+
+
+        .card-link {
+
+            display: inline-block;
+
+            margin-top: 20px;
+
+            color: var(--gold);
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            border-bottom: 1px dashed var(--gold);
+
+            transition: 0.3s;
+
+        }
+
+
+
+        .card-link:hover { color: var(--bright-gold); letter-spacing: 1px; }
+
+
+
+        /* --- أزرار العودة والصعود الفخمة --- */
+
+        .nav-buttons { position: fixed; top: 30px; right: 30px; z-index: 1000; }
+
+        .btn-return {
+
+            background: rgba(0,0,0,0.7);
+
+            border: 2px solid var(--gold);
+
+            color: var(--gold);
+
+            padding: 12px 25px;
+
+            cursor: pointer;
+
+            font-weight: 900;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            transition: 0.4s;
+
+            border-radius: 5px;
+
+        }
+
+        .btn-return:hover { background: var(--gold); color: var(--royal-black); box-shadow: 0 0 20px var(--gold); }
+
+
+
+        #backToTop {
+
+            position: fixed;
+
+            bottom: 40px;
+
+            left: 40px;
+
+            width: 65px;
+
+            height: 65px;
+
+            background: linear-gradient(135deg, var(--gold), #b8860b);
+
+            color: var(--royal-black);
+
+            border-radius: 50%;
+
+            display: none;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-size: 26px;
+
+            cursor: pointer;
+
+            z-index: 1000;
+
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+
+            transition: 0.5s;
+
+        }
+
+
+
+        #backToTop.flip-animation {
+
+            animation: royalFlip 0.8s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+
+        }
+
+
+
+        @keyframes royalFlip {
+
+            0% { transform: rotate(0) scale(1); }
+
+            50% { transform: rotate(360deg) scale(1.4); }
+
+            100% { transform: rotate(720deg) scale(1); }
+
+        }
+
+
+
+        /* --- سجلات الأمان (Security Logs) --- */
+
+        .logs-section {
+
+            margin-top: 60px;
+
+            background: rgba(255, 255, 255, 0.02);
+
+            padding: 40px;
+
+            border-radius: 10px;
+
+            border-right: 4px solid var(--gold);
+
+        }
+
+
+
+        .log-item {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 15px 0;
+
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+
+        }
+
+
+
+        .log-date { color: var(--gold); font-family: monospace; }
+
+
+
+    </style>
+
+</head>
+
+<body>
+
+
+
+    <div id="star-container"></div>
+
+
+
+    <div class="nav-buttons">
+
+        <button class="btn-return" onclick="window.history.back()">
+
+            <i class="fas fa-shield-virus"></i> العودة للمركز
+
+        </button>
+
+    </div>
+
+
+
+    <div class="container">
+
+        <header>
+
+            <h1 class="main-title">SECURITY ALERTS</h1>
+
+            <div class="status-badge">
+
+                <i class="fas fa-satellite-dish"></i> الأنظمة: نشطة وتحت المراقبة المشددة
+
+            </div>
+
+        </header>
+
+
+
+        <div class="grid-container">
+
+            <div class="security-card">
+
+                <div class="card-icon"><i class="fas fa-bug"></i></div>
+
+                <h2 class="card-title">برنامج مكافآت الثغرات</h2>
+
+                <p>نحن في Alqurmani X نقدر ذكاء المهندسين. إذا اكتشفت ثغرة أمنية، نرجو الإبلاغ عنها فوراً للمساهمة في تأمين المجتمع الرقمي.</p>
+
+                <a href="report-vulnerability.html" class="card-link">إرسال تقرير أمني <i class="fas fa-chevron-left"></i></a>
+
+            </div>
+
+
+
+            <div class="security-card">
+
+                <div class="card-icon"><i class="fas fa-user-shield"></i></div>
+
+                <h2 class="card-title">بروتوكولات الحماية</h2>
+
+                <p>تعرف على القوانين الصارمة التي نتبعها لحماية بياناتك، وكيف نستخدم تقنيات التشفير المتقدمة لتأمين استثماراتك.</p>
+
+                <a href="security-terms.html" class="card-link">مراجعة السياسات <i class="fas fa-chevron-left"></i></a>
+
+            </div>
+
+
+
+            <div class="security-card">
+
+                <div class="card-icon"><i class="fas fa-microchip"></i></div>
+
+                <h2 class="card-title">حالة الخوادم</h2>
+
+                <p>مراقبة لحظية لأداء البنية التحتية السحابية لـ Alqurmani X لضمان استقرار الخدمة بنسبة 99.9%.</p>
+
+                <div style="margin-top: 15px; color: #00FF00; font-size: 0.9rem;">
+
+                    <i class="fas fa-check-circle"></i> جميع العقد (Nodes) تعمل بكفاءة.
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="logs-section">
+
+            <h2 class="card-title" style="margin-bottom: 30px;"><i class="fas fa-file-code"></i> سجل التحديثات الأمنية الأخيرة</h2>
+
+            <div class="log-item">
+
+                <span>تحديث بروتوكول التشفير إلى SSL TLS 1.3</span>
+
+                <span class="log-date">2026-04-10</span>
+
+            </div>
+
+            <div class="log-item">
+
+                <span>تفعيل نظام التحقق الثلاثي لإدارة قواعد البيانات</span>
+
+                <span class="log-date">2026-04-05</span>
+
+            </div>
+
+            <div class="log-item">
+
+                <span>صد محاولة اختراق عشوائية بنجاح (DDoS Protection)</span>
+
+                <span class="log-date">2026-03-28</span>
+
+            </div>
+
+        </div>
+
+
+
+        <footer style="margin-top: 80px; text-align: center; color: #555; font-size: 0.8rem;">
+
+            <p>ALQURMANI X SECURITY HUB - HIGH ENCRYPTION LEVEL 7 ACTIVATED</p>
+
+        </footer>
+
+    </div>
+
+
+
+    <div id="backToTop" title="الصعود للقِمة">
+
+        <i class="fas fa-crown"></i>
+
+    </div>
+
+
+
+    <script>
+
+        // محرك النجوم الذهبية
+
+        const starContainer = document.getElementById('star-container');
+
+        for (let i = 0; i < 70; i++) {
+
+            const star = document.createElement('div');
+
+            star.className = 'star';
+
+            const size = Math.random() * 3 + 1 + 'px';
+
+            star.style.width = size; star.style.height = size;
+
+            star.style.left = Math.random() * 100 + 'vw';
+
+            star.style.top = Math.random() * 100 + 'vh';
+
+            star.style.animationDuration = Math.random() * 2 + 3 + 's';
+
+            starContainer.appendChild(star);
+
+        }
+
+
+
+        // منطق السهم الذكي
+
+        const btt = document.getElementById('backToTop');
+
+        window.onscroll = () => {
+
+            if (document.documentElement.scrollTop > 400) {
+
+                btt.style.display = "flex";
+
+            } else {
+
+                btt.style.display = "none";
+
+            }
+
+        };
+
+
+
+        btt.onclick = () => {
+
+            btt.classList.add('flip-animation');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            setTimeout(() => { btt.classList.remove('flip-animation'); }, 800);
+
+        };
+
+    </script>
+
+</body>
+
+</html>
