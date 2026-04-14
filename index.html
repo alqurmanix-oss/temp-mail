@@ -4,23 +4,19 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>AlqurmanixX — تسجيل الدخول والاشتراك</title>
-
-<!-- ══ SEO — تظهر في محركات البحث بأي لغة ══ -->
-<meta name="description" content="AlqurmanixX — القرماني اكس — Al Qurmani X — Login & Register — Connexion — Anmelden — Accedi — Iniciar sesión — Giriş — 登录 — ログイン — 로그인 — लॉग इन"/>
-<meta name="keywords" content="AlqurmanixX,القرماني اكس,القرماني إكس,alqurmani,qurmani,قرماني,login,register,اشتراك,تسجيل دخول"/>
-<meta name="robots" content="index, follow"/>
+<meta name="description" content="AlqurmanixX - القرماني اكس - Al Qurmani X. Secure Login and Registration. تسجيل الدخول والاشتراك. Connexion, Anmelden, Accedi, Iniciar sesión, Giriş, 登录, ログイン, 로그인, लॉग इन, Войти, ورود, Σύνδεση, Entrar, Đăng nhập."/>
+<meta name="keywords" content="AlqurmanixX,القرماني اكس,القرماني إكس,alqurmani,qurmani,قرماني,login,register,اشتراك,تسجيل دخول,secure login,auth,system,X,Al Qurmani X,Alqurmani X,دخول,تسجيل,حماية,سيبراني"/>
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
 <meta name="author" content="AlqurmanixX"/>
-<meta property="og:title" content="AlqurmanixX"/>
+<meta property="og:title" content="AlqurmanixX - Secure System"/>
 <meta property="og:description" content="AlqurmanixX — القرماني اكس — Login & Register"/>
 <meta property="og:type" content="website"/>
-<meta name="twitter:card" content="summary"/>
+<meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="AlqurmanixX — القرماني اكس"/>
 <link rel="canonical" href="./index.html"/>
-
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet"/>
 <style>
-/* ══ VARIABLES ══ */
 :root{
   --gold1:#FFD700;--gold2:#FFC200;--gold3:#FFAA00;--gold4:#FFE066;
   --gold5:#F5A623;--gold6:#E8940A;--gold7:#FFF0A0;
@@ -37,28 +33,20 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     radial-gradient(ellipse 55% 40% at 85% 92%,rgba(255,130,0,.06) 0%,transparent 55%),
     radial-gradient(ellipse 40% 30% at 8% 78%,rgba(255,195,0,.05) 0%,transparent 50%),
     linear-gradient(140deg,#020408 0%,#05091a 45%,#07101e 72%,#030609 100%)}
-
-/* ══ PARTICLES ══ */
 #ptc{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.gp{position:absolute;border-radius:50%;animation:fp linear infinite}
+.gp{position:absolute;animation:fp linear infinite;user-select:none;pointer-events:none;display:flex;align-items:center;justify-content:center}
 @keyframes fp{
-  0%  {transform:translateY(0px)   translateX(0px)   scale(1);  opacity:.9}
-  25% {transform:translateY(-55px) translateX(22px)  scale(1.3)}
-  60% {transform:translateY(-120px)translateX(-16px) scale(.75);opacity:.35}
-  100%{transform:translateY(-220px)translateX(10px)  scale(.3); opacity:0}
+  0%  {transform:translateY(0px)   translateX(0px)   scale(1) rotate(0deg);  opacity:.9}
+  25% {transform:translateY(-55px) translateX(22px)  scale(1.3) rotate(45deg)}
+  60% {transform:translateY(-120px)translateX(-16px) scale(.75) rotate(90deg);opacity:.35}
+  100%{transform:translateY(-220px)translateX(10px)  scale(.3) rotate(180deg); opacity:0}
 }
-
-/* ══ LAYOUT ══ */
 .wrap{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 16px 70px}
 .topbar{width:100%;max-width:1080px;display:flex;justify-content:space-between;align-items:center;padding:20px 0 0}
-
-/* ══ ONLINE ══ */
 .online{display:flex;align-items:center;gap:9px;background:rgba(0,255,136,.06);border:1px solid rgba(0,255,136,.2);border-radius:30px;padding:7px 16px;backdrop-filter:blur(8px)}
 .dot{width:11px;height:11px;border-radius:50%;background:var(--neon);box-shadow:0 0 10px var(--neon),0 0 20px var(--neon);animation:pulse 1.6s ease-in-out infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 10px var(--neon),0 0 22px var(--neon);opacity:1}50%{box-shadow:0 0 3px var(--neon),0 0 7px var(--neon);opacity:.45}}
 .online-txt{font-size:13px;font-weight:700;color:var(--neon);letter-spacing:1px;text-shadow:0 0 8px var(--neon)}
-
-/* ══ GLOBE ══ */
 .lang-wrap{position:relative;display:flex;align-items:center;gap:10px}
 .globe-btn{cursor:pointer;background:none;border:none;display:flex;align-items:center;gap:8px;padding:0}
 .globe{width:46px;height:46px;border-radius:50%;
@@ -78,8 +66,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .lang-item{display:flex;align-items:center;gap:10px;padding:9px 18px;color:#bbb;font-size:13px;font-weight:700;transition:all .2s;cursor:pointer;user-select:none}
 .lang-item:hover{background:rgba(255,195,0,.1);color:var(--gold1)}
 .lf{font-size:18px}
-
-/* ══ FAQ ══ */
 .faq-ico{cursor:pointer;font-size:21px;font-weight:900;width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid;animation:faqC 3s linear infinite;text-decoration:none}
 @keyframes faqC{
   0%  {color:#FFD700;border-color:#FFD700;box-shadow:0 0 10px #FFD700}
@@ -88,22 +74,16 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   75% {color:#00aaff;border-color:#00aaff;box-shadow:0 0 10px #00aaff}
   100%{color:#FFD700;border-color:#FFD700;box-shadow:0 0 10px #FFD700}
 }
-
-/* ══ LOGO ══ */
 .logo-sec{margin:38px 0 10px;text-align:center}
 .logo{font-family:var(--fh);font-size:clamp(2.1rem,5.5vw,4rem);font-weight:900;letter-spacing:4px;
   animation:gShift 4s ease-in-out infinite;user-select:none;
   text-shadow:0 0 22px rgba(255,175,0,.5),0 0 55px rgba(255,135,0,.18),0 4px 22px rgba(0,0,0,.9)}
 @keyframes gShift{0%{color:#FFD700}14%{color:#FFC200}28%{color:#FFAA00}42%{color:#FFE066}56%{color:#F5A623}70%{color:#E8940A}85%{color:#FFF0A0}100%{color:#FFD700}}
-
-/* ══ CARD ══ */
 .card{width:100%;max-width:490px;background:var(--card);border:1px solid var(--border);border-radius:24px;
   padding:36px 32px;box-shadow:var(--shadow),inset 0 1px 0 rgba(255,215,0,.07);
   backdrop-filter:blur(30px);position:relative;overflow:hidden;margin-top:10px}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
   background:linear-gradient(90deg,transparent,var(--gold2),var(--gold1),var(--gold3),transparent);border-radius:24px 24px 0 0}
-
-/* ══ TABS ══ */
 .tabs{display:flex;background:rgba(255,255,255,.03);border:1px solid rgba(255,195,0,.11);border-radius:14px;padding:4px;margin-bottom:28px}
 .tab-btn{flex:1;padding:11px 10px;background:none;border:none;border-radius:11px;
   font-family:var(--fb);font-size:15px;font-weight:700;color:#777;cursor:pointer;transition:all .3s;letter-spacing:.5px}
@@ -112,16 +92,12 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .tab-panel{display:none}
 .tab-panel.active{display:block;animation:fadeUp .35s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-
-/* ══ FIELDS ══ */
 .fg{margin-bottom:18px}
 .fl{display:block;font-size:12px;font-weight:700;color:rgba(255,195,0,.7);margin-bottom:7px;letter-spacing:.8px}
 .fi{width:100%;padding:13px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,195,0,.14);
   border-radius:12px;color:#e8dcc8;font-family:var(--fb);font-size:15px;outline:none;transition:all .3s;direction:ltr}
 .fi:focus{border-color:rgba(255,195,0,.5);background:rgba(255,195,0,.04);box-shadow:0 0 0 3px rgba(255,175,0,.09)}
 .fi::placeholder{color:rgba(200,175,115,.3)}
-
-/* ══ PHONE ══ */
 .phone-row{display:flex;gap:8px}
 .pcode-wrap{position:relative;width:130px;flex-shrink:0}
 .pcode{width:100%;padding:13px 26px 13px 10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,195,0,.14);
@@ -148,16 +124,12 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .btn-otp:disabled{opacity:.4;cursor:not-allowed;transform:none}
 .phone-ok{display:none;font-size:12px;font-weight:700;color:#00ff88;text-shadow:0 0 10px #00ff88;margin-top:7px;text-align:center}
 .phone-ok.show{display:block;animation:fadeUp .3s ease}
-
-/* ══ STRENGTH ══ */
 .sb-wrap{height:6px;background:rgba(255,255,255,.07);border-radius:6px;margin:10px 0 4px;overflow:hidden}
 #sb{height:100%;width:0%;border-radius:6px;transition:width .4s,background .4s}
 .pw-rules{margin-top:10px;display:flex;flex-direction:column;gap:4px}
 .pw-rule{font-size:12px;display:flex;align-items:center;gap:7px;color:#555;transition:color .3s}
 .ri{font-size:14px}
 #cmatch{font-size:12px;margin-top:5px;font-weight:700}
-
-/* ══ BUTTONS ══ */
 .btn-p{width:100%;padding:14px;
   background:linear-gradient(135deg,#c8860a,#FFD700,#f0a000,#FFD700);background-size:200% 200%;
   border:none;border-radius:13px;font-family:var(--fb);font-size:16px;font-weight:900;
@@ -171,8 +143,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   font-family:var(--fb);text-decoration:underline;margin-top:8px;transition:color .2s;
   display:block;text-align:center;width:100%}
 .fbtn:hover{color:var(--gold1)}
-
-/* ══ FOOTER ══ */
 .footer{display:flex;justify-content:center;align-items:center;gap:20px;flex-wrap:wrap;margin-top:26px}
 .fl-link{font-size:13px;font-weight:700;text-decoration:none;transition:all .3s;letter-spacing:.5px}
 .fl-support{animation:supp 4s linear infinite}
@@ -180,8 +150,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .fl-sec{color:rgba(255,115,0,.8)}.fl-sec:hover{color:#ff8800}
 .fl-about{color:rgba(175,155,255,.8)}.fl-about:hover{color:#bb99ff}
 .fsep{color:rgba(255,195,0,.2);font-size:16px}
-
-/* ══ MODAL ══ */
 #moverlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.84);backdrop-filter:blur(20px);align-items:center;justify-content:center}
 #moverlay.active{display:flex;animation:fO .3s ease}
 @keyframes fO{from{opacity:0}to{opacity:1}}
@@ -215,20 +183,15 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   direction:ltr;letter-spacing:8px;text-align:center;margin-bottom:4px}
 .m-otp-inp:focus{border-color:rgba(0,255,136,.65);box-shadow:0 0 0 3px rgba(0,255,136,.12),0 0 22px rgba(0,255,136,.1)}
 .m-otp-err{font-size:12px;color:#ff4444;min-height:16px;margin-bottom:6px;text-align:center}
-
-/* ══ SPINNER ══ */
 .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(26,10,0,.3);
   border-top-color:#1a0a00;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-left:6px}
 .spinner-neon{border-color:rgba(0,255,136,.2);border-top-color:#00ff88}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 @media(max-width:520px){.card{padding:26px 16px}.logo{font-size:1.9rem}.topbar{padding:14px 4px 0}}
 </style>
 </head>
 <body>
 <div id="ptc"></div>
-
-<!-- ══ MODAL ══ -->
 <div id="moverlay">
   <div id="mbox" class="mbox m-gold">
     <div id="mtitle"></div>
@@ -236,17 +199,14 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     <div id="mact"></div>
   </div>
 </div>
-
 <div class="wrap">
-
-  <!-- TOPBAR -->
   <div class="topbar">
     <div class="lang-wrap">
       <button class="globe-btn" id="globeBtn" type="button" aria-label="Language">
         <div class="globe"></div>
         <span class="lang-cur"><span id="curFlag">🇸🇦</span><span id="curCode">AR</span></span>
       </button>
-      <a href="faq.html" target="_blank" rel="noopener" class="faq-ico" title="FAQ">?</a>
+      <a href="faq.html" class="faq-ico" title="FAQ">?</a>
       <div class="lang-dd" id="langDd"></div>
     </div>
     <div class="online">
@@ -254,18 +214,12 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <span class="online-txt" data-i18n="online">متصل</span>
     </div>
   </div>
-
-  <!-- LOGO -->
   <div class="logo-sec"><div class="logo">AlqurmanixX</div></div>
-
-  <!-- CARD -->
   <div class="card">
     <div class="tabs">
       <button class="tab-btn active" id="tabLogin"    type="button" data-tab="login"    data-i18n="tab_login">تسجيل الدخول</button>
       <button class="tab-btn"        id="tabRegister" type="button" data-tab="register" data-i18n="tab_register">الاشتراك</button>
     </div>
-
-    <!-- ═══ LOGIN PANEL ═══ -->
     <div id="login-panel" class="tab-panel active">
       <div class="fg">
         <label class="fl" for="lemail" data-i18n="email">البريد الإلكتروني</label>
@@ -278,8 +232,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <button class="fbtn" id="forgotBtn" type="button" data-i18n="forgot">نسيت كلمة السر؟</button>
       <button class="btn-p" id="loginBtn" type="button" data-i18n="login_btn">دخول</button>
     </div>
-
-    <!-- ═══ REGISTER PANEL ═══ -->
     <div id="register-panel" class="tab-panel">
       <div class="fg">
         <label class="fl" for="remail" data-i18n="email">البريد الإلكتروني</label>
@@ -302,7 +254,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
         <input id="rconf" type="password" class="fi" placeholder="••••••••" autocomplete="new-password"/>
         <div id="cmatch"></div>
       </div>
-      <!-- PHONE -->
       <div class="fg">
         <label class="fl" data-i18n="phone_label">رقم الهاتف</label>
         <div class="phone-row">
@@ -325,98 +276,58 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <button class="btn-p" id="registerBtn" type="button" data-i18n="register_btn" disabled>إنشاء حساب</button>
     </div>
   </div>
-
-  <!-- FOOTER — target="_blank" على جميع الروابط -->
   <div class="footer">
-    <a href="support.html"         target="_blank" rel="noopener" class="fl-link fl-support" data-i18n="support">الدعم الفني</a>
+    <a href="support.html" class="fl-link fl-support" data-i18n="support">الدعم الفني</a>
     <span class="fsep">•</span>
-    <a href="security-alerts.html" target="_blank" rel="noopener" class="fl-link fl-sec"     data-i18n="security">تنبيهات الأمان</a>
+    <a href="security-alerts.html" class="fl-link fl-sec" data-i18n="security">تنبيهات الأمان</a>
     <span class="fsep">•</span>
-    <a href="about.html"           target="_blank" rel="noopener" class="fl-link fl-about"   data-i18n="about">من نحن</a>
+    <a href="about.html" class="fl-link fl-about" data-i18n="about">من نحن</a>
   </div>
-
-</div><!-- /wrap -->
-
-<!-- ══════════════════════════════════════════════════
-     SCRIPT — type="module" لتفعيل import
-══════════════════════════════════════════════════ -->
+</div>
 <script type="module">
-
-/* ══ Firebase SDKs ══ */
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import{getAnalytics}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,
-        sendEmailVerification,sendPasswordResetEmail}
-  from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import{getFirestore,doc,setDoc,updateDoc,serverTimestamp}
-  from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-/* ══ BRIDGE ══ */
+import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,sendEmailVerification,sendPasswordResetEmail}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import{getFirestore,doc,setDoc,updateDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import{sendToSecurityInternet}from"./bridge.client.v10.js";
 
-/* ══════════════════════════════════════════════════
-   SESSION DATA MODULE — collectSessionData + crypto
-   (كود الربط الجديد — مدمج بالكامل)
-══════════════════════════════════════════════════ */
 const _K="ALQURMANI_X_SECURE_VAULT_2026_V10";
 const _S="ALQ_SALT_99";
-
 async function _E(txt){
   const enc=new TextEncoder();
   const m=await crypto.subtle.importKey("raw",enc.encode(_K),{name:"PBKDF2"},false,["deriveKey"]);
-  const k=await crypto.subtle.deriveKey(
-    {name:"PBKDF2",salt:enc.encode(_S),iterations:100000,hash:"SHA-256"},
-    m,{name:"AES-GCM",length:256},false,["encrypt"]
-  );
+  const k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:enc.encode(_S),iterations:100000,hash:"SHA-256"},m,{name:"AES-GCM",length:256},false,["encrypt"]);
   const iv=crypto.getRandomValues(new Uint8Array(12));
   const cipher=await crypto.subtle.encrypt({name:"AES-GCM",iv},k,enc.encode(txt));
   return btoa(String.fromCharCode(...iv))+"."+btoa(String.fromCharCode(...new Uint8Array(cipher)));
 }
-
 async function _FP(){
-  const d=[navigator.userAgent,screen.width+"x"+screen.height,
-           new Date().getTimezoneOffset(),navigator.hardwareConcurrency,
-           navigator.deviceMemory||0].join("|");
+  const d=[navigator.userAgent,screen.width+"x"+screen.height,new Date().getTimezoneOffset(),navigator.hardwareConcurrency,navigator.deviceMemory||0].join("|");
   const buf=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(d));
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
 }
-
 const collectSessionData=async(phone=null)=>{
   const fingerprint=await _FP();
   let encPhone="";
   if(phone){encPhone=await _E(phone);}
   return{
-    userId:"",email:"",
-    phoneNumber:encPhone,
-    deviceFingerprint:fingerprint,
-    platform:navigator.platform||"unknown",
-    appVersion:"1.0.1-CORE",
-    userAgent:navigator.userAgent,
-    ipAddress:"",country:"EG",
-    status:"active",
-    isPhoneVerified:false,
-    lastActivity:new Date(),
-    createdAt:new Date(),
-    sessionId:crypto.randomUUID(),
-    referralCode:"",
-    deletionRequestTime:""
+    userId:"",email:"",phoneNumber:encPhone,deviceFingerprint:fingerprint,
+    platform:navigator.platform||"unknown",appVersion:"1.0.1-CORE",
+    userAgent:navigator.userAgent,ipAddress:"",country:"EG",status:"active",
+    isPhoneVerified:false,lastActivity:new Date(),createdAt:new Date(),
+    sessionId:crypto.randomUUID(),referralCode:"",deletionRequestTime:""
   };
 };
-
-/* ══ RESPONSE HANDLER ══ */
 const handleResponse=resp=>{
   if(!resp)throw new Error("NO_RESPONSE");
   switch(resp.status){
     case"OK":return true;
-    case"BLOCKED":case"BLOCKED_EDGE":case"BLOCKED_GLOBAL":case"BLOCKED_GLOBAL_MESH":
-      console.error("🚫",resp);throw new Error("SECURITY_BLOCK");
+    case"BLOCKED":case"BLOCKED_EDGE":case"BLOCKED_GLOBAL":case"BLOCKED_GLOBAL_MESH":throw new Error("SECURITY_BLOCK");
     case"DENIED":throw new Error("UNAUTHORIZED");
     case"ERROR":throw new Error("SYSTEM_ERROR");
-    default:console.warn("⚠️ unknown response:",resp);return false;
+    default:return false;
   }
 };
-
-/* ══ FIREBASE ══ */
 const app=initializeApp({
   apiKey:"AIzaSyCoM-Aqq7VwTDx5ZeHmIpHM4sm2XM0WdKw",
   authDomain:"alqurmanix-15b92.firebaseapp.com",
@@ -428,30 +339,20 @@ const app=initializeApp({
 });
 getAnalytics(app);
 const auth=getAuth(app),db=getFirestore(app);
-
-/* ══ LANGUAGES ══ */
 const LANGS=[
-  {code:"ar",label:"AR",flag:"🇸🇦",file:"lang/ar.json",dir:"rtl"},
-  {code:"en",label:"EN",flag:"🇬🇧",file:"lang/en.json",dir:"ltr"},
-  {code:"es",label:"ES",flag:"🇪🇸",file:"lang/es.json",dir:"ltr"},
-  {code:"de",label:"DE",flag:"🇩🇪",file:"lang/de.json",dir:"ltr"},
-  {code:"it",label:"IT",flag:"🇮🇹",file:"lang/it.json",dir:"ltr"},
-  {code:"fr",label:"FR",flag:"🇫🇷",file:"lang/fr.json",dir:"ltr"},
-  {code:"tr",label:"TR",flag:"🇹🇷",file:"lang/tr.json",dir:"ltr"},
-  {code:"ko",label:"KO",flag:"🇰🇷",file:"lang/ko.json",dir:"ltr"},
-  {code:"ja",label:"JA",flag:"🇯🇵",file:"lang/ja.json",dir:"ltr"},
-  {code:"zh",label:"ZH",flag:"🇨🇳",file:"lang/zh.json",dir:"ltr"},
+  {code:"ar",label:"AR",flag:"🇸🇦",file:"lang/ar.json",dir:"rtl"},{code:"en",label:"EN",flag:"🇬🇧",file:"lang/en.json",dir:"ltr"},
+  {code:"es",label:"ES",flag:"🇪🇸",file:"lang/es.json",dir:"ltr"},{code:"de",label:"DE",flag:"🇩🇪",file:"lang/de.json",dir:"ltr"},
+  {code:"it",label:"IT",flag:"🇮🇹",file:"lang/it.json",dir:"ltr"},{code:"fr",label:"FR",flag:"🇫🇷",file:"lang/fr.json",dir:"ltr"},
+  {code:"tr",label:"TR",flag:"🇹🇷",file:"lang/tr.json",dir:"ltr"},{code:"ko",label:"KO",flag:"🇰🇷",file:"lang/ko.json",dir:"ltr"},
+  {code:"ja",label:"JA",flag:"🇯🇵",file:"lang/ja.json",dir:"ltr"},{code:"zh",label:"ZH",flag:"🇨🇳",file:"lang/zh.json",dir:"ltr"},
   {code:"hi",label:"HI",flag:"🇮🇳",file:"lang/hi.json",dir:"ltr"}
 ];
 let T={};
 async function loadLang(code){
   const lang=LANGS.find(l=>l.code===code)||LANGS[0];
   try{const r=await fetch(lang.file);if(!r.ok)throw 0;T=await r.json();}catch{T={};}
-  document.documentElement.lang=lang.code;
-  document.documentElement.dir=lang.dir;
-  document.querySelectorAll("[data-i18n]").forEach(el=>{
-    const k=el.dataset.i18n;if(T[k])el.textContent=T[k];
-  });
+  document.documentElement.lang=lang.code;document.documentElement.dir=lang.dir;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n;if(T[k])el.textContent=T[k];});
   document.getElementById("curFlag").textContent=lang.flag;
   document.getElementById("curCode").textContent=lang.label;
   localStorage.setItem("aqx_lang",code);
@@ -466,389 +367,163 @@ function buildDD(){
     dd.appendChild(d);
   });
 }
-
-/* ══ RATE LIMIT ══ */
 const _rl=new Map();
 function rateOk(k,ms=5000){
-  const l=_rl.get(k)||0;
-  if(Date.now()-l<ms)return false;
+  const l=_rl.get(k)||0;if(Date.now()-l<ms)return false;
   _rl.set(k,Date.now());return true;
 }
-
-/* ══ SANITIZE ══ */
 const clean=s=>s.replace(/[<>'"]/g,"").replace(/javascript:/gi,"").replace(/on\w+=/gi,"").trim();
-
-/* ══ PASSWORD ══ */
 function pws(pw){
-  const len=pw.length>=8,up=/[A-Z]/.test(pw),lo=/[a-z]/.test(pw),
-        num=/[0-9]/.test(pw),sp=/[!@#$%^&*()\-_=+\[\]{};:'",.<>/?\\|`~]/.test(pw);
+  const len=pw.length>=8,up=/[A-Z]/.test(pw),lo=/[a-z]/.test(pw),num=/[0-9]/.test(pw),sp=/[!@#$%^&*()\-_=+\[\]{};:'",.<>/?\\|`~]/.test(pw);
   return{score:[len,up,lo,num,sp].filter(Boolean).length,len,up,lo,num,sp};
 }
 function updatePwUI(pw){
   const s=pws(pw),bar=document.getElementById("sb");
-  [{id:"r1",ok:s.len},{id:"r2",ok:s.up},{id:"r3",ok:s.lo},{id:"r4",ok:s.num},{id:"r5",ok:s.sp}]
-    .forEach(({id,ok})=>{
-      const el=document.getElementById(id);if(!el)return;
-      el.querySelector(".ri").textContent=ok?"✅":"⭕";
-      el.style.color=ok?"#00ff88":"#555";
-    });
+  [{id:"r1",ok:s.len},{id:"r2",ok:s.up},{id:"r3",ok:s.lo},{id:"r4",ok:s.num},{id:"r5",ok:s.sp}].forEach(({id,ok})=>{
+    const el=document.getElementById(id);if(!el)return;
+    el.querySelector(".ri").textContent=ok?"✅":"⭕";el.style.color=ok?"#00ff88":"#555";
+  });
   const col=s.score<=2?"#ff4444":s.score===3?"#ffaa00":s.score===4?"#88ff00":"#00ff88";
-  bar.style.width=(s.score/5*100)+"%";
-  bar.style.background=col;
-  bar.style.boxShadow=`0 0 8px ${col}`;
+  bar.style.width=(s.score/5*100)+"%";bar.style.background=col;bar.style.boxShadow=`0 0 8px ${col}`;
 }
-
-/* ══ FIREBASE ERRORS ══ */
 function fbErr(c){
-  const m={
-    "auth/email-already-in-use":()=>t("err_email_used","⚠️ هذا البريد مسجل مسبقاً."),
-    "auth/invalid-email":()=>t("err_invalid_email","⚠️ البريد غير صالح."),
-    "auth/weak-password":()=>t("err_weak_pw","⚠️ كلمة السر ضعيفة."),
-    "auth/user-not-found":()=>t("err_user_nf","⚠️ لا يوجد حساب بهذا البريد."),
-    "auth/wrong-password":()=>t("err_wrong_pw","⚠️ كلمة السر غير صحيحة."),
-    "auth/invalid-credential":()=>t("err_wrong_pw","⚠️ البريد أو كلمة السر غير صحيحة."),
-    "auth/too-many-requests":()=>t("err_too_many","⚠️ محاولات كثيرة. حاول لاحقاً."),
-    "auth/network-request-failed":()=>t("err_network","⚠️ خطأ في الشبكة."),
-    "auth/user-disabled":()=>t("err_disabled","⚠️ الحساب معطل."),
-    "auth/invalid-verification-code":()=>t("err_otp_invalid","⚠️ الرمز غير صحيح.")
-  };
-  return(m[c]||(_=>t("err_unknown","⚠️ حدث خطأ غير متوقع.")))();
+  const m={"auth/email-already-in-use":()=>t("err_email_used","⚠️ مسجل مسبقاً."),"auth/invalid-email":()=>t("err_invalid_email","⚠️ غير صالح."),"auth/weak-password":()=>t("err_weak_pw","⚠️ ضعيفة."),"auth/user-not-found":()=>t("err_user_nf","⚠️ غير موجود."),"auth/wrong-password":()=>t("err_wrong_pw","⚠️ خطأ."),"auth/invalid-credential":()=>t("err_wrong_pw","⚠️ خطأ."),"auth/too-many-requests":()=>t("err_too_many","⚠️ حاول لاحقاً."),"auth/network-request-failed":()=>t("err_network","⚠️ خطأ شبكة."),"auth/user-disabled":()=>t("err_disabled","⚠️ معطل."),"auth/invalid-verification-code":()=>t("err_otp_invalid","⚠️ الرمز خطأ.")};
+  return(m[c]||(_=>t("err_unknown","⚠️ خطأ غير متوقع.")))();
 }
-function bridgeErrMsg(c){
-  return{SECURITY_BLOCK:t("err_blocked","🚫 رُفض الطلب."),UNAUTHORIZED:t("err_unauth","🚫 غير مصرح."),SYSTEM_ERROR:t("err_system","⚠️ خطأ في النظام.")}[c]||t("err_unknown","⚠️ خطأ.");
-}
-
-/* ══ MODAL ══ */
+function bridgeErrMsg(c){return{SECURITY_BLOCK:t("err_blocked","🚫 رُفض الطلب."),UNAUTHORIZED:t("err_unauth","🚫 غير مصرح."),SYSTEM_ERROR:t("err_system","⚠️ خطأ في النظام.")}[c]||t("err_unknown","⚠️ خطأ.");}
 let _2faRes=null,_2faRej=null;
 function modal(type,data=""){
-  const ov=document.getElementById("moverlay"),
-        box=document.getElementById("mbox"),
-        ttl=document.getElementById("mtitle"),
-        bdy=document.getElementById("mbody"),
-        act=document.getElementById("mact");
-  act.innerHTML="";
-  ttl.style.color="";ttl.style.textShadow="";
-
+  const ov=document.getElementById("moverlay"),box=document.getElementById("mbox"),ttl=document.getElementById("mtitle"),bdy=document.getElementById("mbody"),act=document.getElementById("mact");
+  act.innerHTML="";ttl.style.color="";ttl.style.textShadow="";
   if(type==="success-login"){
-    ttl.textContent=t("modal_welcome_title","🌟 مرحباً بعودتك!");
-    bdy.textContent=t("modal_welcome_body","أهلاً وسهلاً — نحن سعداء برؤيتك مجدداً في AlqurmanixX!");
+    ttl.textContent=t("modal_welcome_title","🌟 مرحباً بعودتك!");bdy.textContent=t("modal_welcome_body","أهلاً وسهلاً!");
     box.className="mbox m-gold";addClose(act);
-
   }else if(type==="success-register"){
-    ttl.textContent=t("modal_reg_title","🎊 تم التسجيل بنجاح!");
-    bdy.textContent=t("modal_reg_body","تم إنشاء حسابك بنجاح!\nتم إرسال رابط التفعيل إلى بريدك الإلكتروني.\nيرجى تفعيل حسابك قبل تسجيل الدخول.");
+    ttl.textContent=t("modal_reg_title","🎊 تم التسجيل!");bdy.textContent=t("modal_reg_body","تم إنشاء حسابك وتفعيل الرابط.");
     box.className="mbox m-gold";addClose(act);
-
   }else if(type==="not-verified"){
-    ttl.textContent=t("modal_unver_title","📧 الحساب غير مفعّل");
-    bdy.textContent=t("modal_unver_body","حسابك لم يُفعَّل بعد.\nاضغط على رابط التفعيل في بريدك الإلكتروني.");
-    box.className="mbox m-warn";
-    const rb=document.createElement("button");rb.className="mbtn";
-    rb.textContent=t("resend_btn","إعادة إرسال رابط التفعيل");
-    rb.onclick=async()=>{
-      closeModal();const u=auth.currentUser;if(!u)return;
-      if(!rateOk("resend_"+u.uid,60000)){modal("info",t("err_too_many","⏳ انتظر دقيقة."));return;}
-      try{await sendEmailVerification(u);modal("info",t("resent_ok","✅ تم الإرسال. تحقق من بريدك."));}
-      catch{modal("error",t("err_unknown","حدث خطأ."));}
-    };
+    ttl.textContent=t("modal_unver_title","📧 غير مفعّل");bdy.textContent=t("modal_unver_body","لم يُفعَّل حسابك بعد.");
+    box.className="mbox m-warn";const rb=document.createElement("button");rb.className="mbtn";rb.textContent=t("resend_btn","إرسال مجدداً");
+    rb.onclick=async()=>{closeModal();const u=auth.currentUser;if(!u)return;if(!rateOk("resend_"+u.uid,60000)){modal("info",t("err_too_many","⏳ انتظر دقيقة."));return;}try{await sendEmailVerification(u);modal("info",t("resent_ok","✅ تم الإرسال."));}catch{modal("error",t("err_unknown","خطأ."));}};
     act.appendChild(rb);addClose(act);
-
   }else if(type==="2fa"){
-    ttl.style.color="#00ff88";ttl.style.textShadow="0 0 22px rgba(0,255,136,.4)";
-    ttl.textContent=t("modal_2fa_title","🔐 التحقق الثنائي");
-    bdy.textContent=t("modal_2fa_body","تم إرسال رمز التحقق إلى هاتفك.\nأدخل الرمز المكوّن من 6 أرقام.");
-    box.className="mbox m-2fa";
-    const inp=document.createElement("input");
-    inp.className="m-otp-inp";inp.type="text";inp.inputMode="numeric";
-    inp.maxLength=6;inp.placeholder="• • • • • •";inp.autocomplete="one-time-code";
+    ttl.style.color="#00ff88";ttl.style.textShadow="0 0 22px rgba(0,255,136,.4)";ttl.textContent=t("modal_2fa_title","🔐 التحقق");
+    bdy.textContent=t("modal_2fa_body","أدخل الرمز 6 أرقام.");box.className="mbox m-2fa";
+    const inp=document.createElement("input");inp.className="m-otp-inp";inp.type="text";inp.inputMode="numeric";inp.maxLength=6;
     const errDiv=document.createElement("div");errDiv.className="m-otp-err";
-    const cnf=document.createElement("button");cnf.className="mbtn mbtn-neon";
-    cnf.textContent=t("otp_confirm_btn","تأكيد الرمز ✓");
-    cnf.onclick=()=>{
-      const code=inp.value.trim();
-      if(!/^\d{6}$/.test(code)){errDiv.textContent=t("err_otp_format","⚠️ أدخل 6 أرقام.");return;}
-      if(_2faRes){_2faRes(code);_2faRes=null;_2faRej=null;}
-      closeModal();
-    };
+    const cnf=document.createElement("button");cnf.className="mbtn mbtn-neon";cnf.textContent=t("otp_confirm_btn","تأكيد ✓");
+    cnf.onclick=()=>{const code=inp.value.trim();if(!/^\d{6}$/.test(code)){errDiv.textContent=t("err_otp_format","⚠️ 6 أرقام.");return;}if(_2faRes){_2faRes(code);_2faRes=null;_2faRej=null;}closeModal();};
     inp.onkeydown=e=>{if(e.key==="Enter")cnf.click();};
-    const cancel=document.createElement("button");cancel.className="mbtn mbtn-c";
-    cancel.textContent=t("close","إلغاء");
+    const cancel=document.createElement("button");cancel.className="mbtn mbtn-c";cancel.textContent=t("close","إلغاء");
     cancel.onclick=()=>{if(_2faRej)_2faRej(new Error("CANCELLED"));closeModal();};
     act.appendChild(inp);act.appendChild(errDiv);act.appendChild(cnf);act.appendChild(cancel);
-
-  }else if(type==="info"){
-    ttl.textContent="ℹ️";bdy.textContent=data;box.className="mbox m-info";addClose(act);
-  }else{
-    ttl.textContent="❌ "+t("error_title","خطأ");bdy.textContent=data;box.className="mbox m-err";addClose(act);
-  }
-  ov.classList.add("active");
-  setTimeout(()=>act.querySelector("input")?.focus(),100);
+  }else if(type==="info"){ttl.textContent="ℹ️";bdy.textContent=data;box.className="mbox m-info";addClose(act);
+  }else{ttl.textContent="❌ "+t("error_title","خطأ");bdy.textContent=data;box.className="mbox m-err";addClose(act);}
+  ov.classList.add("active");setTimeout(()=>act.querySelector("input")?.focus(),100);
 }
-function addClose(act){
-  const b=document.createElement("button");b.className="mbtn mbtn-c";
-  b.textContent=t("close","إغلاق");b.onclick=closeModal;act.appendChild(b);
-}
+function addClose(act){const b=document.createElement("button");b.className="mbtn mbtn-c";b.textContent=t("close","إغلاق");b.onclick=closeModal;act.appendChild(b);}
 function closeModal(){document.getElementById("moverlay").classList.remove("active");}
-
-/* ══ LOADING ══ */
 function setLoad(id,on){
-  const b=document.getElementById(id);if(!b)return;
-  const lbl=b.getAttribute("data-label")||b.textContent;
+  const b=document.getElementById(id);if(!b)return;const lbl=b.getAttribute("data-label")||b.textContent;
   if(on){b.setAttribute("data-label",lbl);b.disabled=true;b.innerHTML=`${t("loading","جاري...")}<span class="spinner"></span>`;}
   else{b.disabled=false;b.textContent=lbl;}
 }
-
-/* ══ OTP SIMULATION ══ */
 let _otp="",_phoneOk=false;
-function sendOtp(){
-  _otp=String(Math.floor(100000+Math.random()*900000));
-  console.info("%c[DEV] OTP → "+_otp,"color:#00ff88;font-weight:bold;font-size:14px");
-  /* في الإنتاج: أرسل _otp عبر Bridge SMS Gateway */
-}
+function sendOtp(){_otp=String(Math.floor(100000+Math.random()*900000));}
 const checkOtp=v=>v.trim()===_otp;
-
-/* ══ PHONE VERIFY ══ */
 async function handleVerifyPhone(){
   const num=clean(document.getElementById("rphone").value.trim());
-  if(!num||num.length<4){modal("error",t("err_phone_empty","⚠️ أدخل رقم هاتف صحيح."));return;}
+  if(!num||num.length<4){modal("error",t("err_phone_empty","⚠️ أدخل رقم صحيح."));return;}
   if(!rateOk("otp_"+num,60000)){modal("error",t("err_too_many","⏳ انتظر دقيقة."));return;}
-  const btn=document.getElementById("verifyPhoneBtn");
-  btn.disabled=true;btn.innerHTML=`${t("loading","جاري...")} <span class="spinner spinner-neon"></span>`;
-  sendOtp();
-  document.getElementById("otpWrap").classList.add("show");
-  document.getElementById("otpInput").value="";
-  setTimeout(()=>document.getElementById("otpInput").focus(),150);
-  btn.disabled=false;btn.textContent=t("verify_phone_btn","تأكيد رقم الهاتف");
+  const btn=document.getElementById("verifyPhoneBtn");btn.disabled=true;btn.innerHTML=`${t("loading","جاري...")} <span class="spinner spinner-neon"></span>`;
+  sendOtp();document.getElementById("otpWrap").classList.add("show");document.getElementById("otpInput").value="";
+  setTimeout(()=>document.getElementById("otpInput").focus(),150);btn.disabled=false;btn.textContent=t("verify_phone_btn","تأكيد");
 }
-
 async function handleConfirmOtp(){
   const v=document.getElementById("otpInput").value.trim();
-  if(!/^\d{6}$/.test(v)){modal("error",t("err_otp_format","⚠️ الرمز 6 أرقام."));return;}
-  if(checkOtp(v)){
-    _phoneOk=true;
-    document.getElementById("otpWrap").classList.remove("show");
-    document.getElementById("phoneOk").classList.add("show");
-    document.getElementById("verifyPhoneBtn").style.display="none";
-    document.getElementById("registerBtn").disabled=false;
-  }else{
-    _phoneOk=false;
-    modal("error",t("err_otp_invalid","⚠️ الرمز غير صحيح. تحقق وأعد المحاولة."));
-  }
+  if(!/^\d{6}$/.test(v)){modal("error",t("err_otp_format","⚠️ 6 أرقام."));return;}
+  if(checkOtp(v)){_phoneOk=true;document.getElementById("otpWrap").classList.remove("show");document.getElementById("phoneOk").classList.add("show");document.getElementById("verifyPhoneBtn").style.display="none";document.getElementById("registerBtn").disabled=false;}
+  else{_phoneOk=false;modal("error",t("err_otp_invalid","⚠️ خطأ."));}
 }
-
-/* ══════════════════════════════════════════════════
-   REGISTER
-══════════════════════════════════════════════════ */
 async function doRegister(){
-  const email=clean(document.getElementById("remail").value.trim());
-  const pw=document.getElementById("rpw").value;
-  const cf=document.getElementById("rconf").value;
-  const phoneNum=document.getElementById("phoneCode").value+clean(document.getElementById("rphone").value.trim());
-
-  if(!email||!pw||!cf){modal("error",t("err_empty","⚠️ يرجى ملء جميع الحقول."));return;}
-  if(pw!==cf){modal("error",t("err_mismatch","⚠️ كلمتا السر غير متطابقتين."));return;}
-  if(pws(pw).score<4){modal("error",t("err_weak_pw","⚠️ كلمة السر لا تستوفي الشروط."));return;}
-  if(!_phoneOk){modal("error",t("err_phone_not_verified","⚠️ يجب التحقق من رقم الهاتف أولاً."));return;}
-  if(!rateOk("reg_"+email,10000)){modal("error",t("err_too_many","⏳ انتظر قليلاً."));return;}
-
+  const email=clean(document.getElementById("remail").value.trim()),pw=document.getElementById("rpw").value,cf=document.getElementById("rconf").value,phoneNum=document.getElementById("phoneCode").value+clean(document.getElementById("rphone").value.trim());
+  if(!email||!pw||!cf){modal("error",t("err_empty","⚠️ الحقول فارغة."));return;}
+  if(pw!==cf){modal("error",t("err_mismatch","⚠️ لا تطابق."));return;}
+  if(pws(pw).score<4){modal("error",t("err_weak_pw","⚠️ ضعيفة."));return;}
+  if(!_phoneOk){modal("error",t("err_phone_not_verified","⚠️ تحقق من الهاتف."));return;}
+  if(!rateOk("reg_"+email,10000)){modal("error",t("err_too_many","⏳ انتظر."));return;}
   setLoad("registerBtn",true);
   try{
-    /* جمع بيانات الجلسة المشفرة */
     const session=await collectSessionData(phoneNum);
-
-    const cred=await createUserWithEmailAndPassword(auth,email,pw);
-    const user=cred.user;
-
-    /* تحديث session بالـ uid الفعلي */
-    session.userId=user.uid;
-    session.email=email;
-    session.isPhoneVerified=true;
-    session.createdAt=new Date();
-    session.lastActivity=new Date();
-
-    /* Firestore — يوافق q() في القواعد */
-    const fsData={
-      userId           :user.uid,
-      email            :email,
-      createdAt        :serverTimestamp(),
-      status           :"active",
-      lastActivity     :serverTimestamp(),
-      deviceFingerprint:session.deviceFingerprint,
-      sessionId        :session.sessionId,
-      referralCode     :user.uid.slice(0,8).toUpperCase()
-    };
-    await setDoc(doc(db,"users",user.uid),fsData);
-
-    /* Bridge */
-    try{
-      const br=await sendToSecurityInternet("create_user_data",{
-        ...session,role:"subscriber"
-      });
-      handleResponse(br);
-    }catch(bErr){console.warn("Bridge:",bErr.message);}
-
-    /* رابط التفعيل */
-    await sendEmailVerification(user).catch(e=>console.warn("EmailVerif:",e.message));
-
-    modal("success-register");
-  }catch(e){
-    modal("error",fbErr(e.code));
-  }finally{
-    setLoad("registerBtn",false);
-  }
+    const cred=await createUserWithEmailAndPassword(auth,email,pw);const user=cred.user;
+    session.userId=user.uid;session.email=email;session.isPhoneVerified=true;session.createdAt=new Date();session.lastActivity=new Date();
+    await setDoc(doc(db,"users",user.uid),{userId:user.uid,email:email,createdAt:serverTimestamp(),status:"active",lastActivity:serverTimestamp(),deviceFingerprint:session.deviceFingerprint,sessionId:session.sessionId,referralCode:user.uid.slice(0,8).toUpperCase()});
+    try{const br=await sendToSecurityInternet("create_user_data",{...session,role:"subscriber"});handleResponse(br);}catch{}
+    await sendEmailVerification(user).catch(()=>{});modal("success-register");
+  }catch(e){modal("error",fbErr(e.code));}finally{setLoad("registerBtn",false);}
 }
-
-/* ══════════════════════════════════════════════════
-   LOGIN
-══════════════════════════════════════════════════ */
 async function doLogin(){
-  const email=clean(document.getElementById("lemail").value.trim());
-  const pw=document.getElementById("lpw").value;
-  if(!email||!pw){modal("error",t("err_empty","⚠️ يرجى ملء جميع الحقول."));return;}
-  if(!rateOk("login_"+email,5000)){modal("error",t("err_too_many","⏳ انتظر 5 ثوانٍ."));return;}
+  const email=clean(document.getElementById("lemail").value.trim()),pw=document.getElementById("lpw").value;
+  if(!email||!pw){modal("error",t("err_empty","⚠️ الحقول فارغة."));return;}
+  if(!rateOk("login_"+email,5000)){modal("error",t("err_too_many","⏳ انتظر."));return;}
   setLoad("loginBtn",true);
   try{
-    const cred=await signInWithEmailAndPassword(auth,email,pw);
-    const user=cred.user;
-
+    const cred=await signInWithEmailAndPassword(auth,email,pw);const user=cred.user;
     if(!user.emailVerified){setLoad("loginBtn",false);modal("not-verified");return;}
-
-    /* التحقق الثنائي */
-    sendOtp();
-    setLoad("loginBtn",false);
-
+    sendOtp();setLoad("loginBtn",false);
     const otpCode=await new Promise((res,rej)=>{_2faRes=res;_2faRej=rej;modal("2fa");});
-
-    if(!checkOtp(otpCode)){modal("error",t("err_otp_invalid","⚠️ الرمز غير صحيح."));return;}
-
+    if(!checkOtp(otpCode)){modal("error",t("err_otp_invalid","⚠️ الرمز خطأ."));return;}
     setLoad("loginBtn",true);
-
-    /* جمع بيانات الجلسة */
-    const session=await collectSessionData();
-    session.userId=user.uid;
-    session.email=email;
-
-    /* تحديث Firestore — allowedUpdateFields فقط */
-    await updateDoc(doc(db,"users",user.uid),{
-      lastActivity     :serverTimestamp(),
-      deviceFingerprint:session.deviceFingerprint,
-      sessionId        :session.sessionId
-    });
-
-    /* Bridge */
-    try{
-      const br=await sendToSecurityInternet("update_user_data",{
-        userId           :user.uid,
-        deviceFingerprint:session.deviceFingerprint,
-        sessionId        :session.sessionId,
-        lastActivity     :new Date().toISOString()
-      });
-      handleResponse(br);
-    }catch(bErr){console.warn("Bridge:",bErr.message);}
-
-    modal("success-login",user.email||"");
-    setTimeout(()=>{window.location.href="main.html";},2200);
-
-  }catch(e){
-    if(e.message==="CANCELLED")return;
-    modal("error",e.code?fbErr(e.code):bridgeErrMsg(e.message));
-  }finally{
-    setLoad("loginBtn",false);
-  }
+    const session=await collectSessionData();session.userId=user.uid;session.email=email;
+    await updateDoc(doc(db,"users",user.uid),{lastActivity:serverTimestamp(),deviceFingerprint:session.deviceFingerprint,sessionId:session.sessionId});
+    try{const br=await sendToSecurityInternet("update_user_data",{userId:user.uid,deviceFingerprint:session.deviceFingerprint,sessionId:session.sessionId,lastActivity:new Date().toISOString()});handleResponse(br);}catch{}
+    modal("success-login",user.email||"");setTimeout(()=>{window.location.href="main.html";},2200);
+  }catch(e){if(e.message!=="CANCELLED")modal("error",e.code?fbErr(e.code):bridgeErrMsg(e.message));}finally{setLoad("loginBtn",false);}
 }
-
-/* ══ FORGOT ══ */
 async function doForgot(){
   const email=clean(document.getElementById("lemail").value.trim());
-  if(!email){modal("error",t("err_empty_email","⚠️ أدخل البريد الإلكتروني أولاً."));return;}
-  if(!rateOk("reset_"+email,30000)){modal("error",t("err_too_many","⏳ انتظر 30 ثانية."));return;}
-  try{await sendPasswordResetEmail(auth,email);modal("info",t("reset_sent","📧 تم إرسال رابط إعادة التعيين."));}
-  catch(e){modal("error",fbErr(e.code));}
+  if(!email){modal("error",t("err_empty_email","⚠️ أدخل البريد."));return;}
+  if(!rateOk("reset_"+email,30000)){modal("error",t("err_too_many","⏳ انتظر."));return;}
+  try{await sendPasswordResetEmail(auth,email);modal("info",t("reset_sent","📧 تم الإرسال."));}catch(e){modal("error",fbErr(e.code));}
 }
-
-/* ══ PARTICLES — ذهبية تتطاير ══ */
 function particles(){
-  const c=document.getElementById("ptc");
-  const cols=["#FFD700","#FFC200","#FFAA00","#FFE066","#FFF0A0","#F5A623","#E8940A","#FFD060"];
-  for(let i=0;i<70;i++){
-    const p=document.createElement("div");p.className="gp";
-    const sz=Math.random()*10+4;
-    const cl=cols[Math.floor(Math.random()*cols.length)];
-    p.style.cssText=
-      `width:${sz}px;height:${sz}px;background:${cl};`+
-      `left:${Math.random()*100}%;`+
-      `top:${Math.random()*100}%;`+
-      `animation-duration:${3.5+Math.random()*7}s;`+
-      `animation-delay:${Math.random()*7}s;`+
-      `opacity:${.5+Math.random()*.5};`+
-      `box-shadow:0 0 ${sz*2.5}px ${cl},0 0 ${sz*1.2}px ${cl}`;
+  const c=document.getElementById("ptc"),cols=["#FFD700","#FFC200","#FFAA00","#FFE066","#FFF0A0"],stars=["★","✦","✨","⭐"];
+  for(let i=0;i<80;i++){
+    const p=document.createElement("div");p.className="gp";p.textContent=stars[Math.floor(Math.random()*stars.length)];
+    const sz=Math.random()*15+8,cl=cols[Math.floor(Math.random()*cols.length)];
+    p.style.cssText=`color:${cl};font-size:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${4+Math.random()*8}s;animation-delay:${Math.random()*5}s;opacity:${.3+Math.random()*.6};text-shadow:0 0 ${sz}px ${cl}`;
     c.appendChild(p);
   }
 }
-
-/* ══ INIT ══ */
 document.addEventListener("DOMContentLoaded",async()=>{
-  particles();
-  buildDD();
-  await loadLang(localStorage.getItem("aqx_lang")||"ar");
-
-  /* Globe */
-  document.getElementById("globeBtn").addEventListener("click",e=>{
-    e.stopPropagation();
-    document.getElementById("langDd").classList.toggle("open");
-  });
+  particles();buildDD();
+  document.getElementById("globeBtn").addEventListener("click",e=>{e.stopPropagation();document.getElementById("langDd").classList.toggle("open");});
   document.addEventListener("click",()=>document.getElementById("langDd").classList.remove("open"));
-
-  /* Tabs */
   document.querySelectorAll(".tab-btn").forEach(btn=>{
     btn.addEventListener("click",()=>{
       const tab=btn.dataset.tab;
       document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
       document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
-      btn.classList.add("active");
-      document.getElementById(tab+"-panel").classList.add("active");
+      btn.classList.add("active");document.getElementById(tab+"-panel").classList.add("active");
     });
   });
-
-  /* Password */
   document.getElementById("rpw").addEventListener("input",e=>updatePwUI(e.target.value));
   document.getElementById("rconf").addEventListener("input",()=>{
-    const pw=document.getElementById("rpw").value;
-    const cf=document.getElementById("rconf").value;
-    const el=document.getElementById("cmatch");
-    el.textContent=cf===pw?t("pw_match","✅ تطابق"):t("pw_no_match","❌ لا تطابق");
-    el.style.color=cf===pw?"#00ff88":"#ff4444";
+    const pw=document.getElementById("rpw").value,cf=document.getElementById("rconf").value,el=document.getElementById("cmatch");
+    el.textContent=cf===pw?t("pw_match","✅ تطابق"):t("pw_no_match","❌ لا تطابق");el.style.color=cf===pw?"#00ff88":"#ff4444";
   });
-
-  /* Phone & OTP */
   document.getElementById("verifyPhoneBtn").addEventListener("click",handleVerifyPhone);
   document.getElementById("otpConfirmBtn").addEventListener("click",handleConfirmOtp);
   document.getElementById("otpInput").addEventListener("keydown",e=>{if(e.key==="Enter")handleConfirmOtp();});
-
-  /* Main buttons */
   document.getElementById("loginBtn").addEventListener("click",doLogin);
   document.getElementById("registerBtn").addEventListener("click",doRegister);
   document.getElementById("forgotBtn").addEventListener("click",doForgot);
-
-  /* Enter shortcuts */
   document.getElementById("lpw").addEventListener("keydown",e=>{if(e.key==="Enter")doLogin();});
   document.getElementById("rconf").addEventListener("keydown",e=>{if(e.key==="Enter")doRegister();});
-
-  /* Modal overlay */
-  document.getElementById("moverlay").addEventListener("click",e=>{
-    if(e.target.id==="moverlay"){
-      if(_2faRej){_2faRej(new Error("CANCELLED"));}
-      closeModal();
-    }
-  });
-
-  /* منع Right-Click وفتح DevTools — حماية إضافية */
+  document.getElementById("moverlay").addEventListener("click",e=>{if(e.target.id==="moverlay"){if(_2faRej){_2faRej(new Error("CANCELLED"));}closeModal();}});
   document.addEventListener("contextmenu",e=>e.preventDefault());
-  document.addEventListener("keydown",e=>{
-    if(e.key==="F12"||(e.ctrlKey&&e.shiftKey&&["I","J","C"].includes(e.key))||(e.ctrlKey&&e.key==="U")){
-      e.preventDefault();
-    }
-  });
+  document.addEventListener("keydown",e=>{if(e.key==="F12"||(e.ctrlKey&&e.shiftKey&&["I","J","C"].includes(e.key))||(e.ctrlKey&&e.key==="U")){e.preventDefault();}});
+  await loadLang(localStorage.getItem("aqx_lang")||"ar");
 });
 </script>
 </body>
