@@ -1,1 +1,136 @@
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, confirmPasswordReset, verifyPasswordResetCode } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, updateDoc, increment, serverTimestamp, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+const _0xC={apiKey:"AIzaSyBICr62Oa_-69hATpfFrdTDfO9WV4bVVvU",authDomain:"alqurmanix-d49f7.firebaseapp.com",projectId:"alqurmanix-d49f7"};
+const _0xI=initializeApp(_0xC);
+const _0xAu=getAuth(_0xI);
+const _0xDb=getFirestore(_0xI);
+
+// 🌍 Language Engine (11+)
+const _0xLangs={
+ar:{ok:"تم",btn:"تفعيل",bad:"خطأ"},
+en:{ok:"Done",btn:"Activate",bad:"Error"},
+fr:{ok:"Succès",btn:"Activer",bad:"Erreur"},
+de:{ok:"Erfolg",btn:"Aktivieren",bad:"Fehler"},
+it:{ok:"Fatto",btn:"Attiva",bad:"Errore"},
+tr:{ok:"Tamam",btn:"Aktif",bad:"Hata"},
+ja:{ok:"成功",btn:"実行",bad:"エラー"},
+zh:{ok:"成功",btn:"执行",bad:"错误"},
+ko:{ok:"성공",btn:"실행",bad:"오류"},
+hi:{ok:"सफल",btn:"चालू",bad:"त्रुटि"}
+};
+
+const _0xLp=new URLSearchParams(location.search);
+const _0xL=_0xLp.get("l")||navigator.language.slice(0,2)||"en";
+const _0xTxt=_0xLangs[_0xL]||_0xLangs.en;
+document.documentElement.lang=_0xL;
+document.documentElement.dir=_0xL==="ar"?"rtl":"ltr";
+
+// 🔐 Multi-Layer Fingerprint
+const _0xFP=btoa(
+navigator.userAgent+
+screen.width+
+screen.height+
+Intl.DateTimeFormat().resolvedOptions().timeZone
+);
+
+// 🔗 Code
+const _0xCo=_0xLp.get("oobCode")||_0xLp.get("c");
+
+// 🛡️ Session + Device Lock (Level أعلى)
+async function _0xV(){
+try{
+const _em=await verifyPasswordResetCode(_0xAu,_0xCo);
+const ref=doc(_0xDb,"security_locks",_0xCo);
+const snap=await getDoc(ref);
+
+if(snap.exists()){
+if(snap.data().fp!==_0xFP){
+document.body.innerHTML="SESSION BLOCKED";
+throw 0;
+}
+}else{
+await setDoc(ref,{fp:_0xFP,ts:serverTimestamp()});
+}
+
+_k1.disabled=_k2.disabled=false;
+
+}catch(e){
+location.replace("/error.html");
+}
+}
+
+// 👁️ Toggle (both fields)
+window._0xT=()=>{
+_k1.type=_k1.type==="password"?"text":"password";
+_k2.type=_k2.type==="password"?"text":"password";
+};
+
+// 💪 Smart Strength (Entropy-based)
+function _0xS(v){
+let score=0;
+score+=Math.min(v.length*4,40);
+if(/[A-Z]/.test(v))score+=15;
+if(/[a-z]/.test(v))score+=15;
+if(/[0-9]/.test(v))score+=15;
+if(/[^A-Za-z0-9]/.test(v))score+=15;
+return Math.min(score,100);
+}
+
+const _0xM=()=>{
+const v=_k1.value;
+const s=_0xS(v);
+
+_bar.style.width=s+"%";
+_bar.style.background=s<50?"var(--r)":s<80?"orange":"var(--g)";
+
+_eb.disabled=!(s>85 && v===_k2.value);
+};
+
+_k1.oninput=_k2.oninput=_0xM;
+
+// 🚫 Anti Abuse
+let _0xTr=0;
+let _0xLock=false;
+
+window._0xR=async()=>{
+if(_0xLock)return;
+if(_0xTr>3){
+_0xLock=true;
+setTimeout(()=>_0xLock=false,10000);
+return;
+}
+_0xTr++;
+
+try{
+const _em=await verifyPasswordResetCode(_0xAu,_0xCo);
+
+await confirmPasswordReset(_0xAu,_0xCo,_k1.value);
+
+await updateDoc(doc(_0xDb,"users",_em),{
+reset_count:increment(1),
+last_reset:serverTimestamp()
+});
+
+document.getElementById('sc-res').style.display="flex";
+
+// 🎯 Redirect احترافي
+setTimeout(()=>location.replace("/login.html?reset=1"),3000);
+
+}catch(e){
+_eb.disabled=false;
+}
+};
+
+// 🧠 Anti-Debug (خفيف ذكي)
+setInterval(()=>{
+if(window.outerWidth-window.innerWidth>160){
+document.body.style.opacity="0";
+}
+},1500);
+
+// 🚀 Start
+_0xV();
+</script>
