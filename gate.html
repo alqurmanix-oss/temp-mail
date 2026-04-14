@@ -1,1 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>AGX</title>
 
+<script type="module">
+import{initializeApp as _0x1a2b}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import{getAuth as _0x3c4d,applyActionCode as _0x5e6f,checkActionCode as _0x7g8h,verifyPasswordResetCode as _0x9i0j}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const _0xk1={
+apiKey:"YOUR_API_KEY",
+authDomain:"alqurmanix-15b92.firebaseapp.com",
+projectId:"alqurmanix-15b92"
+};
+
+const _0xa=_0x1a2b(_0xk1);
+const _0xb=_0x3c4d(_0xa);
+
+// Anti-debug
+(function(){
+  const _0xdev=()=>{debugger;};
+  setInterval(_0xdev,3000);
+})();
+
+// Lang Engine
+function _0xL(){
+  const _0xl=(navigator.language||"en").toLowerCase();
+  return _0xl.startsWith("ar")?"ar":
+  _0xl.startsWith("en")?"en":
+  _0xl.startsWith("fr")?"fr":
+  _0xl.startsWith("it")?"it":
+  _0xl.startsWith("de")?"de":
+  _0xl.startsWith("zh")?"zh":
+  _0xl.startsWith("ko")?"ko":
+  _0xl.startsWith("hi")?"hi":
+  _0xl.startsWith("tr")?"tr":
+  _0xl.startsWith("ja")?"ja":
+  _0xl.startsWith("es")?"es":
+  _0xl.startsWith("pt")?"pt":
+  _0xl.startsWith("ru")?"ru":"en";
+}
+
+// Core
+async function _0xR(){
+  const _0xp=new URLSearchParams(location.search);
+  const _0xm=_0xp.get("mode");
+  const _0xc=_0xp.get("oobCode");
+  const _0xl=_0xL();
+
+  const _0xgo=(u)=>location.replace(u);
+
+  try{
+
+    if(!_0xm||!_0xc)throw{code:"INV"};
+
+    switch(_0xm){
+
+      case"verifyEmail":
+        await _0x7g8h(_0xb,_0xc);
+        await _0x5e6f(_0xb,_0xc);
+        _0xgo(`active.html?l=${_0xl}`);
+        break;
+
+      case"resetPassword":
+        await _0x9i0j(_0xb,_0xc);
+        _0xgo(`reset.html?c=${_0xc}&l=${_0xl}`);
+        break;
+
+      case"recoverEmail":
+        await _0x7g8h(_0xb,_0xc);
+        _0xgo(`active.html?recovered=1&l=${_0xl}`);
+        break;
+
+      default:
+        _0xgo(`error.html?type=0&l=${_0xl}`);
+    }
+
+  }catch(e){
+    const _0xe=e?.code||"X";
+    console.warn("E:",_0xe);
+    location.replace(`support.html?err=${_0xe}&l=${_0xl}`);
+  }
+}
+
+// Speed
+addEventListener("load",()=>{_0xR();});
+</script>
+
+<style>
+body{background:#020408;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}
+.ldr{width:50px;height:50px;border:3px solid rgba(255,215,0,.1);border-top-color:#FFD700;border-radius:50%;animation:s .7s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+</style>
+
+</head>
+<body><div class="ldr"></div></body>
+</html>
