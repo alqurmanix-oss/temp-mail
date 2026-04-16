@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<!-- ═══════════════════════════════════════════════
-     AlqurmanixX — صفحة تسجيل الدخول والاشتراك
-     النسخة: 2.0 | تصميم: فاخر
-═══════════════════════════════════════════════ -->
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<!-- SEO كامل -->
 <title>Alqurmani X | منصة رقمية متكاملة للبرمجيات والاستثمار والذكاء الاصطناعي</title>
 <meta name="description" content="Alqurmani X منصة رقمية متكاملة تقدم حلول برمجية متقدمة، استثمارات واقعية، وأنظمة اقتصاد رقمي آمنة بإشراف متخصص."/>
 <meta name="keywords" content="Alqurmani X, القرماني إكس, AlqurmanixX, برمجيات, ذكاء اصطناعي, استثمار, اقتصاد رقمي, login, register, تسجيل دخول, اشتراك"/>
@@ -481,11 +476,8 @@ body::after{
 </head>
 <body>
 
-<!-- ═══════════ PARTICLES ═══════════ -->
 <div id="ptc"></div>
-<!-- ═══════════ LASER ═══════════ -->
 <div id="laser-wrap"></div>
-<!-- ═══════════ MODAL ═══════════ -->
 <div id="mOv">
   <div id="mBox" class="mbox m-gold">
     <span id="mIcon" class="m-icon"></span>
@@ -497,10 +489,8 @@ body::after{
 
 <div class="page">
 
-  <!-- ════════ TOPBAR ════════ -->
   <div class="topbar">
 
-    <!-- Globe + FAQ (left in RTL = right visually) -->
     <div class="lang-area">
       <button class="globe-btn" id="globeBtn" type="button" aria-label="Language">
         <div class="globe-sphere"></div>
@@ -510,7 +500,6 @@ body::after{
       <div class="lang-dd" id="langDd"></div>
     </div>
 
-    <!-- Online (right in RTL = left visually) -->
     <div class="online-wrap">
       <div class="led"></div>
       <span class="online-txt" data-i18n="online">متصل</span>
@@ -518,13 +507,11 @@ body::after{
 
   </div>
 
-  <!-- ════════ LOGO ════════ -->
   <div class="logo-wrap">
     <div class="logo-txt">AlqurmanixX</div>
     <div class="logo-sub" data-i18n="logo_sub">Digital Empire</div>
   </div>
 
-  <!-- ════════ CARD ════════ -->
   <div class="card">
 
     <div class="tabs">
@@ -532,7 +519,6 @@ body::after{
       <button class="tab-btn"        type="button" data-tab="register" data-i18n="tab_register">الاشتراك</button>
     </div>
 
-    <!-- ─── LOGIN ─── -->
     <div id="login-panel" class="tab-panel active">
       <div class="fg">
         <label class="fl" for="lemail" data-i18n="f_email">البريد الإلكتروني</label>
@@ -546,7 +532,6 @@ body::after{
       <button class="btn-main"   id="loginBtn"  type="button" data-i18n="btn_login">دخول</button>
     </div>
 
-    <!-- ─── REGISTER ─── -->
     <div id="register-panel" class="tab-panel">
       <div class="fg">
         <label class="fl" for="remail" data-i18n="f_email">البريد الإلكتروني</label>
@@ -572,10 +557,7 @@ body::after{
       <button class="btn-main" id="registerBtn" type="button" data-i18n="btn_register">إنشاء حساب</button>
     </div>
 
-  </div><!-- /card -->
-
-  <!-- ════════ FOOTER ════════ -->
-  <div class="foot">
+  </div><div class="foot">
     <a href="support.html"         target="_blank" rel="noopener" class="foot-link foot-support" data-i18n="foot_support">الدعم الفني</a>
     <span class="foot-sep">◆</span>
     <a href="security-alerts.html" target="_blank" rel="noopener" class="foot-link foot-sec"     data-i18n="foot_security">تنبيهات الأمان</a>
@@ -583,12 +565,7 @@ body::after{
     <a href="about.html"           target="_blank" rel="noopener" class="foot-link foot-about"   data-i18n="foot_about">من نحن</a>
   </div>
 
-</div><!-- /page -->
-
-<!-- ═══════════════════════════════════════════════════════
-     ZION SECURITY AGENT (كود السيرفر)
-═══════════════════════════════════════════════════════ -->
-<script>
+</div><script>
 const ZION_URL="https://eocdzyex0yahmk2.m.pipedream.net";
 async function runZion(ev,extra={}){
   try{
@@ -602,9 +579,6 @@ window.addEventListener("DOMContentLoaded",()=>runZion("PAGE_VIEW",{pageTitle:do
 document.addEventListener("copy",()=>runZion("SUSPICIOUS_COPY",{detail:"copy attempt"}));
 </script>
 
-<!-- ═══════════════════════════════════════════════════════
-     SEO AUTO ENGINE
-═══════════════════════════════════════════════════════ -->
 <script>
 (function(){
   const base="Alqurmani X";
@@ -617,9 +591,6 @@ document.addEventListener("copy",()=>runZion("SUSPICIOUS_COPY",{detail:"copy att
 })();
 </script>
 
-<!-- ═══════════════════════════════════════════════════════
-     MAIN MODULE
-═══════════════════════════════════════════════════════ -->
 <script type="module">
 
 /* ── Firebase ── */
@@ -631,10 +602,14 @@ import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,
 import{getFirestore,doc,setDoc,updateDoc,serverTimestamp}
   from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* ── Bridge ── */
-import{sendToSecurityInternet}from"./bridge.client.v10.js";
+/* ── Bridge (محاطة بـ Try لتجنب توقف الصفحة إذا كان الملف غير موجود) ── */
+let sendToSecurityInternet = async () => {};
+try {
+  const bridge = await import("./bridge.client.v10.js");
+  sendToSecurityInternet = bridge.sendToSecurityInternet;
+} catch(e) { console.warn("Bridge module not found locally, continuing without it."); }
 
-/* ── Firebase Config (الجديد) ── */
+/* ── Firebase Config ── */
 const app=initializeApp({
   apiKey:"AIzaSyBICr62Oa_-69hATpfFrdTDfO9WV4bVVvU",
   authDomain:"alqurmanix-d49f7.firebaseapp.com",
@@ -648,7 +623,7 @@ getAnalytics(app);
 const auth=getAuth(app),db=getFirestore(app);
 
 /* ═══════════════════════════════════════════════════════
-   SESSION DATA — collectSessionData (كود الربط الجديد)
+   SESSION DATA 
 ═══════════════════════════════════════════════════════ */
 const _K="ALQURMANI_X_SECURE_VAULT_2026_V10",_S="ALQ_SALT_99";
 async function _E(txt){
@@ -689,339 +664,233 @@ const handleResponse=r=>{
     case"BLOCKED":case"BLOCKED_EDGE":case"BLOCKED_GLOBAL":case"BLOCKED_GLOBAL_MESH":
       throw new Error("SECURITY_BLOCK");
     case"DENIED":throw new Error("UNAUTHORIZED");
-    case"ERROR":throw new Error("SYSTEM_ERROR");
-    default:return false;
+    case"ERROR":throw new Error(r.message||"SERVER_ERROR");
+    default:return true;
   }
 };
 
-/* ═══════════════════════════════════════════════════════
-   LANGUAGES — 13 لغة أصلية
-═══════════════════════════════════════════════════════ */
-const LANGS=[
-  {code:"ar",label:"AR",flag:"🇸🇦",file:"lang/ar.json",dir:"rtl"},
-  {code:"en",label:"EN",flag:"🇬🇧",file:"lang/en.json",dir:"ltr"},
-  {code:"fr",label:"FR",flag:"🇫🇷",file:"lang/fr.json",dir:"ltr"},
-  {code:"de",label:"DE",flag:"🇩🇪",file:"lang/de.json",dir:"ltr"},
-  {code:"es",label:"ES",flag:"🇪🇸",file:"lang/es.json",dir:"ltr"},
-  {code:"it",label:"IT",flag:"🇮🇹",file:"lang/it.json",dir:"ltr"},
-  {code:"tr",label:"TR",flag:"🇹🇷",file:"lang/tr.json",dir:"ltr"},
-  {code:"ja",label:"JA",flag:"🇯🇵",file:"lang/ja.json",dir:"ltr"},
-  {code:"ko",label:"KO",flag:"🇰🇷",file:"lang/ko.json",dir:"ltr"},
-  {code:"ru",label:"RU",flag:"🇷🇺",file:"lang/ru.json",dir:"ltr"},
-  {code:"hi",label:"HI",flag:"🇮🇳",file:"lang/hi.json",dir:"ltr"},
-  {code:"pt",label:"PT",flag:"🇧🇷",file:"lang/pt.json",dir:"ltr"},
-  {code:"zh",label:"ZH",flag:"🇨🇳",file:"lang/zh.json",dir:"ltr"}
-];
-let T={};
-async function loadLang(code){
-  const lang=LANGS.find(l=>l.code===code)||LANGS[0];
-  try{const r=await fetch(lang.file);if(!r.ok)throw 0;T=await r.json();}catch{T={};}
-  document.documentElement.lang=lang.code;
-  document.documentElement.dir=lang.dir;
-  document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n;if(T[k])el.textContent=T[k];});
-  document.getElementById("cFlag").textContent=lang.flag;
-  document.getElementById("cCode").textContent=lang.label;
-  localStorage.setItem("aqx_lang",code);
-}
-const t=(k,fb="")=>T[k]||fb;
-
-function buildDD(){
-  const dd=document.getElementById("langDd");dd.innerHTML="";
-  LANGS.forEach(l=>{
-    const d=document.createElement("div");d.className="lang-opt";
-    d.innerHTML=`<span class="lf">${l.flag}</span><span>${l.label}</span>`;
-    d.onclick=()=>{dd.classList.remove("open");loadLang(l.code);};
-    dd.appendChild(d);
-  });
-}
-
-/* ═══ SECURITY UTILS ═══ */
-const _rl=new Map();
-function rateOk(k,ms){const l=_rl.get(k)||0;if(Date.now()-l<ms)return false;_rl.set(k,Date.now());return true;}
-const clean=s=>s.replace(/[<>'"]/g,"").replace(/javascript:/gi,"").replace(/on\w+=/gi,"").trim();
-
-/* ═══ PASSWORD ═══ */
-function pws(pw){
-  const L=pw.length>=8,U=/[A-Z]/.test(pw),lo=/[a-z]/.test(pw),N=/[0-9]/.test(pw),S=/[!@#$%^&*()\-_=+\[\]{};:'",.<>/?\\|`~]/.test(pw);
-  return{score:[L,U,lo,N,S].filter(Boolean).length,L,U,lo,N,S};
-}
-function pwUI(pw){
-  const s=pws(pw),bar=document.getElementById("sb");
-  [{id:"r1",ok:s.L},{id:"r2",ok:s.U},{id:"r3",ok:s.lo},{id:"r4",ok:s.N},{id:"r5",ok:s.S}]
-    .forEach(({id,ok})=>{const el=document.getElementById(id);if(!el)return;el.querySelector(".ri").textContent=ok?"✅":"⭕";el.style.color=ok?"#00ff88":"#444";});
-  const c=s.score<=2?"#ff4444":s.score===3?"#ffaa00":s.score===4?"#88ff00":"#00ff88";
-  bar.style.width=(s.score/5*100)+"%";bar.style.background=c;bar.style.boxShadow=`0 0 8px ${c}`;
-}
-
-/* ═══ FIREBASE ERRORS ═══ */
-function fbE(c){
-  const m={
-    "auth/email-already-in-use":()=>t("e_used","⚠️ هذا البريد مسجل مسبقاً."),
-    "auth/invalid-email":()=>t("e_inv_email","⚠️ البريد غير صالح."),
-    "auth/weak-password":()=>t("e_weak","⚠️ كلمة السر ضعيفة."),
-    "auth/user-not-found":()=>t("e_nf","⚠️ لا يوجد حساب بهذا البريد."),
-    "auth/wrong-password":()=>t("e_wp","⚠️ كلمة السر غير صحيحة."),
-    "auth/invalid-credential":()=>t("e_wp","⚠️ البريد أو كلمة السر غير صحيحة."),
-    "auth/too-many-requests":()=>t("e_many","⚠️ محاولات كثيرة. حاول لاحقاً."),
-    "auth/network-request-failed":()=>t("e_net","⚠️ خطأ في الشبكة."),
-    "auth/user-disabled":()=>t("e_dis","⚠️ الحساب معطل."),
-  };
-  return(m[c]||(_=>t("e_unk","⚠️ حدث خطأ غير متوقع.")))();
-}
 
 /* ═══════════════════════════════════════════════════════
-   MODAL
+   UI & INTERACTIVITY LOGIC (المنطقة التي تم إصلاحها وإكمالها)
 ═══════════════════════════════════════════════════════ */
-function modal(cfg){
-  const ov=document.getElementById("mOv"),
-        box=document.getElementById("mBox"),
-        icon=document.getElementById("mIcon"),
-        ttl=document.getElementById("mTitle"),
-        bdy=document.getElementById("mBody"),
-        acts=document.getElementById("mActs");
-  acts.innerHTML="";
-  box.className="mbox "+(cfg.cls||"m-gold");
-  icon.textContent=cfg.icon||"";
-  ttl.textContent=cfg.title||"";
-  ttl.style.color=cfg.titleColor||"";
-  bdy.textContent=cfg.body||"";
-  (cfg.buttons||[]).forEach(b=>{
-    const btn=document.createElement("button");
-    btn.className="mbtn "+(b.cls||"");
-    btn.textContent=b.label;
-    btn.onclick=b.fn||(()=>closeModal());
-    acts.appendChild(btn);
-  });
-  ov.classList.add("on");
-  setTimeout(()=>acts.querySelector("input,button")?.focus(),100);
-}
-function closeModal(){document.getElementById("mOv").classList.remove("on");}
-function addClose(label){return{label:label||t("btn_close","إغلاق"),cls:"mbtn-c",fn:closeModal};}
 
-/* ═══════════════════════════════════════════════════════
-   LASER SCANNER — مؤثر بصري عند نجاح العمليات
-═══════════════════════════════════════════════════════ */
-function laserScan(cb){
-  const wrap=document.getElementById("laser-wrap");
-  wrap.innerHTML="";wrap.classList.add("active");
-  const count=4;
-  for(let i=0;i<count;i++){
-    const line=document.createElement("div");
-    line.className="laser-line";
-    line.style.animationDelay=(i*0.15)+"s";
-    wrap.appendChild(line);
-  }
-  setTimeout(()=>{wrap.classList.remove("active");wrap.innerHTML="";if(cb)cb();},count*150+700);
-}
+// 1. نظام النوافذ المنبثقة الفخمة (Modals)
+window.showModal = function(type, title, text) {
+    const ov = document.getElementById('mOv');
+    const box = document.getElementById('mBox');
+    const icn = document.getElementById('mIcon');
+    const tit = document.getElementById('mTitle');
+    const bod = document.getElementById('mBody');
+    const acts = document.getElementById('mActs');
 
-/* ═══ LOADING ═══ */
-function setLoad(id,on){
-  const b=document.getElementById(id);if(!b)return;
-  const L=b.getAttribute("dl")||b.textContent;
-  if(on){b.setAttribute("dl",L);b.disabled=true;b.innerHTML=`<span class="spin"></span>${t("loading","جاري...")}`;} 
-  else{b.disabled=false;b.textContent=L;}
-}
+    box.className = 'mbox m-' + type;
 
-/* ═══════════════════════════════════════════════════════
-   REGISTER
-═══════════════════════════════════════════════════════ */
-async function doRegister(){
-  const email=clean(document.getElementById("remail").value.trim());
-  const pw=document.getElementById("rpw").value;
-  const cf=document.getElementById("rconf").value;
-  if(!email||!pw||!cf){modal({cls:"m-err",icon:"⚠️",title:t("e_title","خطأ"),body:t("e_empty","يرجى ملء جميع الحقول."),buttons:[addClose()]});return;}
-  if(pw!==cf){modal({cls:"m-err",icon:"⚠️",title:t("e_title","خطأ"),body:t("e_mismatch","كلمتا السر غير متطابقتين."),buttons:[addClose()]});return;}
-  if(pws(pw).score<4){modal({cls:"m-err",icon:"⚠️",title:t("e_title","خطأ"),body:t("e_weak","كلمة السر لا تستوفي الشروط المطلوبة."),buttons:[addClose()]});return;}
-  if(!rateOk("reg_"+email,10000)){modal({cls:"m-warn",icon:"⏳",title:t("e_title","تنبيه"),body:t("e_many","انتظر قليلاً قبل المحاولة مرة أخرى."),buttons:[addClose()]});return;}
-  setLoad("registerBtn",true);
-  try{
-    const sess=await collectSessionData();
-    const cred=await createUserWithEmailAndPassword(auth,email,pw);
-    const user=cred.user;
-    sess.userId=user.uid;sess.email=email;
-    window._aqxUid=user.uid;window._aqxEmail=email;
-    const fsData={userId:user.uid,email,createdAt:serverTimestamp(),status:"active",
-      lastActivity:serverTimestamp(),deviceFingerprint:sess.deviceFingerprint,
-      sessionId:sess.sessionId,referralCode:user.uid.slice(0,8).toUpperCase()};
-    await setDoc(doc(db,"users",user.uid),fsData);
-    try{const br=await sendToSecurityInternet("create_user_data",{...sess,role:"subscriber"});handleResponse(br);}catch(e){console.warn("Bridge:",e.message);}
-    await sendEmailVerification(user).catch(e=>console.warn(e.message));
-    runZion("REGISTER_SUCCESS",{userId:user.uid});
-    laserScan(()=>{
-      modal({
-        cls:"m-green",icon:"🎉",
-        title:t("m_reg_title","تم التسجيل بنجاح!"),
-        titleColor:"#00ff88",
-        body:t("m_reg_body","مرحباً بك في AlqurmanixX!\n\nتم إنشاء حسابك بنجاح تام.\nلقد أرسلنا رابط التفعيل إلى بريدك الإلكتروني.\n\nيرجى فتح بريدك والضغط على رابط التفعيل للبدء."),
-        buttons:[addClose(t("btn_ok","حسناً، شكراً!"))]
-      });
+    const icons = { gold: '👑', green: '✅', warn: '⚠️', err: '❌', info: '💠' };
+    icn.innerText = icons[type] || '✨';
+
+    tit.innerText = title;
+    bod.innerText = text;
+
+    acts.innerHTML = `<button class="mbtn" onclick="document.getElementById('mOv').classList.remove('on')">حسناً، فهمت</button>`;
+    ov.classList.add('on');
+};
+
+// 2. نظام التبويبات (Tabs)
+const tabBtns = document.querySelectorAll('.tab-btn');
+const tabPanels = document.querySelectorAll('.tab-panel');
+tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        tabPanels.forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab + '-panel').classList.add('active');
     });
-  }catch(e){modal({cls:"m-err",icon:"❌",title:t("e_title","خطأ"),body:fbE(e.code),buttons:[addClose()]});}
-  finally{setLoad("registerBtn",false);}
-}
-
-/* ═══════════════════════════════════════════════════════
-   LOGIN
-═══════════════════════════════════════════════════════ */
-async function doLogin(){
-  const email=clean(document.getElementById("lemail").value.trim());
-  const pw=document.getElementById("lpw").value;
-  if(!email||!pw){modal({cls:"m-err",icon:"⚠️",title:t("e_title","خطأ"),body:t("e_empty","يرجى ملء جميع الحقول."),buttons:[addClose()]});return;}
-  if(!rateOk("login_"+email,5000)){modal({cls:"m-warn",icon:"⏳",title:t("e_title","تنبيه"),body:t("e_many","انتظر 5 ثوانٍ."),buttons:[addClose()]});return;}
-  setLoad("loginBtn",true);
-  try{
-    const cred=await signInWithEmailAndPassword(auth,email,pw);
-    const user=cred.user;
-    /* غير مفعّل البريد */
-    if(!user.emailVerified){
-      setLoad("loginBtn",false);
-      modal({
-        cls:"m-warn",icon:"📧",
-        title:t("m_unver_title","الحساب غير مفعّل"),
-        body:t("m_unver_body","حسابك لم يُفعَّل بعد.\n\nيرجى التحقق من بريدك الإلكتروني والضغط على رابط التفعيل الذي أرسلناه إليك."),
-        buttons:[
-          {label:t("btn_resend","إعادة إرسال رابط التفعيل"),cls:"mbtn-neon",fn:async()=>{
-            closeModal();
-            if(!rateOk("resend_"+user.uid,60000)){modal({cls:"m-warn",icon:"⏳",title:t("e_title","تنبيه"),body:t("e_many","انتظر دقيقة."),buttons:[addClose()]});return;}
-            try{await sendEmailVerification(user);modal({cls:"m-info",icon:"✅",title:t("m_resent_title","تم الإرسال"),body:t("m_resent_body","تم إرسال الرابط. تحقق من بريدك."),buttons:[addClose()]});}
-            catch{modal({cls:"m-err",icon:"❌",title:t("e_title","خطأ"),body:t("e_unk","حدث خطأ."),buttons:[addClose()]});}
-          }},
-          addClose(t("btn_close","إغلاق"))
-        ]
-      });
-      return;
-    }
-    /* حساب معطل — نتحقق من status في Firestore لاحقاً */
-    const sess=await collectSessionData();
-    sess.userId=user.uid;sess.email=email;
-    window._aqxUid=user.uid;window._aqxEmail=email;
-    try{
-      await updateDoc(doc(db,"users",user.uid),{
-        lastActivity:serverTimestamp(),deviceFingerprint:sess.deviceFingerprint,sessionId:sess.sessionId
-      });
-    }catch(fe){
-      /* لو الوثيقة مش موجودة ننشئها */
-      if(fe.code==="not-found"||fe.code==="firestore/not-found"){
-        await setDoc(doc(db,"users",user.uid),{userId:user.uid,email,createdAt:serverTimestamp(),status:"active",lastActivity:serverTimestamp(),deviceFingerprint:sess.deviceFingerprint,sessionId:sess.sessionId});
-      }
-    }
-    try{const br=await sendToSecurityInternet("update_user_data",{userId:user.uid,deviceFingerprint:sess.deviceFingerprint,sessionId:sess.sessionId,lastActivity:new Date().toISOString()});handleResponse(br);}catch(e){console.warn("Bridge:",e.message);}
-    runZion("LOGIN_SUCCESS",{userId:user.uid});
-    /* scan ثم نافذة ترحيب ثم توجيه */
-    laserScan(()=>{
-      modal({
-        cls:"m-gold",icon:"👑",
-        title:t("m_welcome_title","مرحباً بعودتك!"),
-        body:t("m_welcome_body","أهلاً وسهلاً — لقد اشتقنا إليك.\nنحن سعداء برؤيتك مجدداً في AlqurmanixX.\n\nجاري تحميل لوحة التحكم..."),
-        buttons:[{label:t("btn_enter","دخول الآن"),fn:()=>{closeModal();window.location.href="main.html";}}]
-      });
-      setTimeout(()=>{closeModal();window.location.href="main.html";},3000);
-    });
-  }catch(e){
-    /* حساب مجمّد من الإدارة أو عطّله المستخدم */
-    if(e.code==="auth/user-disabled"){
-      modal({
-        cls:"m-err",icon:"🔒",
-        title:t("m_frozen_title","الحساب محظور"),
-        body:t("m_frozen_body","تم تعليق هذا الحساب بواسطة الإدارة.\n\nإذا كنت تعتقد أن هذا خطأ، تواصل مع فريق الدعم الفني."),
-        buttons:[
-          {label:t("btn_support","التواصل مع الدعم"),fn:()=>{closeModal();window.open("support.html","_blank");}},
-          addClose()
-        ]
-      });
-    }else{modal({cls:"m-err",icon:"❌",title:t("e_title","خطأ"),body:fbE(e.code),buttons:[addClose()]});}
-  }
-  finally{setLoad("loginBtn",false);}
-}
-
-/* ═══ FORGOT PASSWORD ═══ */
-async function doForgot(){
-  const email=clean(document.getElementById("lemail").value.trim());
-  if(!email){modal({cls:"m-err",icon:"⚠️",title:t("e_title","خطأ"),body:t("e_email_first","أدخل البريد الإلكتروني أولاً."),buttons:[addClose()]});return;}
-  if(!rateOk("reset_"+email,30000)){modal({cls:"m-warn",icon:"⏳",title:t("e_title","تنبيه"),body:t("e_many","انتظر 30 ثانية."),buttons:[addClose()]});return;}
-  try{
-    await sendPasswordResetEmail(auth,email);
-    modal({cls:"m-info",icon:"📬",title:t("m_reset_title","تم الإرسال"),body:t("m_reset_body","تم إرسال رابط إعادة تعيين كلمة السر إلى بريدك الإلكتروني.\n\nيرجى التحقق من صندوق الوارد."),buttons:[addClose(t("btn_ok","حسناً"))]});
-  }catch(e){modal({cls:"m-err",icon:"❌",title:t("e_title","خطأ"),body:fbE(e.code),buttons:[addClose()]});}
-}
-
-/* ═══════════════════════════════════════════════════════
-   PARTICLES — ذهبية متطايرة
-═══════════════════════════════════════════════════════ */
-function spawnParticles(){
-  const c=document.getElementById("ptc");
-  const cols=["#FFD700","#FFC200","#FFAA00","#FFE566","#FFF0A0","#F5A623","#E8940A","#FFD060","#FFCC33"];
-  for(let i=0;i<80;i++){
-    const p=document.createElement("div");p.className="gp";
-    const sz=Math.random()*9+3.5;
-    const cl=cols[Math.floor(Math.random()*cols.length)];
-    const shapeR=Math.random()>.3?50:Math.random()*30+10;
-    p.style.cssText=
-      `width:${sz}px;height:${sz}px;`+
-      `background:${cl};`+
-      `border-radius:${shapeR}%;`+
-      `left:${Math.random()*100}%;`+
-      `top:${Math.random()*100}%;`+
-      `animation-duration:${3+Math.random()*8}s;`+
-      `animation-delay:${Math.random()*8}s;`+
-      `opacity:${.55+Math.random()*.45};`+
-      `box-shadow:0 0 ${sz*2.5}px ${cl},0 0 ${sz}px ${cl};`;
-    c.appendChild(p);
-  }
-}
-
-/* ═══════════════════════════════════════════════════════
-   INIT
-═══════════════════════════════════════════════════════ */
-document.addEventListener("DOMContentLoaded",async()=>{
-  spawnParticles();
-  buildDD();
-  await loadLang(localStorage.getItem("aqx_lang")||"ar");
-
-  /* Globe */
-  document.getElementById("globeBtn").addEventListener("click",e=>{
-    e.stopPropagation();document.getElementById("langDd").classList.toggle("open");
-  });
-  document.addEventListener("click",()=>document.getElementById("langDd").classList.remove("open"));
-
-  /* Tabs */
-  document.querySelectorAll(".tab-btn").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const tab=btn.dataset.tab;
-      document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
-      document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
-      btn.classList.add("active");
-      document.getElementById(tab+"-panel").classList.add("active");
-    });
-  });
-
-  /* Password */
-  document.getElementById("rpw").addEventListener("input",e=>pwUI(e.target.value));
-  document.getElementById("rconf").addEventListener("input",()=>{
-    const pw=document.getElementById("rpw").value,cf=document.getElementById("rconf").value;
-    const el=document.getElementById("cmatch");
-    el.textContent=cf===pw?t("pw_match","✅ تطابق"):t("pw_no_match","❌ لا تطابق");
-    el.style.color=cf===pw?"#00ff88":"#ff4444";
-  });
-
-  /* Buttons */
-  document.getElementById("loginBtn").addEventListener("click",doLogin);
-  document.getElementById("registerBtn").addEventListener("click",doRegister);
-  document.getElementById("forgotBtn").addEventListener("click",doForgot);
-
-  /* Enter */
-  document.getElementById("lpw").addEventListener("keydown",e=>{if(e.key==="Enter")doLogin();});
-  document.getElementById("rconf").addEventListener("keydown",e=>{if(e.key==="Enter")doRegister();});
-
-  /* Modal overlay */
-  document.getElementById("mOv").addEventListener("click",e=>{if(e.target.id==="mOv")closeModal();});
-
-  /* Security */
-  document.addEventListener("contextmenu",e=>e.preventDefault());
-  document.addEventListener("keydown",e=>{
-    if(e.key==="F12"||(e.ctrlKey&&e.shiftKey&&["I","J","C"].includes(e.key))||(e.ctrlKey&&e.key==="U"))e.preventDefault();
-  });
 });
+
+// 3. قائمة اللغات
+const globeBtn = document.getElementById('globeBtn');
+const langDd = document.getElementById('langDd');
+const langs = [
+    { c: 'AR', f: '🇸🇦', n: 'العربية' },
+    { c: 'EN', f: '🇺🇸', n: 'English' }
+];
+langs.forEach(l => {
+    const d = document.createElement('div');
+    d.className = 'lang-opt';
+    d.innerHTML = `<span class="lf">${l.f}</span> <span>${l.n}</span>`;
+    d.onclick = () => {
+        document.getElementById('cFlag').innerText = l.f;
+        document.getElementById('cCode').innerText = l.c;
+        langDd.classList.remove('open');
+    };
+    langDd.appendChild(d);
+});
+globeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    langDd.classList.toggle('open');
+});
+document.addEventListener('click', () => langDd.classList.remove('open'));
+
+// 4. نظام الجزيئات (Particles)
+const ptc = document.getElementById('ptc');
+const colors = ['#FFD700', '#00ff88', '#00aaff', '#ff44aa'];
+for(let i=0; i<40; i++) {
+    let p = document.createElement('div');
+    p.className = 'gp';
+    p.style.width = Math.random() * 4 + 1 + 'px';
+    p.style.height = p.style.width;
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.top = Math.random() * 100 + 'vh';
+    p.style.animationDuration = Math.random() * 4 + 3 + 's';
+    p.style.animationDelay = Math.random() * 3 + 's';
+    p.style.boxShadow = `0 0 10px ${p.style.background}`;
+    ptc.appendChild(p);
+}
+
+// 5. فحص قوة كلمة المرور
+const rpw = document.getElementById('rpw');
+const rconf = document.getElementById('rconf');
+const sb = document.getElementById('sb');
+const cmatch = document.getElementById('cmatch');
+const rules = [
+    { id: 'r1', regex: /.{8,}/ },
+    { id: 'r2', regex: /[A-Z]/ },
+    { id: 'r3', regex: /[a-z]/ },
+    { id: 'r4', regex: /[0-9]/ },
+    { id: 'r5', regex: /[^A-Za-z0-9]/ }
+];
+
+rpw.addEventListener('input', () => {
+    let passed = 0;
+    rules.forEach(r => {
+        const el = document.getElementById(r.id);
+        if(r.regex.test(rpw.value)) {
+            el.style.color = '#00ff88';
+            el.querySelector('.ri').innerText = '✅';
+            passed++;
+        } else {
+            el.style.color = '#444';
+            el.querySelector('.ri').innerText = '⭕';
+        }
+    });
+    sb.style.width = (passed * 20) + '%';
+    if(passed <= 2) sb.style.background = '#ff4444';
+    else if(passed <= 4) sb.style.background = '#ffaa00';
+    else sb.style.background = '#00ff88';
+    checkMatch();
+});
+
+rconf.addEventListener('input', checkMatch);
+function checkMatch() {
+    if(!rconf.value) { cmatch.innerText = ''; return; }
+    if(rpw.value === rconf.value) {
+        cmatch.innerText = '✅ الكلمتان متطابقتان';
+        cmatch.style.color = '#00ff88';
+    } else {
+        cmatch.innerText = '❌ الكلمتان غير متطابقتين';
+        cmatch.style.color = '#ff4444';
+    }
+}
+
+// 6. دوال التسجيل والدخول (Firebase + Zion)
+const loginBtn = document.getElementById('loginBtn');
+const registerBtn = document.getElementById('registerBtn');
+const forgotBtn = document.getElementById('forgotBtn');
+
+function setBtnLoading(btn, isLoading, originalText) {
+    if(isLoading) {
+        btn.disabled = true;
+        btn.innerHTML = `<span class="spin"></span> جاري المعالجة...`;
+    } else {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+    }
+}
+
+// --- Login ---
+loginBtn.addEventListener('click', async () => {
+    const email = document.getElementById('lemail').value.trim();
+    const pw = document.getElementById('lpw').value;
+    if(!email || !pw) return showModal('warn', 'تنبيه', 'يرجى إدخال البريد الإلكتروني وكلمة السر.');
+
+    setBtnLoading(loginBtn, true, 'دخول');
+    try {
+        const userCred = await signInWithEmailAndPassword(auth, email, pw);
+        window._aqxUid = userCred.user.uid;
+        window._aqxEmail = userCred.user.email;
+        
+        await runZion('LOGIN_SUCCESS');
+        
+        try {
+            const sessionData = await collectSessionData();
+            await sendToSecurityInternet('LOGIN', sessionData);
+        } catch(e) {}
+
+        showModal('green', 'تم الدخول بنجاح', 'مرحباً بك مجدداً في إمبراطورية القرماني إكس!');
+    } catch(error) {
+        await runZion('LOGIN_FAILED', { error: error.message });
+        showModal('err', 'فشل الدخول', 'بيانات الدخول غير صحيحة أو الحساب غير موجود.');
+    } finally {
+        setBtnLoading(loginBtn, false, 'دخول');
+    }
+});
+
+// --- Register ---
+registerBtn.addEventListener('click', async () => {
+    const email = document.getElementById('remail').value.trim();
+    const pw = document.getElementById('rpw').value;
+    const conf = document.getElementById('rconf').value;
+
+    if(!email || !pw || !conf) return showModal('warn', 'تنبيه', 'يرجى تعبئة جميع الحقول.');
+    if(pw !== conf) return showModal('err', 'خطأ', 'كلمات المرور غير متطابقة!');
+    if(pw.length < 8) return showModal('warn', 'أمان ضعيف', 'يجب أن تحتوي كلمة السر على 8 أحرف على الأقل.');
+
+    setBtnLoading(registerBtn, true, 'إنشاء حساب');
+    try {
+        const userCred = await createUserWithEmailAndPassword(auth, email, pw);
+        window._aqxUid = userCred.user.uid;
+        window._aqxEmail = userCred.user.email;
+
+        await setDoc(doc(db, "users", userCred.user.uid), {
+            email: userCred.user.email,
+            createdAt: serverTimestamp(),
+            role: "user",
+            status: "active"
+        });
+
+        await runZion('REGISTER_SUCCESS');
+        showModal('gold', 'تهانينا!', 'تم إنشاء حسابك الملكي بنجاح في منصة Alqurmani X.');
+    } catch(error) {
+        await runZion('REGISTER_FAILED', { error: error.message });
+        showModal('err', 'حدث خطأ', error.message);
+    } finally {
+        setBtnLoading(registerBtn, false, 'إنشاء حساب');
+    }
+});
+
+// --- Forgot Password ---
+forgotBtn.addEventListener('click', async () => {
+    const email = document.getElementById('lemail').value.trim();
+    if(!email) return showModal('info', 'استعادة كلمة السر', 'يرجى إدخال بريدك الإلكتروني في حقل الدخول أولاً ثم اضغط هنا.');
+    
+    try {
+        await sendPasswordResetEmail(auth, email);
+        await runZion('PASSWORD_RESET_REQUESTED');
+        showModal('green', 'تم الإرسال', 'راجع صندوق الوارد في بريدك الإلكتروني لإعادة تعيين كلمة السر.');
+    } catch(error) {
+        showModal('err', 'فشل الإرسال', 'تأكد من صحة البريد الإلكتروني المدخل.');
+    }
+});
+
+// ليزر حماية إضافي عند محاولة التظليل والنسخ
+document.addEventListener('selectstart', () => {
+    const laser = document.getElementById('laser-wrap');
+    laser.innerHTML = '<div class="laser-line"></div>';
+    laser.classList.add('active');
+    setTimeout(() => laser.classList.remove('active'), 600);
+});
+
 </script>
 </body>
 </html>
