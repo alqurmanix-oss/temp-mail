@@ -3,177 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AQX Food Engine - لوحة التحكم الشاملة</title>
+    <title>AQX Food - لوحة التحكم المباشرة</title>
     <style>
         :root {
             --bg-color: #0b0f19;
             --card-bg: #131d31;
             --accent-color: #0ea5e9;
-            --accent-hover: #0284c7;
             --text-color: #f8fafc;
             --text-muted: #94a3b8;
             --danger-color: #ef4444;
             --success-color: #22c55e;
             --border-color: #1e293b;
         }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; min-height: 100vh; }
-        .container { max-width: 950px; margin: 0 auto; }
-        
+        .container { max-width: 900px; margin: 0 auto; }
         header { text-align: center; margin-bottom: 25px; }
-        header h1 { color: var(--accent-color); font-size: 2rem; margin-bottom: 5px; font-weight: 800; }
-        header p { color: var(--text-muted); font-size: 0.95rem; }
-
-        .card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
-        .card h2 { font-size: 1.15rem; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; color: var(--accent-color); display: flex; justify-content: space-between; align-items: center; }
-
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 15px; }
+        header h1 { color: var(--accent-color); font-size: 1.8rem; margin-bottom: 5px; }
+        .card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        .card h2 { font-size: 1.1rem; margin-bottom: 15px; color: var(--accent-color); border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 15px; }
         .form-group { display: flex; flex-direction: column; }
-        label { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
-        input { background-color: #0f172a; border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); padding: 10px 14px; font-size: 0.95rem; transition: border-color 0.2s; }
+        label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
+        input { background-color: #0f172a; border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-color); padding: 8px 12px; font-size: 0.9rem; }
         input:focus { outline: none; border-color: var(--accent-color); }
-
-        .actions-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-        button { background-color: var(--accent-color); color: #0b0f19; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 700; cursor: pointer; font-size: 0.95rem; transition: background 0.2s; }
-        button:hover { background-color: var(--accent-hover); }
+        .actions-row { display: flex; gap: 10px; flex-wrap: wrap; }
+        button { background-color: var(--accent-color); color: #0b0f19; border: none; border-radius: 6px; padding: 10px 18px; font-weight: bold; cursor: pointer; }
         button.danger { background-color: var(--danger-color); color: #fff; }
-        button.danger:hover { background-color: #dc2626; }
-
-        #outputResult { background-color: #070a12; border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; max-height: 350px; overflow-y: auto; color: #38bdf8; line-height: 1.5; }
+        #outputResult { background-color: #070a12; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; max-height: 300px; overflow-y: auto; color: #38bdf8; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <header>
-            <h1>AQX Food Engine</h1>
-            <p>لوحة التحكم والربط المباشر مع قاعدة بيانات Firestore (المجموعات السبعة)</p>
+            <h1>AQX Food Direct Panel</h1>
+            <p>لوحة التحكم المباشرة مع Firestore</p>
         </header>
 
-        <!-- قسم الاستعلام والبحث -->
+        <!-- قسم الإضافة -->
         <div class="card">
-            <h2>1. استعلام وبحث عن مكون</h2>
-            <div class="form-grid">
-                <div class="form-group" style="grid-column: span 2;">
-                    <label>معرّف المكون (Document ID) أو كلمة البحث</label>
-                    <input type="text" id="searchQuery" placeholder="مثال: ing_potato_raw_100g أو بطاطس">
-                </div>
-            </div>
-            <div class="actions-row">
-                <button onclick="executeAction('READ')">جلب بالمعرّف (GET)</button>
-                <button onclick="executeAction('SEARCH')">بحث ذكي (Search)</button>
-            </div>
-        </div>
-
-        <!-- قسم العمليات (إضافة، تعديل، حذف) -->
-        <div class="card">
-            <h2>2. إدارة البيانات (CRUD)</h2>
+            <h2>إضافة مكون جديد (إلى الجداول المنفصلة)</h2>
             <div class="form-grid">
                 <div class="form-group">
-                    <label>معرّف المكون (Document ID) *</label>
-                    <input type="text" id="docId" value="ing_potato_raw_100g" placeholder="ing_item_name_100g">
+                    <label>معرّف المكون (Document ID)</label>
+                    <input type="text" id="docId" value="ing_potato_raw_100g">
                 </div>
                 <div class="form-group">
                     <label>الاسم بالعربية</label>
-                    <input type="text" id="nameAr" value="بطاطس، طازجة خام" placeholder="بطاطس">
+                    <input type="text" id="nameAr" value="بطاطس، طازجة خام">
                 </div>
                 <div class="form-group">
                     <label>الاسم بالإنجليزية</label>
-                    <input type="text" id="nameEn" value="Potato, raw" placeholder="Potato">
+                    <input type="text" id="nameEn" value="Potato, raw">
                 </div>
                 <div class="form-group">
                     <label>السعرات الحرارية</label>
-                    <input type="number" id="calories" value="77" placeholder="77">
+                    <input type="number" id="calories" value="77">
                 </div>
                 <div class="form-group">
                     <label>البروتين (جرام)</label>
-                    <input type="number" step="0.1" id="protein" value="2.0" placeholder="2.0">
+                    <input type="number" id="protein" value="2.0">
                 </div>
                 <div class="form-group">
                     <label>الكربوهيدرات (جرام)</label>
-                    <input type="number" step="0.1" id="carbs" value="17.5" placeholder="17.5">
+                    <input type="number" id="carbs" value="17.5">
                 </div>
             </div>
             <div class="actions-row">
-                <button onclick="executeAction('CREATE')">إضافة مكون جديد (CREATE)</button>
-                <button onclick="executeAction('UPDATE')">تعديل المكون (UPDATE)</button>
-                <button onclick="executeAction('DELETE')" class="danger">حذف المكون (DELETE)</button>
+                <button onclick="addIngredient()">إضافة المكون للقاعدة</button>
+                <button onclick="getIngredient()">جلب المكون</button>
             </div>
         </div>
 
-        <!-- سجل الاستجابة -->
+        <!-- النتائج -->
         <div class="card">
-            <h2>3. سجل الاستجابة المباشر (API Output)</h2>
-            <div id="outputResult">جاهز للعمل... اضغط على أي زر لتنفيذ العملية وإظهار النتيجة هنا.</div>
+            <h2>سجل العمليات والنتيجة</h2>
+            <div id="outputResult">جاهز...</div>
         </div>
     </div>
 
-    <script>
-        // رابط المحرك الجديد الخاص بك
-        const API_URL = "https://script.google.com/macros/s/AKfycbwqGrClXch4rzYL05LcjBNwwm4g_kheCuX8_clfvBYpfPQaUaKp_N-nTBURsV_rUfvUdA/exec";
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        async function executeAction(actionType) {
-            const outputDiv = document.getElementById("outputResult");
+        const firebaseConfig = {
+            apiKey: "AIzaSyA6JY3cPwAXb_8JjHVZzji3MqLx_rwnIzA",
+            authDomain: "aqx-food.firebaseapp.com",
+            projectId: "aqx-food",
+            storageBucket: "aqx-food.firebasestorage.app",
+            messagingSenderId: "323079878999",
+            appId: "1:323079878999:web:29603047a4cd4f0577a612",
+            measurementId: "G-H40BB0TT8C"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.addIngredient = async function() {
             const docId = document.getElementById("docId").value.trim();
-            const searchQuery = document.getElementById("searchQuery").value.trim();
+            const output = document.getElementById("outputResult");
+            if (!docId) { alert("أدخل المعرّف!"); return; }
 
-            outputDiv.innerText = "جاري تنفيذ الطلب وإرساله إلى المحرك الخادمي...";
+            output.innerText = "جاري الإضافة إلى الجداول السبعة...";
 
             try {
-                let payload = { action: actionType };
-
-                if (actionType === 'READ') {
-                    if (!searchQuery) { alert("أدخل معرّف المكون في خانة البحث أولاً!"); return; }
-                    const res = await fetch(`${API_URL}?action=READ&documentId=${encodeURIComponent(searchQuery)}`);
-                    const json = await res.json();
-                    outputDiv.innerText = JSON.stringify(json, null, 2);
-                    return;
-                }
-
-                if (actionType === 'SEARCH') {
-                    if (!searchQuery) { alert("أدخل كلمة للبحث عنها!"); return; }
-                    const res = await fetch(`${API_URL}?action=SEARCH&query=${encodeURIComponent(searchQuery)}`);
-                    const json = await res.json();
-                    outputDiv.innerText = JSON.stringify(json, null, 2);
-                    return;
-                }
-
-                if (!docId) { alert("يرجى إدخال معرّف المكون (Document ID)!"); return; }
-                payload.documentId = docId;
-
-                if (actionType === 'CREATE' || actionType === 'UPDATE') {
-                    payload.data = {
-                        basic_info: {
-                            canonicalNameAr: document.getElementById("nameAr").value,
-                            canonicalNameEn: document.getElementById("nameEn").value,
-                            searchKeywords: [
-                                document.getElementById("nameAr").value,
-                                document.getElementById("nameEn").value,
-                                docId
-                            ]
-                        },
-                        macronutrients: {
-                            calories: parseFloat(document.getElementById("calories").value) || 0,
-                            protein: parseFloat(document.getElementById("protein").value) || 0,
-                            carbohydrates: parseFloat(document.getElementById("carbs").value) || 0
-                        }
-                    };
-                }
-
-                const response = await fetch(API_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify(payload)
+                // كتابة البيانات في الجداول المنفصلة مباشرة
+                await setDoc(doc(db, "basic_info", docId), {
+                    canonicalNameAr: document.getElementById("nameAr").value,
+                    canonicalNameEn: document.getElementById("nameEn").value,
+                    searchKeywords: [document.getElementById("nameAr").value, document.getElementById("nameEn").value, docId]
                 });
 
-                const result = await response.json();
-                outputDiv.innerText = JSON.stringify(result, null, 2);
+                await setDoc(doc(db, "macronutrients", docId), {
+                    calories: parseFloat(document.getElementById("calories").value) || 0,
+                    protein: parseFloat(document.getElementById("protein").value) || 0,
+                    carbohydrates: parseFloat(document.getElementById("carbs").value) || 0
+                });
 
+                // تفعيل باقي الجداول بشكل افتراضي لضمان اكتمال الهيكل
+                await setDoc(doc(db, "vitamins", docId), { status: "active" });
+                await setDoc(doc(db, "minerals", docId), { status: "active" });
+                await setDoc(doc(db, "amino_and_fatty_acids", docId), { status: "active" });
+                await setDoc(doc(db, "phytochemicals_and_properties", docId), { status: "active" });
+
+                output.innerText = `✅ تم إضافة المكون (${docId}) بنجاح تام وتوزيعه على كافة الجداول!`;
             } catch (err) {
-                outputDiv.innerText = "خطأ في الاتصال بالمحرك:\n" + err.toString();
+                output.innerText = "❌ خطأ أثناء الإضافة (تأكد من قواعد الأمان - Security Rules):\n" + err.message;
             }
-        }
+        };
+
+        window.getIngredient = async function() {
+            const docId = document.getElementById("docId").value.trim();
+            const output = document.getElementById("outputResult");
+            if (!docId) { alert("أدخل المعرّف للبحث!"); return; }
+
+            output.innerText = "جاري جلب البيانات من الجداول...";
+            try {
+                const basicSnap = await getDoc(doc(db, "basic_info", docId));
+                const macroSnap = await getDoc(doc(db, "macronutrients", docId));
+
+                let result = { documentId: docId };
+                if (basicSnap.exists()) result.basic_info = basicSnap.data();
+                if (macroSnap.exists()) result.macronutrients = macroSnap.data();
+
+                output.innerText = JSON.stringify(result, null, 2);
+            } catch (err) {
+                output.innerText = "❌ خطأ في الجلب:\n" + err.message;
+            }
+        };
     </script>
 </body>
 </html>
