@@ -1,92 +1,1039 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AQX Food Control Panel</title>
-    <style>
-        body { background: #0b0f19; color: #f8fafc; font-family: system-ui, sans-serif; padding: 15px; margin: 0; }
-        .container { max-width: 600px; margin: 0 auto; }
-        h1 { color: #38bdf8; font-size: 1.4rem; text-align: center; margin-bottom: 20px; }
-        .card { background: #131d31; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #1e293b; }
-        label { font-size: 0.8rem; color: #94a3b8; display: block; margin-top: 10px; }
-        input { width: 100%; padding: 12px; margin-top: 5px; background: #0f172a; border: 1px solid #334155; color: #fff; border-radius: 6px; font-size: 1rem; box-sizing: border-box; }
-        button { width: 100%; background: #0ea5e9; color: #0b0f19; border: none; padding: 12px; border-radius: 6px; font-weight: bold; margin-top: 15px; font-size: 1rem; cursor: pointer; }
-        button.search { background: #22c55e; color: #fff; }
-        #result { background: #070a12; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 0.75rem; white-space: pre-wrap; margin-top: 10px; max-height: 250px; overflow-y: auto; color: #38bdf8; border: 1px solid #1e293b; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123d35">
+  <title>AQX Food | لوحة إدارة المكونات الغذائية</title>
+
+  <style>
+    :root {
+      --green: #123d35;
+      --green2: #1d6251;
+      --gold: #d5ad58;
+      --bg: #f4f7f5;
+      --white: #ffffff;
+      --text: #24352f;
+      --muted: #718078;
+      --border: #dfe8e2;
+      --red: #b42318;
+      --shadow: 0 8px 30px rgba(18,61,53,.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Tahoma, Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .header {
+      background: linear-gradient(120deg, var(--green), var(--green2));
+      color: white;
+      padding: 25px 18px;
+      border-bottom: 4px solid var(--gold);
+    }
+
+    .header-inner {
+      max-width: 1150px;
+      margin: auto;
+    }
+
+    .brand {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: .5px;
+    }
+
+    .brand span {
+      color: var(--gold);
+    }
+
+    .subtitle {
+      color: #e0eee8;
+      margin-top: 9px;
+      line-height: 1.8;
+    }
+
+    .container {
+      max-width: 1150px;
+      margin: 24px auto;
+      padding: 0 14px 35px;
+    }
+
+    .status-bar {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: bold;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #9ca3af;
+    }
+
+    .dot.ok {
+      background: #16a34a;
+    }
+
+    .dot.bad {
+      background: #dc2626;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .card.full {
+      grid-column: 1 / -1;
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      color: var(--green);
+      font-size: 19px;
+    }
+
+    h3 {
+      color: var(--green);
+      font-size: 15px;
+      margin: 20px 0 12px;
+      padding-bottom: 9px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d4dfd8;
+      border-radius: 9px;
+      outline: none;
+      background: #fff;
+      color: var(--text);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--green2);
+      box-shadow: 0 0 0 3px rgba(29,98,81,.09);
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+      direction: ltr;
+      text-align: left;
+      font-family: Consolas, monospace;
+      font-size: 13px;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-top: 6px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 9px;
+      padding: 11px 16px;
+      font-weight: bold;
+      transition: .15s;
+    }
+
+    .btn:hover {
+      filter: brightness(1.07);
+      transform: translateY(-1px);
+    }
+
+    .primary {
+      background: var(--green);
+      color: white;
+    }
+
+    .secondary {
+      background: #e8f0eb;
+      color: var(--green);
+    }
+
+    .gold {
+      background: var(--gold);
+      color: #30260f;
+    }
+
+    .danger {
+      background: #fde8e7;
+      color: var(--red);
+    }
+
+    .small {
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+
+    .result-box {
+      min-height: 110px;
+      max-height: 480px;
+      overflow: auto;
+      padding: 15px;
+      border-radius: 10px;
+      background: #102b25;
+      color: #d7f6df;
+      direction: ltr;
+      text-align: left;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font: 12px/1.8 Consolas, monospace;
+    }
+
+    .notice {
+      display: none;
+      padding: 13px;
+      border-radius: 9px;
+      margin-bottom: 14px;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+
+    .notice.show {
+      display: block;
+    }
+
+    .notice.success {
+      background: #e6f6eb;
+      color: #176534;
+    }
+
+    .notice.error {
+      background: #fde9e7;
+      color: #9f2018;
+    }
+
+    .notice.info {
+      background: #e7f1fa;
+      color: #174b75;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 20px 10px;
+      line-height: 2;
+    }
+
+    .loading {
+      opacity: .65;
+      pointer-events: none;
+    }
+
+    @media (max-width: 760px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card.full {
+        grid-column: auto;
+      }
+
+      .brand {
+        font-size: 23px;
+      }
+
+      .row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .card {
+        padding: 16px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="container">
-    <h1>AQX Food Dashboard</h1>
 
-    <div class="card">
-        <h3>إضافة مكون جديد (يستهدف الجداول السبعة)</h3>
-        <label>المعرف (Document ID)</label>
-        <input type="text" id="docId" value="ing_potato_raw_100g">
-        
-        <label>الاسم بالعربية</label>
-        <input type="text" id="nameAr" value="بطاطس، طازجة خام">
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">AQX <span>FOOD</span></div>
+    <div class="subtitle">
+      لوحة إدارة قاعدة بيانات المكونات الغذائية والقيم الغذائية
+      <br>
+      ALQURMANI X · Nutrition Database Management
+    </div>
+  </div>
+</header>
 
-        <label>السعرات الحرارية</label>
-        <input type="number" id="calories" value="77">
+<main class="container">
 
-        <button onclick="sendRequest('CREATE')">إضافة وتوزيع على الجداول</button>
+  <div class="status-bar">
+    <div class="status">
+      <span class="dot" id="statusDot"></span>
+      <span id="connectionStatus">لم يتم اختبار الاتصال بعد</span>
     </div>
 
-    <div class="card">
-        <h3>بحث أو جلب مكون</h3>
-        <label>المعرف أو كلمة البحث</label>
-        <input type="text" id="searchKey" value="ing_potato_raw_100g">
-        
-        <button onclick="sendRequest('READ')">جلب بالمعرف</button>
-        <button class="search" onclick="sendRequest('SEARCH')">بحث ذكي</button>
-    </div>
+    <button class="btn secondary small" onclick="testConnection()">
+      اختبار المحرك
+    </button>
+  </div>
 
-    <div class="card">
-        <h3>سجل الاستجابة</h3>
-        <div id="result">جاهز للتنفيذ...</div>
-    </div>
-</div>
+  <div id="notice" class="notice"></div>
+
+  <div class="grid">
+
+    <!-- بيانات المكون -->
+    <section class="card">
+      <h2>١. بيانات المكوّن</h2>
+
+      <div class="field">
+        <label for="documentId">معرّف المكوّن Document ID</label>
+        <input
+          id="documentId"
+          type="text"
+          value="ing_potato_raw_100g"
+          placeholder="ing_potato_raw_100g"
+          autocomplete="off"
+        >
+        <div class="hint">
+          استخدم معرّفًا ثابتًا وفريدًا لكل مكوّن.
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="nameAr">اسم المكوّن بالعربية</label>
+          <input id="nameAr" value="بطاطس نيئة">
+        </div>
+
+        <div class="field">
+          <label for="nameEn">اسم المكوّن بالإنجليزية</label>
+          <input id="nameEn" value="Raw Potato">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="calories">السعرات الحرارية / 100 جم</label>
+          <input id="calories" type="number" min="0" step="any" value="77">
+        </div>
+
+        <div class="field">
+          <label for="status">الحالة</label>
+          <select id="status">
+            <option value="active">نشط</option>
+            <option value="draft">مسودة</option>
+            <option value="inactive">غير نشط</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="keywords">كلمات البحث</label>
+        <input
+          id="keywords"
+          placeholder="بطاطس, potato, raw potato"
+          value="بطاطس, potato, raw potato"
+        >
+        <div class="hint">
+          ستُحفظ كقائمة كلمات بحث في basic_info.
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button class="btn primary" onclick="createItem()">
+          إضافة مكوّن
+        </button>
+
+        <button class="btn gold" onclick="updateItem()">
+          حفظ التعديلات
+        </button>
+
+        <button class="btn secondary" onclick="readItem()">
+          قراءة البيانات
+        </button>
+
+        <button class="btn danger" onclick="deleteItem()">
+          حذف المكوّن
+        </button>
+      </div>
+    </section>
+
+    <!-- البحث -->
+    <section class="card">
+      <h2>٢. البحث عن مكوّن</h2>
+
+      <div class="field">
+        <label for="searchQuery">كلمة البحث</label>
+        <input
+          id="searchQuery"
+          placeholder="أدخل كلمة بحث موجودة داخل searchKeywords"
+        >
+      </div>
+
+      <div class="field">
+        <label for="pageSize">عدد النتائج الأقصى</label>
+        <select id="pageSize">
+          <option value="10">10 نتائج</option>
+          <option value="20" selected>20 نتيجة</option>
+          <option value="50">50 نتيجة</option>
+          <option value="100">100 نتيجة</option>
+        </select>
+      </div>
+
+      <div class="buttons">
+        <button class="btn primary" onclick="searchItems()">
+          بحث
+        </button>
+
+        <button class="btn secondary" onclick="clearResults()">
+          مسح النتائج
+        </button>
+      </div>
+
+      <h3>ملاحظات البحث</h3>
+      <div class="hint">
+        يعتمد البحث على المجموعة basic_info والحقل searchKeywords.
+        يجب أن تكون الكلمة مطابقة لإحدى الكلمات المخزّنة في Firestore.
+      </div>
+    </section>
+
+    <!-- بيانات المجموعات -->
+    <section class="card full">
+      <h2>٣. بيانات المجموعات الغذائية</h2>
+
+      <div class="field">
+        <label for="basicInfo">Basic Info — البيانات الأساسية</label>
+        <textarea id="basicInfo">{
+  "nameAr": "بطاطس نيئة",
+  "nameEn": "Raw Potato",
+  "calories": 77,
+  "status": "active",
+  "searchKeywords": ["بطاطس", "potato", "raw potato"],
+  "basis": "100g",
+  "source": "pending_verification"
+}</textarea>
+      </div>
+
+      <div class="field">
+        <label for="macronutrients">Macronutrients — المغذيات الكبرى</label>
+        <textarea id="macronutrients">{
+  "basis": "100g",
+  "protein_g": 2.05,
+  "carbohydrates_g": 17.49,
+  "fat_g": 0.09,
+  "fiber_g": 2.1,
+  "sugars_g": 0.82
+}</textarea>
+      </div>
+
+      <div class="field">
+        <label for="vitamins">Vitamins — الفيتامينات</label>
+        <textarea id="vitamins">{
+  "basis": "100g",
+  "vitamin_c_mg": 19.7,
+  "vitamin_b6_mg": 0.298,
+  "folate_ug": 15
+}</textarea>
+      </div>
+
+      <div class="field">
+        <label for="minerals">Minerals — المعادن</label>
+        <textarea id="minerals">{
+  "basis": "100g",
+  "potassium_mg": 425,
+  "magnesium_mg": 23,
+  "phosphorus_mg": 57,
+  "calcium_mg": 12,
+  "iron_mg": 0.81
+}</textarea>
+      </div>
+
+      <div class="field">
+        <label for="aminoFatty">Amino and Fatty Acids — الأحماض الأمينية والدهنية</label>
+        <textarea id="aminoFatty">{
+  "basis": "100g",
+  "dataStatus": "not_fully_verified"
+}</textarea>
+      </div>
+
+      <div class="field">
+        <label for="phytochemicals">Phytochemicals and Properties — المركبات والخصائص</label>
+        <textarea id="phytochemicals">{
+  "basis": "100g",
+  "dataStatus": "not_fully_verified"
+}</textarea>
+      </div>
+
+      <div class="field">
+        <label for="servingUnits">Serving Units — وحدات الحصص</label>
+        <textarea id="servingUnits">{
+  "basis": "100g",
+  "units": [
+    {
+      "nameAr": "جرام",
+      "nameEn": "gram",
+      "weight_g": 1
+    }
+  ]
+}</textarea>
+      </div>
+
+      <div class="hint">
+        القيم الظاهرة مثال أولي وليست شهادة بصحة البيانات الغذائية.
+        راجع مصدر القيم قبل اعتمادها للنشر.
+      </div>
+
+      <div class="buttons">
+        <button class="btn primary" onclick="createItem()">
+          إضافة جميع البيانات
+        </button>
+
+        <button class="btn gold" onclick="updateItem()">
+          تحديث جميع البيانات
+        </button>
+
+        <button class="btn secondary" onclick="readItem()">
+          تحميل بيانات المكوّن
+        </button>
+      </div>
+    </section>
+
+    <!-- النتيجة -->
+    <section class="card full">
+      <h2>٤. نتيجة العملية</h2>
+
+      <div id="result" class="result-box">جاهز. اختبر الاتصال بالمحرك أولًا.</div>
+
+      <div class="buttons">
+        <button class="btn secondary" onclick="copyResult()">
+          نسخ النتيجة
+        </button>
+
+        <button class="btn secondary" onclick="downloadResult()">
+          تنزيل JSON
+        </button>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="footer">
+    ALQURMANI X · AQX FOOD<br>
+    Nutrition Database Management System
+  </div>
+
+</main>
 
 <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbxdGVB04Qnc5QLENHk95jPwP35coUcNHwkzvkSBQTU9fhyyWWw7oI8gmnUnt3g8GwJk/exec";
+"use strict";
 
-    async function sendRequest(action) {
-        const resDiv = document.getElementById("result");
-        resDiv.innerText = "جاري الاتصال بالمحرك وتنفيذ العملية...";
+/*
+ * رابط المحرك الذي أرسله المستخدم.
+ */
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbxAdsZNrA_ggry_UMoCB8u4dhOuPa_C9Enu703EKdm1lYGfg_Luzxu_vKziXImG0LFl5Q/exec";
 
-        const docId = document.getElementById("docId").value.trim();
-        const nameAr = document.getElementById("nameAr").value.trim();
-        const calories = document.getElementById("calories").value.trim();
-        const searchKey = document.getElementById("searchKey").value.trim();
+const COLLECTION_FIELDS = {
+  basic_info: "basicInfo",
+  macronutrients: "macronutrients",
+  vitamins: "vitamins",
+  minerals: "minerals",
+  amino_and_fatty_acids: "aminoFatty",
+  phytochemicals_and_properties: "phytochemicals",
+  serving_units: "servingUnits"
+};
 
-        let finalUrl = `${API_URL}?action=${action}`;
+let lastResult = null;
+let busy = false;
 
-        if (action === 'CREATE' || action === 'UPDATE') {
-            if (!docId) { alert("أدخل المعرف!"); return; }
-            finalUrl += `&documentId=${encodeURIComponent(docId)}&nameAr=${encodeURIComponent(nameAr)}&calories=${calories}`;
-        } else if (action === 'READ') {
-            if (!searchKey) { alert("أدخل المعرف للبحث!"); return; }
-            finalUrl += `&documentId=${encodeURIComponent(searchKey)}`;
-        } else if (action === 'SEARCH') {
-            if (!searchKey) { alert("أدخل كلمة للبحث عنها!"); return; }
-            finalUrl += `&query=${encodeURIComponent(searchKey)}`;
-        }
+function showNotice(message, type) {
+  const el = document.getElementById("notice");
+  el.className = "notice show " + type;
+  el.textContent = message;
+}
 
-        try {
-            const response = await fetch(finalUrl);
-            const text = await response.text();
-            try {
-                const json = JSON.parse(text);
-                resDiv.innerText = JSON.stringify(json, null, 2);
-            } catch {
-                resDiv.innerText = text;
-            }
-        } catch (e) {
-            resDiv.innerText = "خطأ في الاتصال: " + e.message;
-        }
+function hideNotice() {
+  const el = document.getElementById("notice");
+  el.className = "notice";
+  el.textContent = "";
+}
+
+function showResult(data) {
+  lastResult = data;
+
+  document.getElementById("result").textContent =
+    typeof data === "string"
+      ? data
+      : JSON.stringify(data, null, 2);
+}
+
+function setConnectionStatus(message, state) {
+  document.getElementById("connectionStatus").textContent = message;
+
+  const dot = document.getElementById("statusDot");
+  dot.className = "dot";
+
+  if (state === "ok") dot.classList.add("ok");
+  if (state === "bad") dot.classList.add("bad");
+}
+
+function getDocumentId() {
+  const id = document.getElementById("documentId").value.trim();
+
+  if (!id) {
+    throw new Error("أدخل معرّف المكوّن أولًا.");
+  }
+
+  return id;
+}
+
+function parseTextarea(id) {
+  const text = document.getElementById(id).value.trim();
+
+  if (!text) return {};
+
+  try {
+    const value = JSON.parse(text);
+
+    if (
+      value === null ||
+      typeof value !== "object" ||
+      Array.isArray(value)
+    ) {
+      throw new Error("يجب إدخال كائن JSON.");
     }
+
+    return value;
+  } catch (e) {
+    throw new Error(
+      "خطأ في JSON داخل الحقل " + id + ": " + e.message
+    );
+  }
+}
+
+function getCollectionPayloads() {
+  const collections = {};
+
+  Object.keys(COLLECTION_FIELDS).forEach(function(collection) {
+    const fieldId = COLLECTION_FIELDS[collection];
+    collections[collection] = parseTextarea(fieldId);
+  });
+
+  /*
+   * مزامنة بيانات النموذج الأساسية مع basic_info.
+   */
+  const basic = collections.basic_info;
+
+  basic.nameAr = document.getElementById("nameAr").value.trim();
+  basic.nameEn = document.getElementById("nameEn").value.trim();
+  basic.status = document.getElementById("status").value;
+
+  const caloriesText = document.getElementById("calories").value.trim();
+
+  if (caloriesText !== "") {
+    const calories = Number(caloriesText);
+
+    if (!Number.isFinite(calories) || calories < 0) {
+      throw new Error("قيمة السعرات الحرارية غير صحيحة.");
+    }
+
+    basic.calories = calories;
+  }
+
+  const keywords = document.getElementById("keywords").value
+    .split(",")
+    .map(function(item) {
+      return item.trim().toLowerCase();
+    })
+    .filter(Boolean);
+
+  basic.searchKeywords = Array.from(new Set(keywords));
+
+  return collections;
+}
+
+/*
+ * جميع الطلبات تستخدم GET لتوافق واجهة المتصفح
+ * مع محرك Apps Script الحالي الذي يستقبل معاملات URL.
+ */
+async function apiRequest(action, params) {
+  const query = new URLSearchParams();
+
+  query.set("action", action);
+
+  Object.keys(params || {}).forEach(function(key) {
+    const value = params[key];
+
+    query.set(
+      key,
+      typeof value === "string" ? value : JSON.stringify(value)
+    );
+  });
+
+  const url = API_URL + "?" + query.toString();
+
+  /*
+   * لا نستخدم no-cors؛ لأنه يمنع قراءة استجابة المحرك.
+   */
+  const response = await fetch(url, {
+    method: "GET",
+    redirect: "follow",
+    cache: "no-store"
+  });
+
+  const text = await response.text();
+
+  let data;
+
+  try {
+    data = JSON.parse(text);
+  } catch (_) {
+    throw new Error(
+      "استجابة المحرك ليست JSON صالحًا. " +
+      "تحقق من رابط النشر وصلاحيات الوصول. " +
+      "بداية الاستجابة: " + text.slice(0, 250)
+    );
+  }
+
+  if (!response.ok) {
+    throw new Error("HTTP " + response.status + ": " + text);
+  }
+
+  return data;
+}
+
+async function runAction(action, params) {
+  if (busy) return;
+
+  busy = true;
+  hideNotice();
+  document.body.classList.add("loading");
+
+  try {
+    showResult({
+      status: "PROCESSING",
+      action: action,
+      message: "جارٍ إرسال الطلب إلى محرك AQX Food..."
+    });
+
+    const result = await apiRequest(action, params);
+
+    showResult(result);
+
+    if (result && result.success === true) {
+      showNotice("استلمت الواجهة استجابة ناجحة من المحرك.", "success");
+    } else {
+      showNotice(
+        "المحرك أعاد نتيجة غير ناجحة أو أبلغ عن أخطاء. راجع التفاصيل.",
+        "error"
+      );
+    }
+
+    return result;
+
+  } catch (error) {
+    const message = String(error.message || error);
+
+    showResult({
+      success: false,
+      action: action,
+      error: message,
+      troubleshooting: [
+        "تحقق من أن رابط المحرك هو رابط Web App الصحيح.",
+        "تحقق من أن الوصول إلى المحرك مسموح للواجهة.",
+        "تحقق من أن نسخة المحرك المنشورة تحتوي على الإجراء المطلوب.",
+        "إذا ظهر خطأ CORS، فيجب تعديل طريقة الاتصال أو المحرك؛ لا يمكن للواجهة وحدها تجاوز سياسة المتصفح."
+      ]
+    });
+
+    showNotice("فشل الاتصال أو تنفيذ الطلب: " + message, "error");
+    setConnectionStatus("تعذر الاتصال بالمحرك", "bad");
+
+    return null;
+
+  } finally {
+    busy = false;
+    document.body.classList.remove("loading");
+  }
+}
+
+async function testConnection() {
+  setConnectionStatus("جارٍ اختبار الاتصال...", "");
+
+  /*
+   * اختبار READ لمعرّف معروف.
+   * لا ينشئ أي مستند ولا يحذفه.
+   */
+  const result = await runAction("READ", {
+    documentId: document.getElementById("documentId").value.trim()
+      || "ing_potato_raw_100g"
+  });
+
+  if (result && result.success === true) {
+    setConnectionStatus("المحرك استجاب بنجاح", "ok");
+  } else {
+    setConnectionStatus("وصلت استجابة لكن يلزم فحص النتيجة", "bad");
+  }
+}
+
+async function createItem() {
+  let documentId;
+  let collections;
+
+  try {
+    documentId = getDocumentId();
+    collections = getCollectionPayloads();
+  } catch (error) {
+    showNotice(error.message, "error");
+    return;
+  }
+
+  if (!confirm(
+    "تأكيد إضافة المكوّن " + documentId +
+    " إلى قاعدة بيانات AQX Food؟"
+  )) {
+    return;
+  }
+
+  await runAction("CREATE", {
+    documentId: documentId,
+    collections: collections
+  });
+}
+
+async function updateItem() {
+  let documentId;
+  let collections;
+
+  try {
+    documentId = getDocumentId();
+    collections = getCollectionPayloads();
+  } catch (error) {
+    showNotice(error.message, "error");
+    return;
+  }
+
+  if (!confirm(
+    "تأكيد تحديث بيانات المكوّن " + documentId + "؟"
+  )) {
+    return;
+  }
+
+  await runAction("UPDATE", {
+    documentId: documentId,
+    collections: collections
+  });
+}
+
+async function readItem() {
+  let documentId;
+
+  try {
+    documentId = getDocumentId();
+  } catch (error) {
+    showNotice(error.message, "error");
+    return;
+  }
+
+  const result = await runAction("READ", {
+    documentId: documentId
+  });
+
+  if (!result || result.success !== true || !result.data) {
+    return;
+  }
+
+  const data = result.data;
+
+  Object.keys(COLLECTION_FIELDS).forEach(function(collection) {
+    const fieldId = COLLECTION_FIELDS[collection];
+
+    if (data[collection] && typeof data[collection] === "object") {
+      document.getElementById(fieldId).value =
+        JSON.stringify(data[collection], null, 2);
+    }
+  });
+
+  const basic = data.basic_info;
+
+  if (basic && typeof basic === "object") {
+    if (basic.nameAr !== undefined) {
+      document.getElementById("nameAr").value = basic.nameAr;
+    }
+
+    if (basic.nameEn !== undefined) {
+      document.getElementById("nameEn").value = basic.nameEn;
+    }
+
+    if (basic.calories !== undefined) {
+      document.getElementById("calories").value = basic.calories;
+    }
+
+    if (basic.status !== undefined) {
+      document.getElementById("status").value = basic.status;
+    }
+
+    if (Array.isArray(basic.searchKeywords)) {
+      document.getElementById("keywords").value =
+        basic.searchKeywords.join(", ");
+    }
+  }
+
+  showNotice(
+    "تم تحميل البيانات الموجودة في المستندات التي أعادها المحرك. راجع نتيجة القراءة للتأكد من حالة كل مجموعة.",
+    "success"
+  );
+}
+
+async function deleteItem() {
+  let documentId;
+
+  try {
+    documentId = getDocumentId();
+  } catch (error) {
+    showNotice(error.message, "error");
+    return;
+  }
+
+  const confirmation = prompt(
+    "تحذير: سيحاول المحرك حذف بيانات هذا المكوّن من المجموعات السبع.\n" +
+    "للتأكيد، اكتب معرّف المكوّن كما هو:\n" + documentId
+  );
+
+  if (confirmation !== documentId) {
+    showNotice("تم إلغاء الحذف.", "info");
+    return;
+  }
+
+  await runAction("DELETE", {
+    documentId: documentId
+  });
+}
+
+async function searchItems() {
+  const query = document.getElementById("searchQuery").value.trim();
+
+  if (!query) {
+    showNotice("أدخل كلمة البحث أولًا.", "error");
+    return;
+  }
+
+  await runAction("SEARCH", {
+    query: query.toLowerCase(),
+    pageSize: document.getElementById("pageSize").value
+  });
+}
+
+function clearResults() {
+  lastResult = null;
+  document.getElementById("result").textContent = "تم مسح النتائج.";
+  hideNotice();
+}
+
+async function copyResult() {
+  const text = document.getElementById("result").textContent;
+
+  try {
+    await navigator.clipboard.writeText(text);
+    showNotice("تم نسخ النتيجة.", "success");
+  } catch (_) {
+    showNotice(
+      "تعذر النسخ التلقائي. حدد النص داخل مربع النتيجة وانسخه يدويًا.",
+      "info"
+    );
+  }
+}
+
+function downloadResult() {
+  if (lastResult === null) {
+    showNotice("لا توجد نتيجة لتنزيلها.", "error");
+    return;
+  }
+
+  const blob = new Blob(
+    [JSON.stringify(lastResult, null, 2)],
+    { type: "application/json;charset=utf-8" }
+  );
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+
+  a.href = url;
+  a.download = "aqx-food-result.json";
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+/*
+ * لا ننفذ أي كتابة تلقائية عند فتح الصفحة.
+ */
+setConnectionStatus("جاهز لاختبار المحرك", "");
 </script>
+
 </body>
 </html>
