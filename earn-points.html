@@ -13,144 +13,28 @@
             --text-color: #f8fafc;
             --text-muted: #94a3b8;
             --danger-color: #ef4444;
-            --success-color: #22c55e;
             --border-color: #334155;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        header h1 {
-            color: var(--accent-color);
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }
-
-        header p {
-            color: var(--text-muted);
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .card h2 {
-            font-size: 1.25rem;
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 5px;
-        }
-
-        input, textarea, select {
-            background-color: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-color);
-            padding: 10px;
-            font-size: 0.95rem;
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
-        }
-
-        button {
-            background-color: var(--accent-color);
-            color: #0f172a;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 20px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        button:hover {
-            background-color: var(--accent-hover);
-        }
-
-        button.danger {
-            background-color: var(--danger-color);
-            color: #fff;
-        }
-
-        button.danger:hover {
-            background-color: #dc2626;
-        }
-
-        .actions-row {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        #outputResult {
-            background-color: #090d16;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 15px;
-            font-family: monospace;
-            font-size: 0.85rem;
-            white-space: pre-wrap;
-            max-height: 300px;
-            overflow-y: auto;
-            color: #38bdf8;
-        }
-
-        .loader {
-            display: none;
-            color: var(--accent-color);
-            font-size: 0.9rem;
-            margin-right: 10px;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; min-height: 100vh; }
+        .container { max-width: 900px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 25px; }
+        header h1 { color: var(--accent-color); font-size: 1.8rem; margin-bottom: 5px; }
+        header p { color: var(--text-muted); font-size: 0.9rem; }
+        .card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+        .card h2 { font-size: 1.1rem; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; color: var(--accent-color); }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 15px; }
+        .form-group { display: flex; flex-direction: column; }
+        label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
+        input { background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-color); padding: 8px 12px; font-size: 0.9rem; }
+        input:focus { outline: none; border-color: var(--accent-color); }
+        .actions-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        button { background-color: var(--accent-color); color: #0f172a; border: none; border-radius: 6px; padding: 10px 18px; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
+        button:hover { background-color: var(--accent-hover); }
+        button.danger { background-color: var(--danger-color); color: #fff; }
+        #outputResult { background-color: #090d16; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; max-height: 280px; overflow-y: auto; color: #38bdf8; }
+        .status { font-size: 0.85rem; color: var(--accent-color); }
     </style>
 </head>
 <body>
@@ -158,146 +42,121 @@
     <div class="container">
         <header>
             <h1>AQX Food Engine</h1>
-            <p>لوحة التحكم المركزية لإدارة المكونات الخام والبيانات الغذائية</p>
+            <p>لوحة التحكم المركزية لإدارة المكونات الغذائية في Firestore</p>
         </header>
 
-        <!-- قسم البحث والقراءة -->
+        <!-- قسم البحث والجلب -->
         <div class="card">
-            <h2>بحث / استعلام عن مكون</h2>
+            <h2>1. استعلام وبحث</h2>
             <div class="form-grid">
                 <div class="form-group" style="grid-column: span 2;">
-                    <label>معرّف المكون (Document ID) أو كلمة البحث</label>
-                    <input type="text" id="searchQuery" placeholder="مثال: ing_tomato_raw_100g أو طماطم">
+                    <label>معرف المكون أو الكلمة المفتاحية</label>
+                    <input type="text" id="searchQuery" placeholder="مثال: ing_potato_raw_100g أو بطاطس">
                 </div>
             </div>
             <div class="actions-row">
-                <button onclick="performAction('READ')">جلب بالمعرّف (GET)</button>
-                <button onclick="performAction('SEARCH')">بحث ذكي (Search)</button>
-                <span id="searchLoader" class="loader">جاري التنفيذ...</span>
+                <button onclick="performAction('READ')">جلب بالمعرّف</button>
+                <button onclick="performAction('SEARCH')">بحث ذكي</button>
             </div>
         </div>
 
         <!-- قسم الإضافة والتعديل -->
         <div class="card">
-            <h2>إضافة أو تعديل مكون (CRUD)</h2>
+            <h2>2. إضافة وتعديل مكون (CRUD)</h2>
             <div class="form-grid">
                 <div class="form-group">
-                    <label>معرّف المكون الأساسي (Document ID)</label>
-                    <input type="text" id="docId" placeholder="ing_banana_raw_100g">
+                    <label>معرف المكون (Document ID) *</label>
+                    <input type="text" id="docId" placeholder="ing_potato_raw_100g">
                 </div>
                 <div class="form-group">
-                    <label>الاسم بالعربية (Canonical Name Ar)</label>
-                    <input type="text" id="nameAr" placeholder="موز، طازج">
+                    <label>الاسم بالعربية</label>
+                    <input type="text" id="nameAr" placeholder="بطاطس، طازجة خام">
                 </div>
                 <div class="form-group">
-                    <label>الاسم بالإنجليزية (Canonical Name En)</label>
-                    <input type="text" id="nameEn" placeholder="Banana, raw">
+                    <label>الاسم بالإنجليزية</label>
+                    <input type="text" id="nameEn" placeholder="Potato, raw">
                 </div>
                 <div class="form-group">
-                    <label>السعرات الحرارية (Calories)</label>
-                    <input type="number" id="calories" placeholder="89">
+                    <label>السعرات الحرارية</label>
+                    <input type="number" id="calories" placeholder="77">
                 </div>
                 <div class="form-group">
-                    <label>البروتين (Protein g)</label>
-                    <input type="number" step="0.1" id="protein" placeholder="1.1">
+                    <label>البروتين (جرام)</label>
+                    <input type="number" step="0.1" id="protein" placeholder="2.0">
                 </div>
                 <div class="form-group">
-                    <label>الكربوهيدرات (Carbs g)</label>
-                    <input type="number" step="0.1" id="carbs" placeholder="22.8">
+                    <label>الكربوهيدرات (جرام)</label>
+                    <input type="number" step="0.1" id="carbs" placeholder="17.5">
                 </div>
             </div>
             <div class="actions-row">
-                <button onclick="performAction('CREATE')">إضافة مكون جديد (CREATE)</button>
-                <button onclick="performAction('UPDATE')">تعديل المكون (UPDATE)</button>
-                <button onclick="performAction('DELETE')" class="danger">حذف المكون (DELETE)</button>
-                <span id="crudLoader" class="loader">جاري المعالجة...</span>
+                <button onclick="performAction('CREATE')">إضافة مكون جديد</button>
+                <button onclick="performAction('UPDATE')">تعديل بيانات</button>
+                <button onclick="performAction('DELETE')" class="danger">حذف المكون</button>
             </div>
         </div>
 
-        <!-- قسم عرض النتيجة -->
+        <!-- سجل الاستجابة -->
         <div class="card">
-            <h2>سجل الاستجابة (API Response)</h2>
-            <div id="outputResult">أهلاً بك. قم بتنفيذ أي عملية ليظهر الناتج هنا...</div>
+            <h2>3. سجل الاستجابة (Output)</h2>
+            <div id="outputResult">في انتظار تنفيذ العملية...</div>
         </div>
     </div>
 
     <script>
-        // رابط المحرك الخاص بك على Google Apps Script
         const API_URL = "https://script.google.com/macros/s/AKfycbz2b9cx0vF4lsGwDCBZBLu0u5Tc8NmreJ-2I-f3Y5Q31-Zo3JYWA1T-RFonMjWEBZeymA/exec";
 
         async function performAction(actionType) {
             const outputDiv = document.getElementById("outputResult");
             const docId = document.getElementById("docId").value.trim();
             const searchQuery = document.getElementById("searchQuery").value.trim();
-            
-            let requestBody = { action: actionType };
 
-            if (actionType === 'READ') {
-                if (!searchQuery) {
-                    alert("يرجى كتابة معرّف المكون في حقل البحث أولاً لجلبه!");
-                    return;
-                }
-                // جلب عبر GET أو POST
-                fetchDataGet(`action=READ&documentId=${searchQuery}`);
-                return;
-            }
-
-            if (actionType === 'SEARCH') {
-                if (!searchQuery) {
-                    alert("يرجى كتابة كلمة للبحث عنها!");
-                    return;
-                }
-                fetchDataGet(`action=SEARCH&query=${encodeURIComponent(searchQuery)}`);
-                return;
-            }
-
-            // لعمليات CREATE و UPDATE و DELETE تتطلب POST
-            if (!docId) {
-                alert("يرجى إدخال معرّف المكون الأساسي (Document ID)!");
-                return;
-            }
-
-            requestBody.documentId = docId;
-
-            if (actionType === 'CREATE' || actionType === 'UPDATE') {
-                requestBody.data = {
-                    basic_info: {
-                        canonicalNameEn: document.getElementById("nameEn").value || "Unknown",
-                        canonicalNameAr: document.getElementById("nameAr").value || "مكون غير محدد",
-                        searchKeywords: [document.getElementById("nameAr").value, document.getElementById("nameEn").value].filter(Boolean)
-                    },
-                    macronutrients: {
-                        calories: parseFloat(document.getElementById("calories").value) || 0,
-                        protein: parseFloat(document.getElementById("protein").value) || 0,
-                        carbohydrates: parseFloat(document.getElementById("carbs").value) || 0
-                    }
-                };
-            }
-
-            outputDiv.innerText = "جاري إرسال الطلب إلى المحرك الخادمي...";
+            outputDiv.innerText = "جاري معالجة الطلب وتنفيذه على القاعدة...";
 
             try {
+                let payload = { action: actionType };
+
+                if (actionType === 'READ') {
+                    if (!searchQuery) return alert("يرجى إدخال معرف المكون في خانة البحث!");
+                    payload.documentId = searchQuery;
+                } else if (actionType === 'SEARCH') {
+                    if (!searchQuery) return alert("يرجى إدخال كلمة للبحث بها!");
+                    payload.query = searchQuery;
+                } else {
+                    if (!docId) return alert("يرجى إدخال معرف المكون (Document ID)!");
+                    payload.documentId = docId;
+
+                    if (actionType === 'CREATE' || actionType === 'UPDATE') {
+                        payload.data = {
+                            basic_info: {
+                                canonicalNameAr: document.getElementById("nameAr").value || "بدون اسم",
+                                canonicalNameEn: document.getElementById("nameEn").value || "Unnamed",
+                                searchKeywords: [
+                                    document.getElementById("nameAr").value,
+                                    document.getElementById("nameEn").value,
+                                    docId
+                                ].filter(Boolean)
+                            },
+                            macronutrients: {
+                                calories: parseFloat(document.getElementById("calories").value) || 0,
+                                protein: parseFloat(document.getElementById("protein").value) || 0,
+                                carbohydrates: parseFloat(document.getElementById("carbs").value) || 0
+                            }
+                        };
+                    }
+                }
+
                 const response = await fetch(API_URL, {
                     method: "POST",
-                    headers: { "Content-Type": "text/plain;charset=utf-8" }, // لتجنب قيود CORS في Apps Script
-                    body: JSON.stringify(requestBody)
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify(payload)
                 });
-                const result = await response.json();
-                outputDiv.innerText = JSON.stringify(result, null, 2);
-            } catch (err) {
-                outputDiv.innerText = "حدث خطأ في الاتصال: " + err.toString();
-            }
-        }
 
-        async function fetchDataGet(queryString) {
-            const outputDiv = document.getElementById("outputResult");
-            outputDiv.innerText = "جاري جلب البيانات...";
-            try {
-                const response = await fetch(`${API_URL}?${queryString}`);
                 const result = await response.json();
                 outputDiv.innerText = JSON.stringify(result, null, 2);
+
             } catch (err) {
-                outputDiv.innerText = "حدث خطأ في جلب البيانات: " + err.toString();
+                outputDiv.innerText = "خطأ في الاتصال بالمحرك:\n" + err.toString();
             }
         }
     </script>
