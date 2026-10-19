@@ -3,156 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AQX Food - لوحة التحكم المباشرة</title>
+    <title>AQX Mobile Dashboard</title>
     <style>
-        :root {
-            --bg-color: #0b0f19;
-            --card-bg: #131d31;
-            --accent-color: #0ea5e9;
-            --text-color: #f8fafc;
-            --text-muted: #94a3b8;
-            --danger-color: #ef4444;
-            --success-color: #22c55e;
-            --border-color: #1e293b;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; min-height: 100vh; }
-        .container { max-width: 900px; margin: 0 auto; }
-        header { text-align: center; margin-bottom: 25px; }
-        header h1 { color: var(--accent-color); font-size: 1.8rem; margin-bottom: 5px; }
-        .card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
-        .card h2 { font-size: 1.1rem; margin-bottom: 15px; color: var(--accent-color); border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 15px; }
-        .form-group { display: flex; flex-direction: column; }
-        label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
-        input { background-color: #0f172a; border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-color); padding: 8px 12px; font-size: 0.9rem; }
-        input:focus { outline: none; border-color: var(--accent-color); }
-        .actions-row { display: flex; gap: 10px; flex-wrap: wrap; }
-        button { background-color: var(--accent-color); color: #0b0f19; border: none; border-radius: 6px; padding: 10px 18px; font-weight: bold; cursor: pointer; }
-        button.danger { background-color: var(--danger-color); color: #fff; }
-        #outputResult { background-color: #070a12; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; max-height: 300px; overflow-y: auto; color: #38bdf8; }
+        body { background: #0f172a; color: #f8fafc; font-family: sans-serif; padding: 15px; margin: 0; }
+        .container { max-width: 100%; margin: 0 auto; }
+        h1 { color: #38bdf8; font-size: 1.5rem; text-align: center; margin-bottom: 20px; }
+        .card { background: #1e293b; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px: #334155; }
+        label { font-size: 0.85rem; color: #94a3b8; display: block; margin-top: 10px; }
+        input { width: 100%; padding: 12px; margin-top: 5px; background: #0f172a; border: 1px solid #334155; color: #fff; border-radius: 6px; font-size: 1rem; }
+        button { width: 100%; background: #38bdf8; color: #0f172a; border: none; padding: 12px; border-radius: 6px; font-weight: bold; margin-top: 15px; font-size: 1rem; cursor: pointer; }
+        button.danger { background: #ef4444; color: #fff; }
+        #result { background: #070a12; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 0.8rem; white-space: pre-wrap; margin-top: 10px; max-height: 200px; overflow-y: auto; color: #38bdf8; }
     </style>
 </head>
 <body>
+<div class="container">
+    <h1>AQX Mobile Control</h1>
 
-    <div class="container">
-        <header>
-            <h1>AQX Food Direct Panel</h1>
-            <p>لوحة التحكم المباشرة مع Firestore</p>
-        </header>
+    <div class="card">
+        <h3>إضافة مكون جديد</h3>
+        <label>المعرف (Document ID)</label>
+        <input type="text" id="docId" value="ing_banana_raw_100g">
+        
+        <label>الاسم بالعربية</label>
+        <input type="text" id="nameAr" value="موز، طازج">
 
-        <!-- قسم الإضافة -->
-        <div class="card">
-            <h2>إضافة مكون جديد (إلى الجداول المنفصلة)</h2>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>معرّف المكون (Document ID)</label>
-                    <input type="text" id="docId" value="ing_potato_raw_100g">
-                </div>
-                <div class="form-group">
-                    <label>الاسم بالعربية</label>
-                    <input type="text" id="nameAr" value="بطاطس، طازجة خام">
-                </div>
-                <div class="form-group">
-                    <label>الاسم بالإنجليزية</label>
-                    <input type="text" id="nameEn" value="Potato, raw">
-                </div>
-                <div class="form-group">
-                    <label>السعرات الحرارية</label>
-                    <input type="number" id="calories" value="77">
-                </div>
-                <div class="form-group">
-                    <label>البروتين (جرام)</label>
-                    <input type="number" id="protein" value="2.0">
-                </div>
-                <div class="form-group">
-                    <label>الكربوهيدرات (جرام)</label>
-                    <input type="number" id="carbs" value="17.5">
-                </div>
-            </div>
-            <div class="actions-row">
-                <button onclick="addIngredient()">إضافة المكون للقاعدة</button>
-                <button onclick="getIngredient()">جلب المكون</button>
-            </div>
-        </div>
+        <label>السعرات الحرارية</label>
+        <input type="number" id="calories" value="89">
 
-        <!-- النتائج -->
-        <div class="card">
-            <h2>سجل العمليات والنتيجة</h2>
-            <div id="outputResult">جاهز...</div>
-        </div>
+        <button onclick="sendData('CREATE')">إضافة للقاعدة</button>
     </div>
 
-    <!-- Firebase SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    <div class="card">
+        <h3>بحث أو جلب مكون</h3>
+        <label>المعرف أو كلمة البحث</label>
+        <input type="text" id="searchKey" value="ing_banana_raw_100g">
+        
+        <button onclick="sendData('READ')">جلب بالمعرف</button>
+        <button onclick="sendData('SEARCH')" style="background: #22c55e; color:#fff;">بحث ذكي</button>
+    </div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyA6JY3cPwAXb_8JjHVZzji3MqLx_rwnIzA",
-            authDomain: "aqx-food.firebaseapp.com",
-            projectId: "aqx-food",
-            storageBucket: "aqx-food.firebasestorage.app",
-            messagingSenderId: "323079878999",
-            appId: "1:323079878999:web:29603047a4cd4f0577a612",
-            measurementId: "G-H40BB0TT8C"
-        };
+    <div class="card">
+        <h3>النتيجة</h3>
+        <div id="result">في الانتظار...</div>
+    </div>
+</div>
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+<script>
+    // رابط المحرك الخاص بك
+    const API_URL = "https://script.google.com/macros/s/AKfycbwqGrClXch4rzYL05LcjBNwwm4g_kheCuX8_clfvBYpfPQaUaKp_N-nTBURsV_rUfvUdA/exec";
 
-        window.addIngredient = async function() {
-            const docId = document.getElementById("docId").value.trim();
-            const output = document.getElementById("outputResult");
-            if (!docId) { alert("أدخل المعرّف!"); return; }
+    async function sendData(actionType) {
+        const resDiv = document.getElementById("result");
+        resDiv.innerText = "جاري التنفيذ...";
 
-            output.innerText = "جاري الإضافة إلى الجداول السبعة...";
+        try {
+            let options = { method: "POST" };
+            let url = API_URL;
+            let payload = { action: actionType };
 
-            try {
-                // كتابة البيانات في الجداول المنفصلة مباشرة
-                await setDoc(doc(db, "basic_info", docId), {
-                    canonicalNameAr: document.getElementById("nameAr").value,
-                    canonicalNameEn: document.getElementById("nameEn").value,
-                    searchKeywords: [document.getElementById("nameAr").value, document.getElementById("nameEn").value, docId]
-                });
-
-                await setDoc(doc(db, "macronutrients", docId), {
-                    calories: parseFloat(document.getElementById("calories").value) || 0,
-                    protein: parseFloat(document.getElementById("protein").value) || 0,
-                    carbohydrates: parseFloat(document.getElementById("carbs").value) || 0
-                });
-
-                // تفعيل باقي الجداول بشكل افتراضي لضمان اكتمال الهيكل
-                await setDoc(doc(db, "vitamins", docId), { status: "active" });
-                await setDoc(doc(db, "minerals", docId), { status: "active" });
-                await setDoc(doc(db, "amino_and_fatty_acids", docId), { status: "active" });
-                await setDoc(doc(db, "phytochemicals_and_properties", docId), { status: "active" });
-
-                output.innerText = `✅ تم إضافة المكون (${docId}) بنجاح تام وتوزيعه على كافة الجداول!`;
-            } catch (err) {
-                output.innerText = "❌ خطأ أثناء الإضافة (تأكد من قواعد الأمان - Security Rules):\n" + err.message;
+            if (actionType === 'CREATE') {
+                payload.documentId = document.getElementById("docId").value;
+                payload.data = {
+                    basic_info: { canonicalNameAr: document.getElementById("nameAr").value },
+                    macronutrients: { calories: parseFloat(document.getElementById("calories").value) }
+                };
+                options.body = JSON.stringify(payload);
+            } else if (actionType === 'READ') {
+                const id = document.getElementById("searchKey").value;
+                url = `${API_URL}?action=READ&documentId=${id}`;
+                options.method = "GET";
+            } else if (actionType === 'SEARCH') {
+                const query = document.getElementById("searchKey").value;
+                url = `${API_URL}?action=SEARCH&query=${encodeURIComponent(query)}`;
+                options.method = "GET";
             }
-        };
 
-        window.getIngredient = async function() {
-            const docId = document.getElementById("docId").value.trim();
-            const output = document.getElementById("outputResult");
-            if (!docId) { alert("أدخل المعرّف للبحث!"); return; }
-
-            output.innerText = "جاري جلب البيانات من الجداول...";
-            try {
-                const basicSnap = await getDoc(doc(db, "basic_info", docId));
-                const macroSnap = await getDoc(doc(db, "macronutrients", docId));
-
-                let result = { documentId: docId };
-                if (basicSnap.exists()) result.basic_info = basicSnap.data();
-                if (macroSnap.exists()) result.macronutrients = macroSnap.data();
-
-                output.innerText = JSON.stringify(result, null, 2);
-            } catch (err) {
-                output.innerText = "❌ خطأ في الجلب:\n" + err.message;
-            }
-        };
-    </script>
+            const response = await fetch(url, options);
+            const json = await response.json();
+            resDiv.innerText = JSON.stringify(json, null, 2);
+        } catch (e) {
+            resDiv.innerText = "خطأ: " + e.message;
+        }
+    }
+</script>
 </body>
 </html>
