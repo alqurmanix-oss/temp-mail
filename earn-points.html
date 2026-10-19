@@ -3,38 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AQX Food - لوحة تحكم المكونات الغذائية</title>
+    <title>AQX Food Engine - لوحة التحكم الشاملة</title>
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent-color: #38bdf8;
-            --accent-hover: #0ea5e9;
+            --bg-color: #0b0f19;
+            --card-bg: #131d31;
+            --accent-color: #0ea5e9;
+            --accent-hover: #0284c7;
             --text-color: #f8fafc;
             --text-muted: #94a3b8;
             --danger-color: #ef4444;
-            --border-color: #334155;
+            --success-color: #22c55e;
+            --border-color: #1e293b;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; min-height: 100vh; }
-        .container { max-width: 900px; margin: 0 auto; }
+        .container { max-width: 950px; margin: 0 auto; }
+        
         header { text-align: center; margin-bottom: 25px; }
-        header h1 { color: var(--accent-color); font-size: 1.8rem; margin-bottom: 5px; }
-        header p { color: var(--text-muted); font-size: 0.9rem; }
-        .card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
-        .card h2 { font-size: 1.1rem; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; color: var(--accent-color); }
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 15px; }
+        header h1 { color: var(--accent-color); font-size: 2rem; margin-bottom: 5px; font-weight: 800; }
+        header p { color: var(--text-muted); font-size: 0.95rem; }
+
+        .card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
+        .card h2 { font-size: 1.15rem; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; color: var(--accent-color); display: flex; justify-content: space-between; align-items: center; }
+
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 15px; }
         .form-group { display: flex; flex-direction: column; }
-        label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
-        input { background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-color); padding: 8px 12px; font-size: 0.9rem; }
+        label { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
+        input { background-color: #0f172a; border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); padding: 10px 14px; font-size: 0.95rem; transition: border-color 0.2s; }
         input:focus { outline: none; border-color: var(--accent-color); }
-        .actions-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-        button { background-color: var(--accent-color); color: #0f172a; border: none; border-radius: 6px; padding: 10px 18px; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
+
+        .actions-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+        button { background-color: var(--accent-color); color: #0b0f19; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 700; cursor: pointer; font-size: 0.95rem; transition: background 0.2s; }
         button:hover { background-color: var(--accent-hover); }
         button.danger { background-color: var(--danger-color); color: #fff; }
-        #outputResult { background-color: #090d16; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; max-height: 280px; overflow-y: auto; color: #38bdf8; }
-        .status { font-size: 0.85rem; color: var(--accent-color); }
+        button.danger:hover { background-color: #dc2626; }
+
+        #outputResult { background-color: #070a12; border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; max-height: 350px; overflow-y: auto; color: #38bdf8; line-height: 1.5; }
     </style>
 </head>
 <body>
@@ -42,108 +48,117 @@
     <div class="container">
         <header>
             <h1>AQX Food Engine</h1>
-            <p>لوحة التحكم المركزية لإدارة المكونات الغذائية في Firestore</p>
+            <p>لوحة التحكم والربط المباشر مع قاعدة بيانات Firestore (المجموعات السبعة)</p>
         </header>
 
-        <!-- قسم البحث والجلب -->
+        <!-- قسم الاستعلام والبحث -->
         <div class="card">
-            <h2>1. استعلام وبحث</h2>
+            <h2>1. استعلام وبحث عن مكون</h2>
             <div class="form-grid">
                 <div class="form-group" style="grid-column: span 2;">
-                    <label>معرف المكون أو الكلمة المفتاحية</label>
+                    <label>معرّف المكون (Document ID) أو كلمة البحث</label>
                     <input type="text" id="searchQuery" placeholder="مثال: ing_potato_raw_100g أو بطاطس">
                 </div>
             </div>
             <div class="actions-row">
-                <button onclick="performAction('READ')">جلب بالمعرّف</button>
-                <button onclick="performAction('SEARCH')">بحث ذكي</button>
+                <button onclick="executeAction('READ')">جلب بالمعرّف (GET)</button>
+                <button onclick="executeAction('SEARCH')">بحث ذكي (Search)</button>
             </div>
         </div>
 
-        <!-- قسم الإضافة والتعديل -->
+        <!-- قسم العمليات (إضافة، تعديل، حذف) -->
         <div class="card">
-            <h2>2. إضافة وتعديل مكون (CRUD)</h2>
+            <h2>2. إدارة البيانات (CRUD)</h2>
             <div class="form-grid">
                 <div class="form-group">
-                    <label>معرف المكون (Document ID) *</label>
-                    <input type="text" id="docId" placeholder="ing_potato_raw_100g">
+                    <label>معرّف المكون (Document ID) *</label>
+                    <input type="text" id="docId" value="ing_potato_raw_100g" placeholder="ing_item_name_100g">
                 </div>
                 <div class="form-group">
                     <label>الاسم بالعربية</label>
-                    <input type="text" id="nameAr" placeholder="بطاطس، طازجة خام">
+                    <input type="text" id="nameAr" value="بطاطس، طازجة خام" placeholder="بطاطس">
                 </div>
                 <div class="form-group">
                     <label>الاسم بالإنجليزية</label>
-                    <input type="text" id="nameEn" placeholder="Potato, raw">
+                    <input type="text" id="nameEn" value="Potato, raw" placeholder="Potato">
                 </div>
                 <div class="form-group">
                     <label>السعرات الحرارية</label>
-                    <input type="number" id="calories" placeholder="77">
+                    <input type="number" id="calories" value="77" placeholder="77">
                 </div>
                 <div class="form-group">
                     <label>البروتين (جرام)</label>
-                    <input type="number" step="0.1" id="protein" placeholder="2.0">
+                    <input type="number" step="0.1" id="protein" value="2.0" placeholder="2.0">
                 </div>
                 <div class="form-group">
                     <label>الكربوهيدرات (جرام)</label>
-                    <input type="number" step="0.1" id="carbs" placeholder="17.5">
+                    <input type="number" step="0.1" id="carbs" value="17.5" placeholder="17.5">
                 </div>
             </div>
             <div class="actions-row">
-                <button onclick="performAction('CREATE')">إضافة مكون جديد</button>
-                <button onclick="performAction('UPDATE')">تعديل بيانات</button>
-                <button onclick="performAction('DELETE')" class="danger">حذف المكون</button>
+                <button onclick="executeAction('CREATE')">إضافة مكون جديد (CREATE)</button>
+                <button onclick="executeAction('UPDATE')">تعديل المكون (UPDATE)</button>
+                <button onclick="executeAction('DELETE')" class="danger">حذف المكون (DELETE)</button>
             </div>
         </div>
 
         <!-- سجل الاستجابة -->
         <div class="card">
-            <h2>3. سجل الاستجابة (Output)</h2>
-            <div id="outputResult">في انتظار تنفيذ العملية...</div>
+            <h2>3. سجل الاستجابة المباشر (API Output)</h2>
+            <div id="outputResult">جاهز للعمل... اضغط على أي زر لتنفيذ العملية وإظهار النتيجة هنا.</div>
         </div>
     </div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbz2b9cx0vF4lsGwDCBZBLu0u5Tc8NmreJ-2I-f3Y5Q31-Zo3JYWA1T-RFonMjWEBZeymA/exec";
+        // رابط المحرك الجديد الخاص بك
+        const API_URL = "https://script.google.com/macros/s/AKfycbwqGrClXch4rzYL05LcjBNwwm4g_kheCuX8_clfvBYpfPQaUaKp_N-nTBURsV_rUfvUdA/exec";
 
-        async function performAction(actionType) {
+        async function executeAction(actionType) {
             const outputDiv = document.getElementById("outputResult");
             const docId = document.getElementById("docId").value.trim();
             const searchQuery = document.getElementById("searchQuery").value.trim();
 
-            outputDiv.innerText = "جاري معالجة الطلب وتنفيذه على القاعدة...";
+            outputDiv.innerText = "جاري تنفيذ الطلب وإرساله إلى المحرك الخادمي...";
 
             try {
                 let payload = { action: actionType };
 
                 if (actionType === 'READ') {
-                    if (!searchQuery) return alert("يرجى إدخال معرف المكون في خانة البحث!");
-                    payload.documentId = searchQuery;
-                } else if (actionType === 'SEARCH') {
-                    if (!searchQuery) return alert("يرجى إدخال كلمة للبحث بها!");
-                    payload.query = searchQuery;
-                } else {
-                    if (!docId) return alert("يرجى إدخال معرف المكون (Document ID)!");
-                    payload.documentId = docId;
+                    if (!searchQuery) { alert("أدخل معرّف المكون في خانة البحث أولاً!"); return; }
+                    const res = await fetch(`${API_URL}?action=READ&documentId=${encodeURIComponent(searchQuery)}`);
+                    const json = await res.json();
+                    outputDiv.innerText = JSON.stringify(json, null, 2);
+                    return;
+                }
 
-                    if (actionType === 'CREATE' || actionType === 'UPDATE') {
-                        payload.data = {
-                            basic_info: {
-                                canonicalNameAr: document.getElementById("nameAr").value || "بدون اسم",
-                                canonicalNameEn: document.getElementById("nameEn").value || "Unnamed",
-                                searchKeywords: [
-                                    document.getElementById("nameAr").value,
-                                    document.getElementById("nameEn").value,
-                                    docId
-                                ].filter(Boolean)
-                            },
-                            macronutrients: {
-                                calories: parseFloat(document.getElementById("calories").value) || 0,
-                                protein: parseFloat(document.getElementById("protein").value) || 0,
-                                carbohydrates: parseFloat(document.getElementById("carbs").value) || 0
-                            }
-                        };
-                    }
+                if (actionType === 'SEARCH') {
+                    if (!searchQuery) { alert("أدخل كلمة للبحث عنها!"); return; }
+                    const res = await fetch(`${API_URL}?action=SEARCH&query=${encodeURIComponent(searchQuery)}`);
+                    const json = await res.json();
+                    outputDiv.innerText = JSON.stringify(json, null, 2);
+                    return;
+                }
+
+                if (!docId) { alert("يرجى إدخال معرّف المكون (Document ID)!"); return; }
+                payload.documentId = docId;
+
+                if (actionType === 'CREATE' || actionType === 'UPDATE') {
+                    payload.data = {
+                        basic_info: {
+                            canonicalNameAr: document.getElementById("nameAr").value,
+                            canonicalNameEn: document.getElementById("nameEn").value,
+                            searchKeywords: [
+                                document.getElementById("nameAr").value,
+                                document.getElementById("nameEn").value,
+                                docId
+                            ]
+                        },
+                        macronutrients: {
+                            calories: parseFloat(document.getElementById("calories").value) || 0,
+                            protein: parseFloat(document.getElementById("protein").value) || 0,
+                            carbohydrates: parseFloat(document.getElementById("carbs").value) || 0
+                        }
+                    };
                 }
 
                 const response = await fetch(API_URL, {
