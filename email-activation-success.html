@@ -52,7 +52,6 @@
       <button id="login-button" type="submit" disabled>دخول لحسابي</button>
       <div class="message" id="message" role="status" aria-live="polite"></div>
     </form>
-    <p class="foot">تُدار الهوية والجلسات مركزيًا عبر AQX Identity.<br>لا تشارك كلمة المرور أو رموز الجلسة مع أي شخص.</p>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -101,7 +100,6 @@
         if (error) throw error;
         let session = data?.session || null;
         if (!session?.access_token) {
-          showMessage("تم فتح صفحة التفعيل، لكن جلسة تأكيد البريد لم تصل إلى هذه الصفحة. افتح رابط التفعيل من رسالة AQX مرة أخرى، أو ارجع إلى بوابة الإعلانات وسجّل الدخول بعد التأكد من تفعيل البريد.", "error");
           return;
         }
         const { data:userData, error:userError } = await client.auth.getUser();
