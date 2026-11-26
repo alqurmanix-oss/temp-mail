@@ -111,7 +111,7 @@ tr:last-child td{border-bottom:0}
 .notice{border:1px solid #eadcae;background:#fffaf0;border-radius:12px;padding:15px 17px;color:#725d2c;font-size:13px}
 .cta-panel{background:linear-gradient(125deg,#071b38,#0b6b6e);border-radius:20px;color:#fff;padding:34px;text-align:center}
 .cta-panel h2{color:#fff}.cta-panel p{color:#d6e7e9;max-width:720px;margin:0 auto 18px}
-.disabled-cta{display:inline-flex;align-items:center;justify-content:center;background:#ffffff20;border:1px solid #ffffff50;color:#fff;border-radius:10px;padding:12px 22px;font-weight:800;cursor:not-allowed}
+.cta-button{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:var(--mint);border:1px solid var(--mint);color:#06233b;border-radius:10px;padding:13px 26px;font-weight:900;transition:transform .2s,box-shadow .2s,background .2s;box-shadow:0 8px 22px #00c9c033}.cta-button:hover{transform:translateY(-2px);background:#35e0d5;box-shadow:0 12px 28px #00c9c044}.cta-button span{font-size:18px}.cta-note{display:block;margin-top:13px;color:#c5dcdf;font-size:12px}
 footer{background:#071b38;color:#c8dce2;padding:25px 0;text-align:center;font-size:12px}
 footer b{color:#fff}
 @media(max-width:820px){.hero-grid,.placement,.price-layout{grid-template-columns:1fr}.hero{padding:48px 0}.grid-3{grid-template-columns:1fr 1fr}.specs{grid-template-columns:1fr 1fr}.navlinks{display:none}}
@@ -319,10 +319,11 @@ footer b{color:#fff}
 <section class="soft">
 <div class="wrap">
 <div class="cta-panel">
-<p class="eyebrow">AQX ADS · للمعلنين</p>
-<h2>هل أنت مستعد لإعداد حملتك؟</h2>
-<p>تفاصيل المساحة وأسعارها موضحة للمراجعة والتخطيط. إنشاء الحملات والفوترة والتسليم المدفوع غير متاحة حاليًا إلى حين اكتمال جاهزية بوابات التشغيل والتمويل.</p>
-<span class="disabled-cta" aria-disabled="true">إنشاء الحملات غير متاح حاليًا</span>
+<p class="eyebrow">AQX ADS · خطوتك التالية تبدأ هنا</p>
+<h2>حان وقت تجهيز حملتك الإعلانية!</h2>
+<p>علامتك التجارية تستحق وصولًا أوسع. تعرّف على المساحة والأسعار، وانتقل إلى صفحة الحملات لبدء رحلتك الإعلانية مع AQX. نعمل على استكمال بوابات التشغيل والتمويل لتفعيل إنشاء الحملات والفوترة وإطلاق الإعلانات.</p>
+<a class="cta-button" href="../campaigns.html">ابدأ إعداد حملتك <span aria-hidden="true">←</span></a>
+<small class="cta-note">صفحة الحملات هي وجهتك التالية — ترقّب اكتمال تجهيزها قريبًا.</small>
 </div>
 </div>
 </section>
