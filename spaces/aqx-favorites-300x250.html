@@ -347,7 +347,7 @@ function calc(){
  document.getElementById('bonusCount').textContent=fmt(bonus);
  document.getElementById('deliveryCount').textContent=fmt(count+bonus);
  document.getElementById('selectedCpm').textContent='$'+fmt(rate);
- document.getElementById('calcMessage').textContent=count<5000?'العدد المدخل أقل من الحد الأدنى المهيأ لهذه المساحة (5,000 ظهور مدفوع). الأرقام المعروضة للاطلاع فقط وفق الأسعار المعتمدة، ولا تعني قبول حملة بهذا الحجم.':'الحد الأدنى المهيأ لهذه المساحة هو 5,000 ظهور مدفوع. البونص مجاني ويُسجل منفصلًا ولا يدخل في أساس الفوترة. هذه الحاسبة توضيحية وليست عرض سعر أو أداة إنشاء حملة.';
+ document.getElementById('calcMessage').textContent=count<5000?'العدد المدخل أقل من الحد الأدنى المهيأ لهذه المساحة (5,000 ظهور مدفوع). الأرقام المعروضة للاطلاع فقط وفق الأسعار المعتمدة، ولا تعني قبول حملة بهذا الحجم.':'الحد الأدنى المهيأ لهذه المساحة هو 5,000 ظهور مدفوع. البونص مجاني ويُسجل منفصلًا ولا يدخل في أساس الفوترة. تعرض الحاسبة التكلفة وفق الأسعار المعتمدة فعليًا، وهي مخصصة للاطلاع فقط ولا تُنشئ حملة إعلانية أو تطلقها.';
 }
 country.addEventListener('change',calc);paid.addEventListener('input',calc);calc();
 })();
