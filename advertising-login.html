@@ -469,7 +469,10 @@
           throw new Error("INVALID_LOGIN_CREDENTIALS");
         }
         const ok = await establishAqxServiceSession(data.session);
-        if (ok) showMessage("login-message", "تم اعتماد جلسة AQX Advertising بنجاح.", "success");
+        if (ok) {
+          showMessage("login-message", "تم اعتماد جلسة AQX Advertising بنجاح. جارٍ الانتقال إلى الفحص الأمني…", "success");
+          window.location.assign("./security-check.html");
+        }
       } catch (error) {
         showMessage("login-message", error.code ? loginErrorMessage(error.code) : (
           error.message === "INVALID_LOGIN_CREDENTIALS"
