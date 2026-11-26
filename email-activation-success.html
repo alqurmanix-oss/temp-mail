@@ -35,7 +35,7 @@
     .sound-button{width:auto;margin:12px auto 0;padding:8px 14px;border:1px solid rgba(83,214,232,.28);background:rgba(83,214,232,.08);color:#c9f6ff;font-size:12px;box-shadow:none}
     .sound-button:hover{background:rgba(83,214,232,.16)}
     .celebration{position:fixed;inset:0;z-index:20;overflow:hidden;pointer-events:none;opacity:0}
-    .celebration.active{animation:celebrationFade 3.2s ease-out forwards}
+    .celebration.active{animation:celebrationFade 5s ease-out forwards}
     .confetti{position:absolute;top:-12px;left:var(--x);width:var(--w);height:var(--h);border-radius:2px;background:var(--c);opacity:0;transform:rotate(var(--r));animation:confettiFall var(--d) cubic-bezier(.2,.65,.3,1) var(--delay) forwards;box-shadow:0 0 12px color-mix(in srgb,var(--c),transparent 35%)}
     @keyframes confettiFall{0%{opacity:0;transform:translate3d(0,-5vh,0) rotate(0)}10%{opacity:1}100%{opacity:0;transform:translate3d(var(--drift),110vh,0) rotate(780deg)}}
     @keyframes celebrationFade{0%{opacity:1}75%{opacity:1}100%{opacity:0}}
@@ -63,8 +63,7 @@
       <button id="login-button" type="submit" disabled>دخول لحسابي</button>
       <div class="message" id="message" role="status" aria-live="polite"></div>
     </form>
-    <button class="sound-button" id="welcome-audio-button" type="button">🔊 إعادة تشغيل الترحيب الصوتي</button>
-  </main>
+    </main>
   <div class="celebration" id="celebration" aria-hidden="true"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -81,15 +80,42 @@
     let confirmedEmail = "";
     let welcomeSpeechText = "Welcome to AQX Advertising!";
     let welcomeCelebrationStarted = false;
+    let welcomeAudioStarted = false;
+    let welcomeGestureFallbackArmed = false;
 
-    function playWelcomeAudio() {
-      if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) return;
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(welcomeSpeechText);
-      utterance.lang = "en-US";
-      utterance.rate = 0.94;
-      utterance.pitch = 1.04;
-      window.speechSynthesis.speak(utterance);
+    function armWelcomeAudioForFirstInteraction() {
+      if (welcomeGestureFallbackArmed || welcomeAudioStarted) return;
+      welcomeGestureFallbackArmed = true;
+      const resumeOnFirstInteraction = () => {
+        if (welcomeAudioStarted) return;
+        startWelcomeAudio();
+      };
+      window.addEventListener("pointerdown", resumeOnFirstInteraction, { once:true, capture:true });
+      window.addEventListener("keydown", resumeOnFirstInteraction, { once:true, capture:true });
+      window.addEventListener("touchstart", resumeOnFirstInteraction, { once:true, capture:true, passive:true });
+    }
+
+    function startWelcomeAudio() {
+      if (welcomeAudioStarted) return;
+      if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        armWelcomeAudioForFirstInteraction();
+        return;
+      }
+      try {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(welcomeSpeechText);
+        utterance.lang = "en-US";
+        utterance.rate = 0.94;
+        utterance.pitch = 1.04;
+        utterance.onstart = () => { welcomeAudioStarted = true; };
+        utterance.onerror = () => { armWelcomeAudioForFirstInteraction(); };
+        window.speechSynthesis.speak(utterance);
+        window.setTimeout(() => {
+          if (!welcomeAudioStarted && !window.speechSynthesis.speaking) armWelcomeAudioForFirstInteraction();
+        }, 1400);
+      } catch (_) {
+        armWelcomeAudioForFirstInteraction();
+      }
     }
     function launchWelcome(user) {
       if (welcomeCelebrationStarted) return;
@@ -117,12 +143,10 @@
           celebration.appendChild(piece);
         }
         celebration.classList.add("active");
-        window.setTimeout(() => celebration.replaceChildren(), 4000);
+        window.setTimeout(() => celebration.replaceChildren(), 5100);
       }
-      window.setTimeout(playWelcomeAudio, 450);
+      startWelcomeAudio();
     }
-
-    $("welcome-audio-button").addEventListener("click", playWelcomeAudio);
 
     function showMessage(text, type) {
       const el = $("message");
