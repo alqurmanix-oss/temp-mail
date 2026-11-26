@@ -32,6 +32,16 @@
     .message{display:none;margin:15px 0 0;padding:12px;border:1px solid var(--line);border-radius:12px;font-size:13px;line-height:1.9;text-align:right}
     .message.show{display:block}.message.error{color:#ffd1d1;border-color:rgba(255,153,153,.35);background:rgba(150,40,40,.12)}.message.info{color:#d4f5ff;border-color:rgba(83,214,232,.3);background:rgba(45,130,160,.1)}.message.success{color:#c6ffe5;border-color:rgba(114,223,178,.32);background:rgba(35,130,90,.12)}
     .foot{margin:22px 0 0;color:#7f98ae;font-size:11px;line-height:1.9}
+    .sound-button{width:auto;margin:12px auto 0;padding:8px 14px;border:1px solid rgba(83,214,232,.28);background:rgba(83,214,232,.08);color:#c9f6ff;font-size:12px;box-shadow:none}
+    .sound-button:hover{background:rgba(83,214,232,.16)}
+    .celebration{position:fixed;inset:0;z-index:20;overflow:hidden;pointer-events:none;opacity:0}
+    .celebration.active{animation:celebrationFade 3.2s ease-out forwards}
+    .confetti{position:absolute;top:-12px;left:var(--x);width:var(--w);height:var(--h);border-radius:2px;background:var(--c);opacity:0;transform:rotate(var(--r));animation:confettiFall var(--d) cubic-bezier(.2,.65,.3,1) var(--delay) forwards;box-shadow:0 0 12px color-mix(in srgb,var(--c),transparent 35%)}
+    @keyframes confettiFall{0%{opacity:0;transform:translate3d(0,-5vh,0) rotate(0)}10%{opacity:1}100%{opacity:0;transform:translate3d(var(--drift),110vh,0) rotate(780deg)}}
+    @keyframes celebrationFade{0%{opacity:1}75%{opacity:1}100%{opacity:0}}
+    body.laser-active:after{content:"";position:fixed;z-index:30;pointer-events:none;left:calc(50% - 1px);top:-36vh;width:2px;height:36vh;background:linear-gradient(to bottom,transparent,#7ef7ff 35%,#fff 50%,#4ce4ff 65%,transparent);box-shadow:0 0 9px 3px rgba(83,214,232,.75),0 0 28px 8px rgba(57,137,220,.42);animation:verticalLaser 1.15s ease-in-out infinite alternate}
+    @keyframes verticalLaser{from{transform:translateY(0)}to{transform:translateY(145vh)}}
+    @media(prefers-reduced-motion:reduce){.celebration.active{animation:none;opacity:0}.confetti{animation:none}body.laser-active:after{animation:none;top:0;height:100vh;opacity:.45}}
     @media(max-width:420px){body{padding:12px}.card{border-radius:19px}}
   </style>
 </head>
@@ -53,7 +63,9 @@
       <button id="login-button" type="submit" disabled>دخول لحسابي</button>
       <div class="message" id="message" role="status" aria-live="polite"></div>
     </form>
+    <button class="sound-button" id="welcome-audio-button" type="button">🔊 إعادة تشغيل الترحيب الصوتي</button>
   </main>
+  <div class="celebration" id="celebration" aria-hidden="true"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
@@ -67,6 +79,50 @@
       : null;
     const $ = id => document.getElementById(id);
     let confirmedEmail = "";
+    let welcomeSpeechText = "Welcome to AQX Advertising!";
+    let welcomeCelebrationStarted = false;
+
+    function playWelcomeAudio() {
+      if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(welcomeSpeechText);
+      utterance.lang = "en-US";
+      utterance.rate = 0.94;
+      utterance.pitch = 1.04;
+      window.speechSynthesis.speak(utterance);
+    }
+    function launchWelcome(user) {
+      if (welcomeCelebrationStarted) return;
+      welcomeCelebrationStarted = true;
+      const metadata = user?.user_metadata || {};
+      const firstLast = [metadata.first_name, metadata.last_name].filter(Boolean).join(" ");
+      const displayName = String(metadata.full_name || metadata.name || metadata.display_name || metadata.preferred_name || firstLast || "").trim();
+      welcomeSpeechText = displayName
+        ? "Welcome, " + displayName + "! We're delighted to welcome you to AQX Advertising. Let's get started!"
+        : "Welcome! We're delighted to welcome you to AQX Advertising. Let's get started!";
+      const celebration = $("celebration");
+      if (!sessionStorage.getItem("aqx_ads_welcome_seen_v1")) {
+        sessionStorage.setItem("aqx_ads_welcome_seen_v1", "1");
+        for (let i = 0; i < 72; i++) {
+          const piece = document.createElement("span");
+          piece.className = "confetti";
+          piece.style.setProperty("--x", (Math.random() * 100) + "vw");
+          piece.style.setProperty("--w", (5 + Math.random() * 6) + "px");
+          piece.style.setProperty("--h", (8 + Math.random() * 9) + "px");
+          piece.style.setProperty("--c", ["#53d6e8", "#72dfb2", "#f6d477", "#7aaeff", "#ffffff"][i % 5]);
+          piece.style.setProperty("--r", (Math.random() * 180) + "deg");
+          piece.style.setProperty("--d", (2.1 + Math.random() * 1.5) + "s");
+          piece.style.setProperty("--delay", (Math.random() * .55) + "s");
+          piece.style.setProperty("--drift", ((Math.random() - .5) * 180) + "px");
+          celebration.appendChild(piece);
+        }
+        celebration.classList.add("active");
+        window.setTimeout(() => celebration.replaceChildren(), 4000);
+      }
+      window.setTimeout(playWelcomeAudio, 450);
+    }
+
+    $("welcome-audio-button").addEventListener("click", playWelcomeAudio);
 
     function showMessage(text, type) {
       const el = $("message");
@@ -93,6 +149,7 @@
     }
     async function initialize() {
       if (!client) {
+        launchWelcome(null);
         showMessage("تعذر تحميل خدمة المصادقة المركزية. أعد تحميل الصفحة.", "error");
         return;
       }
@@ -101,11 +158,13 @@
         if (error) throw error;
         let session = data?.session || null;
         if (!session?.access_token) {
+          launchWelcome(null);
           return;
         }
         const { data:userData, error:userError } = await client.auth.getUser();
         if (userError) throw userError;
         const user = userData?.user;
+        launchWelcome(user);
         if (!user?.email || !user.email_confirmed_at) {
           showMessage("لم يكتمل تأكيد البريد في جلسة الحساب بعد. استخدم رابط التفعيل الأصلي من رسالة AQX.", "error");
           return;
@@ -124,6 +183,7 @@
       const password = $("account-password").value;
       if (!confirmedEmail) return showMessage("تعذر تحديد حساب AQX الذي تم تفعيل بريده. أعد فتح رابط التفعيل.", "error");
       if (password.length < 8 || password.length > 128) return showMessage("أدخل كلمة المرور الصحيحة لحساب AQX.", "error");
+      document.body.classList.add("laser-active");
       busy(true);
       try {
         const { data, error } = await client.auth.signInWithPassword({ email:confirmedEmail, password });
@@ -171,6 +231,7 @@
         showMessage(message, "error");
       } finally {
         busy(false);
+        document.body.classList.remove("laser-active");
       }
     });
 
