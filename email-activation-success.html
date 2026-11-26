@@ -228,7 +228,7 @@
       try {
         if ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) {
           window.speechSynthesis.cancel();
-          const alertVoice = new SpeechSynthesisUtterance("Security alert. Unauthorized access attempt detected. Access denied. AQX security system.");
+          const alertVoice = new SpeechSynthesisUtterance("Security notice. Access verification failed. This session has been restricted by AQX Identity security.");
           alertVoice.lang = "en-US";
           alertVoice.rate = .82;
           alertVoice.pitch = .72;
@@ -253,13 +253,13 @@
     function denyActivationAccess() {
       document.body.classList.remove("access-granted");
       const attempt = incrementDeniedAttempts();
-      $("security-title").textContent = "تحذير أمني شديد — تم رفض الوصول";
+      $("security-title").textContent = "تنبيه أمني | تعذّر التحقق من صلاحية الوصول";
       $("security-copy").textContent = attempt <= 2
-        ? "تم رصد محاولة فتح مباشرة دون إثبات تفعيل صالح من رسالة البريد الإلكتروني. لن يتم عرض محتوى الصفحة."
+        ? "لم يتم التحقق من صلاحية رابط تفعيل البريد الإلكتروني. تم حظر الوصول إلى هذه الصفحة."
         : attempt === 3
-        ? "تم رصد محاولات وصول متكررة. سيتم إنهاء هذه الصفحة والتحويل إلى موقع AQX الرئيسي."
-        : "تم تجاوز الحد المسموح للمحاولات. سيتم إنهاء جلسة عرض هذه الصفحة الآن.";
-      $("security-meta").textContent = "ACCESS DENIED · ATTEMPT " + attempt + " · AQX IDENTITY SECURITY";
+        ? "تم رصد نشاط وصول غير معتاد. جارٍ إنهاء الاتصال وإعادة التوجيه إلى بوابة AQX."
+        : "تم تجاوز الحد المسموح لمحاولات الوصول. تم تقييد الوصول إلى هذه الصفحة.";
+      $("security-meta").textContent = "SECURITY ALERT · ACCESS RESTRICTED · ATTEMPT " + attempt + " · AQX IDENTITY";
       runSecurityAlarm();
       if (attempt === 3) {
         window.setTimeout(() => window.location.replace("https://alqurmanix.com/"), 4200);
