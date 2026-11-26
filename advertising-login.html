@@ -383,7 +383,7 @@
           captcha_token: captchaToken,
           form_started_at: formStartedAt,
           website: $("website").value,
-          return_to: SERVICE_RETURN_TO
+          return_to: window.location.origin + "/email-activation-success.html"
         });
         if (result.session?.access_token && result.session?.refresh_token && supabaseClient) {
           const { error } = await supabaseClient.auth.setSession({
@@ -395,7 +395,9 @@
           return;
         }
         $("login-email").value = email;
-        showMessage("register-message", result.message || "تم استلام طلب التسجيل. افتح بريدك الإلكتروني وأكّد عنوان البريد قبل تسجيل الدخول.", "success");
+        showMessage("register-message", result.email_confirmation_required === true
+          ? "تم إنشاء طلب التسجيل وإرسال رسالة تفعيل إلى بريدك الإلكتروني بواسطة مزود البريد المعتمد. افتح الرسالة واضغط رابط تفعيل البريد؛ بعد نجاح التفعيل ستنتقل إلى صفحة نجاح التفعيل. إذا لم تجد الرسالة، افحص مجلد الرسائل غير المرغوب فيها."
+          : (result.message || "تم استلام طلب التسجيل. راجع بريدك الإلكتروني لإكمال الخطوات المطلوبة."), "success");
         if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
       } catch (error) {
         showMessage("register-message", registrationErrorMessage(error.code || error.message), "error");
