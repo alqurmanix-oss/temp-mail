@@ -385,7 +385,8 @@ footer b{color:#fff}
     document.getElementById("minimumPaidText").textContent=fmtInteger(data.minimum_paid_impressions_per_campaign)+" ظهور مدفوع";
     document.getElementById("bonusRatioLabel").textContent=(Number(data.bonus_ratio.bonus_impressions)/Number(data.bonus_ratio.paid_impressions)*100)+"% Bonus";
     document.getElementById("heroBonusTag").textContent="بونص "+(Number(data.bonus_ratio.bonus_impressions)/Number(data.bonus_ratio.paid_impressions)*100)+"% للحملات المؤهلة";
-    document.getElementById("bonusPolicyText").textContent="مقابل كل "+fmtNumber(data.bonus_ratio.paid_impressions)+" ظهور مدفوع، يُضاف "+fmtNumber(data.bonus_ratio.bonus_impressions)+" ظهور مجاني بعد بلوغ الحد الأدنى للحملة.";
+    const bonusNature=data.bonus_is_free&&!data.bonus_is_billable?" مجانًا ومنفصلًا عن الفاتورة.":data.bonus_is_billable?" وفق قواعد الفوترة المعتمدة.":" وفق إعدادات البونص الحالية.";
+    document.getElementById("bonusPolicyText").textContent="مقابل كل "+fmtNumber(data.bonus_ratio.paid_impressions)+" ظهور مدفوع، يُضاف "+fmtNumber(data.bonus_ratio.bonus_impressions)+" ظهور بونص بعد بلوغ الحد الأدنى للحملة."+bonusNature;
     const tiers=document.getElementById("discountTiersDisplay");tiers.innerHTML="";
     data.volume_discounts.forEach(t=>{
       const li=document.createElement("li");
