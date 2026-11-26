@@ -270,7 +270,7 @@ footer b{color:#fff}
 
 <section>
 <div class="wrap">
-<div class="section-head"><h2>حاسبة تقديرية للحملة</h2><p>غيّر الدولة وعدد الظهورات المدفوعة لرؤية التكلفة الأساسية والخصم والبونص التقديري.</p></div>
+<div class="section-head"><h2>حاسبة تكلفة الحملة</h2><p>غيّر الدولة وعدد الظهورات المدفوعة للاطلاع على التكلفة الأساسية والخصم والظهورات الإضافية المجانية.</p></div>
 <div class="calc">
 <div class="calc-grid">
 <div class="field"><label for="calcCountry">دولة الاستهداف</label><select id="calcCountry">
@@ -281,12 +281,12 @@ footer b{color:#fff}
 <div class="results">
 <div class="result"><small>التكلفة قبل الخصم</small><b id="grossCost">$1.75</b></div>
 <div class="result"><small>خصم الحجم</small><b id="discountValue">0%</b></div>
-<div class="result"><small>التكلفة التقديرية</small><b id="netCost">$1.75</b></div>
+<div class="result"><small>إجمالي تكلفة الحملة</small><b id="netCost">$1.75</b></div>
 <div class="result"><small>ظهورات البونص</small><b id="bonusCount">5,000</b></div>
 <div class="result"><small>إجمالي التسليم المستهدف</small><b id="deliveryCount">10,000</b></div>
 <div class="result"><small>سعر CPM المختار</small><b id="selectedCpm">$0.35</b></div>
 </div>
-<p class="calc-foot" id="calcMessage">الحد الأدنى المهيأ لهذه المساحة هو 5,000 ظهور مدفوع. البونص مجاني ويُسجل منفصلًا ولا يدخل في أساس الفوترة. هذه الحاسبة توضيحية وليست عرض سعر أو أداة إنشاء حملة.</p>
+<p class="calc-foot" id="calcMessage">الحد الأدنى المهيأ لهذه المساحة هو 5,000 ظهور مدفوع. البونص مجاني ويُسجل منفصلًا ولا يدخل في أساس الفوترة. تعرض الحاسبة التكلفة وفق الأسعار المعتمدة فعليًا، وهي مخصصة للاطلاع فقط ولا تُنشئ حملة إعلانية أو تطلقها.</p>
 </div>
 </div>
 </section>
@@ -347,7 +347,7 @@ function calc(){
  document.getElementById('bonusCount').textContent=fmt(bonus);
  document.getElementById('deliveryCount').textContent=fmt(count+bonus);
  document.getElementById('selectedCpm').textContent='$'+fmt(rate);
- document.getElementById('calcMessage').textContent=count<5000?'العدد المدخل أقل من الحد الأدنى المهيأ لهذه المساحة (5,000 ظهور مدفوع). الأرقام المعروضة للتوضيح فقط، ولا تعني قبول حملة بهذا الحجم.':'الحد الأدنى المهيأ لهذه المساحة هو 5,000 ظهور مدفوع. البونص مجاني ويُسجل منفصلًا ولا يدخل في أساس الفوترة. هذه الحاسبة توضيحية وليست عرض سعر أو أداة إنشاء حملة.';
+ document.getElementById('calcMessage').textContent=count<5000?'العدد المدخل أقل من الحد الأدنى المهيأ لهذه المساحة (5,000 ظهور مدفوع). الأرقام المعروضة للاطلاع فقط وفق الأسعار المعتمدة، ولا تعني قبول حملة بهذا الحجم.':'الحد الأدنى المهيأ لهذه المساحة هو 5,000 ظهور مدفوع. البونص مجاني ويُسجل منفصلًا ولا يدخل في أساس الفوترة. هذه الحاسبة توضيحية وليست عرض سعر أو أداة إنشاء حملة.';
 }
 country.addEventListener('change',calc);paid.addEventListener('input',calc);calc();
 })();
