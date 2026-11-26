@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#071426">
+  <meta name="description" content="بوابة التسجيل وتسجيل الدخول الموحد لخدمة AQX Advertising. حساب AQX واحد للوصول إلى خدمات المنظومة.">
+  <title>بوابة AQX Advertising | الحساب الموحد</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{color-scheme:dark;--bg:#071426;--panel:#0d2037;--panel2:#102944;--line:rgba(160,190,220,.16);--text:#f4f8fc;--muted:#a9bbce;--cyan:#53d6e8;--blue:#3989dc;--gold:#d7b46a;--danger:#ff8585;--success:#72dfb2}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 10%,rgba(36,115,169,.24),transparent 38%),radial-gradient(ellipse at 85% 85%,rgba(30,150,160,.12),transparent 35%),var(--bg);color:var(--text);font-family:"Cairo",sans-serif}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:linear-gradient(rgba(130,180,210,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(130,180,210,.08) 1px,transparent 1px);background-size:46px 46px;mask-image:linear-gradient(to bottom,black,transparent 90%)}
+    .shell{width:min(100% - 32px,1060px);margin:0 auto;padding:38px 0 28px;position:relative}
+    header{text-align:center;margin-bottom:28px}
+    .brand-mark{width:58px;height:58px;margin:0 auto 12px;border:1px solid rgba(83,214,232,.5);border-radius:18px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(83,214,232,.16),rgba(57,137,220,.08));box-shadow:0 0 34px rgba(83,214,232,.12);font-weight:900;font-size:20px;letter-spacing:-1px;color:var(--cyan)}
+    .eyebrow{font-size:12px;letter-spacing:2.5px;color:var(--cyan);font-weight:800}
+    h1{font-size:clamp(26px,5vw,39px);margin:7px 0 4px;font-weight:900}
+    .subtitle{margin:0;color:var(--muted);font-size:14px}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:stretch}
+    .auth-card,.info-card{border:1px solid var(--line);border-radius:22px;background:linear-gradient(155deg,rgba(16,41,68,.96),rgba(9,27,47,.97));box-shadow:0 22px 70px rgba(0,0,0,.28)}
+    .auth-card{padding:24px}
+    .tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px;border-radius:14px;background:rgba(2,13,27,.56);border:1px solid var(--line);margin-bottom:22px}
+    .tab{border:0;border-radius:10px;padding:12px 10px;background:transparent;color:var(--muted);font:700 14px "Cairo",sans-serif;cursor:pointer;transition:.2s}
+    .tab[aria-selected="true"]{color:#061724;background:linear-gradient(110deg,var(--cyan),#83e5e9);box-shadow:0 5px 18px rgba(83,214,232,.16)}
+    .form-panel[hidden]{display:none}
+    .form-title{font-size:21px;font-weight:800;margin:0 0 4px}
+    .form-hint{font-size:13px;color:var(--muted);margin:0 0 19px}
+    .field{margin:0 0 14px}
+    label{display:block;font-size:13px;font-weight:700;margin:0 0 7px;color:#e6f0f8}
+    input[type=email],input[type=password]{width:100%;border:1px solid rgba(160,190,220,.22);border-radius:12px;background:rgba(3,15,29,.62);padding:13px 14px;color:var(--text);font:500 14px "Cairo",sans-serif;outline:none;transition:.2s}
+    input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(83,214,232,.12)}
+    input::placeholder{color:#738ba2}
+    .terms{display:flex;gap:10px;align-items:flex-start;font-size:12px;line-height:1.9;color:var(--muted);margin:15px 0}
+    .terms input{margin:5px 0 0;accent-color:var(--cyan);width:16px;height:16px;flex:0 0 auto}
+    a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}
+    .legal-version{font-size:11px;color:#839bb0;margin:-4px 0 14px}
+    .captcha-wrap{margin:14px 0;min-height:68px;display:flex;justify-content:flex-start;align-items:center}
+    .btn{width:100%;border:0;border-radius:12px;padding:13px 16px;background:linear-gradient(100deg,#42c9dc,#428ee0);color:#061827;font:900 15px "Cairo",sans-serif;cursor:pointer;box-shadow:0 9px 24px rgba(45,151,194,.2);transition:transform .2s,filter .2s}
+    .btn:hover{filter:brightness(1.06);transform:translateY(-1px)}.btn:disabled{opacity:.48;cursor:not-allowed;transform:none}
+    .message{display:none;margin:14px 0 0;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:13px;line-height:1.9}
+    .message.show{display:block}.message.error{color:#ffd1d1;border-color:rgba(255,133,133,.35);background:rgba(150,40,40,.12)}.message.success{color:#c6ffe5;border-color:rgba(114,223,178,.32);background:rgba(35,130,90,.12)}.message.info{color:#d4f5ff;border-color:rgba(83,214,232,.3);background:rgba(45,130,160,.1)}
+    .info-card{padding:24px;display:flex;flex-direction:column;justify-content:space-between;gap:22px}
+    .info-card h2{font-size:19px;margin:0 0 10px}.info-card p{font-size:13px;line-height:2;color:var(--muted);margin:0}
+    .promise{display:flex;gap:11px;align-items:flex-start;margin-top:17px}.promise-icon{width:30px;height:30px;flex:0 0 30px;border-radius:10px;background:rgba(83,214,232,.12);display:grid;place-items:center;color:var(--cyan);font-weight:900}
+    .promise strong{display:block;font-size:13px;margin-bottom:2px}.promise span{display:block;color:var(--muted);font-size:12px;line-height:1.8}
+    .security-note{padding:13px;border:1px solid var(--line);border-radius:13px;background:rgba(3,15,29,.38);font-size:11px;line-height:1.9;color:#91a9be}
+    .status-line{font-size:11px;color:#829bb1;text-align:center;margin-top:15px;min-height:20px}
+    .ready{display:none;border:1px solid rgba(114,223,178,.3);border-radius:16px;padding:20px;background:rgba(35,130,90,.1);text-align:center}
+    .ready.show{display:block}.ready .check{font-size:30px;color:var(--success)}.ready h2{font-size:19px;margin:5px 0}.ready p{font-size:13px;color:#c4d8d0;line-height:1.9;margin:0}
+    .honeypot{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+    footer{text-align:center;color:#6e879d;font-size:11px;padding:23px 8px 0}
+    @media(max-width:820px){.layout{grid-template-columns:1fr}.info-card{display:grid;grid-template-columns:1fr 1fr}.info-card .security-note{grid-column:1/-1}}
+    @media(max-width:560px){.shell{width:min(100% - 20px,1060px);padding-top:25px}.auth-card{padding:16px}.info-card{display:flex;padding:18px}.tabs{gap:5px}.tab{font-size:12px;padding:11px 5px}.subtitle{font-size:12px}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div class="brand-mark" aria-hidden="true">AQX</div>
+      <div class="eyebrow">AQX DIGITAL ECOSYSTEM</div>
+      <h1>AQX Advertising</h1>
+      <p class="subtitle">بوابة الحساب الموحد لخدمة الإعلانات</p>
+    </header>
+
+    <div class="layout">
+      <section class="auth-card" aria-label="التسجيل وتسجيل الدخول">
+        <div class="tabs" role="tablist" aria-label="اختيار نوع الدخول">
+          <button class="tab" id="register-tab" type="button" role="tab" aria-selected="false" aria-controls="register-panel">تسجيل حساب جديد</button>
+          <button class="tab" id="login-tab" type="button" role="tab" aria-selected="true" aria-controls="login-panel">تسجيل الدخول</button>
+        </div>
+
+        <section class="form-panel" id="register-panel" role="tabpanel" aria-labelledby="register-tab" hidden>
+          <h2 class="form-title">إنشاء حساب AQX موحد</h2>
+          <p class="form-hint">سجّل مرة واحدة، واستخدم الحساب نفسه عبر خدمات AQX.</p>
+          <form id="register-form" novalidate>
+            <div class="field">
+              <label for="register-email">البريد الإلكتروني</label>
+              <input id="register-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="name@example.com" required>
+            </div>
+            <div class="field">
+              <label for="register-password">كلمة المرور</label>
+              <input id="register-password" name="password" type="password" autocomplete="new-password" minlength="8" maxlength="128" placeholder="8 أحرف على الأقل" required>
+            </div>
+            <div class="field">
+              <label for="register-confirm">تأكيد كلمة المرور</label>
+              <input id="register-confirm" name="confirm_password" type="password" autocomplete="new-password" minlength="8" maxlength="128" placeholder="أعد كتابة كلمة المرور" required>
+            </div>
+            <div class="honeypot" aria-hidden="true">
+              <label for="website">اترك هذا الحقل فارغًا</label>
+              <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+            <label class="terms" for="terms-accepted">
+              <input id="terms-accepted" type="checkbox" required>
+              <span>أقر بأنني قرأت ووافقت على <a href="https://digital.alqurmanix.com/terms-of-use.html" target="_blank" rel="noopener">الشروط والأحكام</a> و<a href="https://digital.alqurmanix.com/privacy.html" target="_blank" rel="noopener">سياسة الخصوصية</a> الخاصة بمنظومة AQX.</span>
+            </label>
+            <p class="legal-version" id="legal-version">الإصدارات القانونية المعتمدة: جارٍ التحميل…</p>
+            <div class="captcha-wrap"><div id="aqx-turnstile"></div></div>
+            <button class="btn" id="register-submit" type="submit">إنشاء حساب AQX</button>
+            <div class="message" id="register-message" role="status" aria-live="polite"></div>
+          </form>
+        </section>
+
+        <section class="form-panel" id="login-panel" role="tabpanel" aria-labelledby="login-tab">
+          <h2 class="form-title">مرحبًا بعودتك</h2>
+          <p class="form-hint">استخدم بريد حساب AQX الموحد للدخول إلى خدمة الإعلانات.</p>
+          <form id="login-form" novalidate>
+            <div class="field">
+              <label for="login-email">البريد الإلكتروني</label>
+              <input id="login-email" name="email" type="email" autocomplete="username" maxlength="254" placeholder="name@example.com" required>
+            </div>
+            <div class="field">
+              <label for="login-password">كلمة المرور</label>
+              <input id="login-password" name="password" type="password" autocomplete="current-password" maxlength="128" placeholder="أدخل كلمة المرور" required>
+            </div>
+            <button class="btn" id="login-submit" type="submit">تسجيل الدخول إلى AQX Advertising</button>
+            <div class="message" id="login-message" role="status" aria-live="polite"></div>
+          </form>
+        </section>
+
+        <section class="ready" id="session-ready" aria-live="polite">
+          <div class="check">✓</div>
+          <h2>تم تسجيل الدخول بنجاح</h2>
+          <p>تم التحقق من حساب AQX وإنشاء جلسة الحساب الموحد واعتماد خدمة الإعلانات. ستُستكمل وجهة لوحة التحكم في مرحلة بناء لوحة الخدمة.</p>
+        </section>
+        <div class="status-line" id="system-status">جارٍ الاتصال بخدمة الهوية المركزية…</div>
+      </section>
+
+      <aside class="info-card">
+        <div>
+          <h2>حساب واحد… وخدمات AQX كلها</h2>
+          <p>حساب AQX موحد؛ لا تحتاج إلى إنشاء حساب جديد لكل خدمة. إذا كان لديك حساب من قبل، استخدم تسجيل الدخول بالبريد نفسه.</p>
+          <div class="promise">
+            <div class="promise-icon">01</div>
+            <div><strong>هوية واحدة</strong><span>حساب مركزي واحد لجميع خدمات المنظومة.</span></div>
+          </div>
+          <div class="promise">
+            <div class="promise-icon">02</div>
+            <div><strong>جلسة معتمدة</strong><span>إنشاء الجلسة والتحقق منها يتمان عبر AQX Identity.</span></div>
+          </div>
+          <div class="promise">
+            <div class="promise-icon">03</div>
+            <div><strong>حماية مركزية</strong><span>سياسات التسجيل والحظر والتحقق الأمني يطبقها النظام المركزي.</span></div>
+          </div>
+        </div>
+        <div class="security-note">لا تشارك كلمة المرور أو رموز الجلسة مع أي شخص. لا تطلب AQX منك إرسال كلمة المرور عبر البريد أو الرسائل.</div>
+      </aside>
+    </div>
+
+    <footer>© AQX Advertising · جزء من منظومة AQX · الحسابات والجلسات تدار مركزيًا بواسطة AQX Identity</footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const AQX_IDENTITY_URL = "https://fkiokwwztbyztleeuwks.supabase.co/functions/v1/aqx-identity";
+    const AQX_SUPABASE_URL = "https://fkiokwwztbyztleeuwks.supabase.co";
+    const AQX_PUBLISHABLE_KEY = "sb_publishable_4DCXObCqPUoNnI8ANOo8dA_nRAg0y5_";
+    const SERVICE_RETURN_TO = window.location.origin + window.location.pathname;
+    const supabaseClient = window.supabase?.createClient
+      ? window.supabase.createClient(AQX_SUPABASE_URL, AQX_PUBLISHABLE_KEY, {
+          auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+        })
+      : null;
+
+    const $ = (id) => document.getElementById(id);
+    let registrationStatus = null;
+    let turnstileWidgetId = null;
+    let formStartedAt = Date.now();
+    let emailCheckTimer = null;
+
+    function showMessage(id, text, type = "info") {
+      const el = $(id);
+      el.textContent = text;
+      el.className = "message show " + type;
+    }
+    function clearMessage(id) {
+      const el = $(id);
+      el.textContent = "";
+      el.className = "message";
+    }
+    function setBusy(buttonId, busy, busyText) {
+      const button = $(buttonId);
+      if (!button.dataset.label) button.dataset.label = button.textContent;
+      button.disabled = busy;
+      button.textContent = busy ? busyText : button.dataset.label;
+    }
+    function switchTab(tab) {
+      const register = tab === "register";
+      $("register-tab").setAttribute("aria-selected", String(register));
+      $("login-tab").setAttribute("aria-selected", String(!register));
+      $("register-panel").hidden = !register;
+      $("login-panel").hidden = register;
+      $("session-ready").classList.remove("show");
+      if (register) $("register-email").focus();
+      else $("login-email").focus();
+    }
+    $("register-tab").addEventListener("click", () => switchTab("register"));
+    $("login-tab").addEventListener("click", () => switchTab("login"));
+
+    function getDeviceId() {
+      const key = "aqx_identity_device_id";
+      let value = "";
+      try { value = localStorage.getItem(key) || ""; } catch (_) {}
+      if (!/^[a-f0-9-]{16,128}$/i.test(value)) {
+        const bytes = new Uint8Array(24);
+        crypto.getRandomValues(bytes);
+        value = Array.from(bytes, b => b.toString(16).padStart(2, "0")).join("");
+        try { localStorage.setItem(key, value); } catch (_) {}
+      }
+      return value;
+    }
+
+    async function identityRequest(path, body, accessToken) {
+      const headers = {
+        "Content-Type": "application/json",
+        "apikey": AQX_PUBLISHABLE_KEY
+      };
+      if (accessToken) headers.Authorization = "Bearer " + accessToken;
+      const response = await fetch(AQX_IDENTITY_URL + path, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(body || {})
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok || payload.success === false) {
+        const error = new Error(payload.message || payload.error || "IDENTITY_REQUEST_FAILED");
+        error.code = payload.error || "IDENTITY_REQUEST_FAILED";
+        error.status = response.status;
+        throw error;
+      }
+      return payload;
+    }
+
+    async function loadRegistrationStatus() {
+      try {
+        const response = await fetch(AQX_IDENTITY_URL + "/v1/registration/status", {
+          headers: { "apikey": AQX_PUBLISHABLE_KEY }
+        });
+        const data = await response.json();
+        if (!response.ok || data.success !== true) throw new Error(data.error || "REGISTRATION_STATUS_UNAVAILABLE");
+        registrationStatus = data;
+        const legal = data.legal_versions || {};
+        $("legal-version").textContent = "إصدارات الوثائق المعتمدة: الشروط " + (legal.terms || "غير متاح") + " · الخصوصية " + (legal.privacy || "غير متاح");
+        const emailSignup = data.signup_methods?.email?.signup_enabled === true;
+        const captchaEnabled = data.captcha?.enabled === true && !!data.captcha?.site_key;
+        const canRegister = data.registration_open === true && emailSignup && captchaEnabled && !!legal.terms && !!legal.privacy;
+        $("register-submit").disabled = !canRegister;
+        if (!data.registration_open) {
+          showMessage("register-message", data.closed_reason || "التسجيل مغلق مؤقتًا وفق سياسة AQX Identity.", "error");
+        } else if (!emailSignup) {
+          showMessage("register-message", "التسجيل بالبريد الإلكتروني غير متاح حاليًا وفق إعدادات الحساب الموحد.", "error");
+        } else if (!captchaEnabled) {
+          showMessage("register-message", "تعذر تهيئة التحقق الأمني. التسجيل متوقف لحين عودة خدمة الحماية.", "error");
+        } else if (!legal.terms || !legal.privacy) {
+          showMessage("register-message", "الوثائق القانونية المعتمدة غير مكتملة؛ لن نرسل طلب تسجيل قبل اكتمالها.", "error");
+        }
+        if (captchaEnabled) mountTurnstile(data.captcha.site_key);
+        $("system-status").textContent = "اتصال الهوية المركزية نشط · تسجيل البريد وكلمة المرور متاح وفق السياسة الحالية";
+      } catch (error) {
+        $("register-submit").disabled = true;
+        showMessage("register-message", "تعذر تحميل سياسة التسجيل من AQX Identity. لم يتم إرسال أي بيانات.", "error");
+        $("system-status").textContent = "تعذر الاتصال بخدمة الهوية المركزية";
+      }
+    }
+
+    window.onAQXTurnstileReady = function () {
+      if (registrationStatus?.captcha?.site_key) mountTurnstile(registrationStatus.captcha.site_key);
+    };
+    function mountTurnstile(siteKey) {
+      if (!window.turnstile || turnstileWidgetId !== null || !$("aqx-turnstile")) return;
+      try {
+        turnstileWidgetId = window.turnstile.render("#aqx-turnstile", {
+          sitekey: siteKey,
+          theme: "dark",
+          language: "ar",
+          callback: () => {},
+          "expired-callback": () => {},
+          "error-callback": () => {}
+        });
+      } catch (_) {
+        showMessage("register-message", "تعذر تحميل اختبار التحقق الأمني. أعد تحميل الصفحة.", "error");
+        $("register-submit").disabled = true;
+      }
+    }
+
+    async function checkEmailStatus(email) {
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return null;
+      try {
+        const response = await fetch(AQX_IDENTITY_URL + "/v1/registration/email-status", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "apikey": AQX_PUBLISHABLE_KEY },
+          body: JSON.stringify({ email: email.trim().toLowerCase() })
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || data.success !== true) return null;
+        return data;
+      } catch (_) { return null; }
+    }
+
+    $("register-email").addEventListener("blur", async () => {
+      clearTimeout(emailCheckTimer);
+      const email = $("register-email").value.trim().toLowerCase();
+      if (!email) return;
+      showMessage("register-message", "جارٍ التحقق من حالة البريد لدى الحساب الموحد…", "info");
+      const status = await checkEmailStatus(email);
+      if (!status) { clearMessage("register-message"); return; }
+      if (status.status === "registered") {
+        showMessage("register-message", "هذا البريد مرتبط بالفعل بحساب AQX موحد. لا تنشئ حسابًا ثانيًا؛ انتقل إلى تبويب تسجيل الدخول لاستخدام الحساب نفسه في خدمة الإعلانات وباقي خدمات AQX.", "info");
+        $("login-email").value = email;
+      } else if (status.status === "verification_pending") {
+        showMessage("register-message", "يوجد حساب بهذا البريد، لكن تأكيد البريد لم يكتمل بعد. راجع رسالة تأكيد AQX أولًا، ثم استخدم تسجيل الدخول.", "info");
+        $("login-email").value = email;
+      } else if (status.status === "available") {
+        showMessage("register-message", "البريد متاح للتسجيل بحساب AQX الموحد.", "success");
+      } else if (status.status === "reserved") {
+        showMessage("register-message", "هذا البريد غير متاح لإعادة التسجيل خلال فترة الحجز الحالية.", "error");
+      } else if (status.status === "blocked" || status.status === "abuse_blocked") {
+        showMessage("register-message", "لا تسمح سياسة AQX Identity باستخدام هذا البريد للتسجيل.", "error");
+      }
+    });
+
+    function registrationErrorMessage(code) {
+      const map = {
+        INVALID_EMAIL: "صيغة البريد الإلكتروني غير صحيحة.",
+        EMAIL_REUSE_HOLD: "هذا البريد محجوز حاليًا ولا يمكن إعادة استخدامه للتسجيل.",
+        EMAIL_NOT_ALLOWED: "هذا البريد غير مسموح به وفق سياسة AQX Identity.",
+        DISPOSABLE_EMAIL_NOT_ALLOWED: "لا تقبل AQX عناوين البريد المؤقتة لهذا التسجيل.",
+        REGISTRATION_CLOSED: "التسجيل مغلق مؤقتًا.",
+        EMAIL_SIGNUP_DISABLED: "التسجيل بالبريد الإلكتروني غير متاح حاليًا.",
+        SIGNUP_RATE_LIMITED: "تم تجاوز الحد المسموح لمحاولات التسجيل. حاول لاحقًا.",
+        PASSWORD_POLICY_FAILED: "كلمة المرور لا تستوفي سياسة الأمان المطلوبة.",
+        CAPTCHA_NOT_CONFIGURED: "خدمة التحقق الأمني غير مهيأة حاليًا. لم يتم إنشاء الحساب.",
+        CAPTCHA_REQUIRED_OR_INVALID: "أكمل اختبار التحقق الأمني ثم أعد المحاولة.",
+        FORM_SUBMITTED_TOO_FAST: "أعد المحاولة بعد إكمال النموذج بصورة طبيعية.",
+        TERMS_REQUIRED: "يجب الموافقة على الشروط والأحكام وسياسة الخصوصية.",
+        DEVICE_ID_REQUIRED: "تعذر التحقق من الجهاز. أعد تحميل الصفحة.",
+        DEVICE_ACCOUNT_LIMIT_REACHED: "تم بلوغ حد التسجيل المسموح لهذا الجهاز.",
+        REFERRAL_DEVICE_ACCOUNT_LIMIT_REACHED: "تم بلوغ حد التسجيل المسموح لهذا الجهاز عبر رابط الإحالة.",
+        LEGAL_DOCUMENTS_NOT_CONFIGURED: "الوثائق القانونية المركزية غير مهيأة؛ لم يتم إكمال التسجيل.",
+        SIGNUP_FINALIZATION_FAILED: "تعذر إكمال تسجيل الحساب مركزيًا. لا تعاود التسجيل قبل التحقق من حالة الطلب.",
+        SIGNUP_REJECTED: "تعذر قبول طلب التسجيل. إذا كان هذا البريد مستخدمًا في أي خدمة AQX، انتقل إلى تسجيل الدخول بالحساب نفسه.",
+        REGISTRATION_POLICY_UNAVAILABLE: "تعذر تحميل سياسة التسجيل المركزية.",
+        SIGNUP_SERVICE_UNAVAILABLE: "خدمة التسجيل المركزية غير متاحة مؤقتًا."
+      };
+      return map[code] || "تعذر إكمال التسجيل. رمز الحالة: " + code;
+    }
+
+    $("register-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearMessage("register-message");
+      const email = $("register-email").value.trim().toLowerCase();
+      const password = $("register-password").value;
+      const confirm = $("register-confirm").value;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showMessage("register-message", "أدخل بريدًا إلكترونيًا صحيحًا.", "error");
+      if (password.length < 8 || password.length > 128) return showMessage("register-message", "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل، وبحد أقصى 128 حرفًا.", "error");
+      if (password !== confirm) return showMessage("register-message", "كلمتا المرور غير متطابقتين.", "error");
+      if (!$("terms-accepted").checked) return showMessage("register-message", "يجب الموافقة على الشروط والأحكام وسياسة الخصوصية أولًا.", "error");
+      if (!registrationStatus || registrationStatus.registration_open !== true || registrationStatus.signup_methods?.email?.signup_enabled !== true) return showMessage("register-message", "التسجيل غير متاح وفق سياسة AQX Identity الحالية.", "error");
+      const captchaToken = turnstileWidgetId !== null && window.turnstile ? window.turnstile.getResponse(turnstileWidgetId) : "";
+      if (!captchaToken) return showMessage("register-message", "أكمل اختبار التحقق الأمني قبل إنشاء الحساب.", "error");
+      setBusy("register-submit", true, "جارٍ إنشاء حساب AQX…");
+      try {
+        const existing = await checkEmailStatus(email);
+        if (existing?.status === "registered" || existing?.status === "verification_pending") {
+          $("login-email").value = email;
+          showMessage("register-message", "هذا البريد لديه حساب AQX بالفعل. انتقل إلى تبويب تسجيل الدخول؛ لا تنشئ حسابًا آخر.", "info");
+          switchTab("login");
+          return;
+        }
+        if (existing?.status === "reserved" || existing?.status === "blocked" || existing?.status === "abuse_blocked") {
+          return showMessage("register-message", "هذا البريد غير متاح للتسجيل وفق سياسة AQX Identity.", "error");
+        }
+        const result = await identityRequest("/v1/registration/signup", {
+          email,
+          password,
+          device_id: getDeviceId(),
+          terms_accepted: true,
+          captcha_token: captchaToken,
+          form_started_at: formStartedAt,
+          website: $("website").value,
+          return_to: SERVICE_RETURN_TO
+        });
+        if (result.session?.access_token && result.session?.refresh_token && supabaseClient) {
+          const { error } = await supabaseClient.auth.setSession({
+            access_token: result.session.access_token,
+            refresh_token: result.session.refresh_token
+          });
+          if (error) throw error;
+          await establishAqxServiceSession(result.session);
+          return;
+        }
+        $("login-email").value = email;
+        showMessage("register-message", result.message || "تم استلام طلب التسجيل. افتح بريدك الإلكتروني وأكّد عنوان البريد قبل تسجيل الدخول.", "success");
+        if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
+      } catch (error) {
+        showMessage("register-message", registrationErrorMessage(error.code || error.message), "error");
+        if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
+      } finally {
+        setBusy("register-submit", false);
+        formStartedAt = Date.now();
+      }
+    });
+
+    function loginErrorMessage(code) {
+      const map = {
+        EMAIL_NOT_VERIFIED: "يجب تأكيد البريد الإلكتروني من رسالة AQX قبل إنشاء جلسة الدخول.",
+        LOGIN_RATE_LIMITED: "تم تجاوز عدد محاولات تسجيل الدخول. حاول لاحقًا.",
+        LOGIN_PROVIDER_DISABLED: "تسجيل الدخول بالبريد غير متاح حاليًا.",
+        LOGIN_SESSION_CREATION_FAILED: "تعذر إنشاء جلسة AQX. حاول مرة أخرى.",
+        LOGIN_TOKEN_INVALID: "رمز جلسة الدخول غير صالح. سجّل الدخول من جديد.",
+        ACCOUNT_SELF_DISABLED: "الحساب معطّل بناءً على طلب صاحبه. راجع بريدك لطلب إعادة التنشيط.",
+        ACCOUNT_ADMIN_DISABLED: "الحساب معطّل إداريًا. تواصل مع دعم AQX.",
+        CENTRAL_ACCESS_BLOCKED: "هذا الحساب غير مسموح له حاليًا باستخدام خدمات AQX.",
+        LOGIN_PROOF_REQUIRED: "يلزم إكمال التحقق الأمني قبل متابعة الدخول.",
+        RETURN_TO_NOT_REGISTERED: "وجهة خدمة الإعلانات غير مسجلة لدى نظام الهوية المركزي.",
+        REDIRECT_TICKET_INVALID: "تعذر اعتماد الانتقال الآمن إلى خدمة الإعلانات."
+      };
+      return map[code] || "تعذر تسجيل الدخول أو إنشاء جلسة الخدمة. رمز الحالة: " + code;
+    }
+
+    async function establishAqxServiceSession(authSession) {
+      if (!authSession?.access_token) throw new Error("INVALID_SESSION");
+      const started = await identityRequest("/v1/session/start", {
+        return_to: SERVICE_RETURN_TO
+      }, authSession.access_token);
+      if (started.restricted === true) {
+        showMessage("login-message", "تم التحقق من الحساب، لكن مستوى الوصول الحالي مقيّد. لن نفتح لوحة الخدمة قبل استكمال متطلبات AQX Identity.", "error");
+        return false;
+      }
+      if (!started.aqx_session_token || !started.login_proof?.token || !started.redirect_ticket) {
+        throw new Error("LOGIN_SESSION_CREATION_FAILED");
+      }
+      const redeemed = await identityRequest("/v1/redirect/consume", {
+        redirect_ticket: started.redirect_ticket
+      }, authSession.access_token);
+      if (!redeemed.service_session_token || !redeemed.redirect_uri) throw new Error("REDIRECT_TICKET_INVALID");
+      const destination = new URL(redeemed.redirect_uri);
+      if (destination.origin !== window.location.origin) throw new Error("REDIRECT_ORIGIN_NOT_ALLOWED");
+
+      sessionStorage.setItem("aqx_identity_session_token", started.aqx_session_token);
+      sessionStorage.setItem("aqx_identity_login_proof", JSON.stringify(started.login_proof));
+      sessionStorage.setItem("aqx_advertising_service_session", redeemed.service_session_token);
+      sessionStorage.setItem("aqx_advertising_session_expires_at", new Date(Date.now() + (redeemed.expires_in_seconds || 2592000) * 1000).toISOString());
+      $("register-panel").hidden = true;
+      $("login-panel").hidden = true;
+      $("register-tab").hidden = true;
+      $("login-tab").hidden = true;
+      $("session-ready").classList.add("show");
+      $("system-status").textContent = "جلسة الحساب الموحد وجلسة خدمة الإعلانات تم اعتمادهما";
+      return true;
+    }
+
+    $("login-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearMessage("login-message");
+      const email = $("login-email").value.trim().toLowerCase();
+      const password = $("login-password").value;
+      if (!supabaseClient) return showMessage("login-message", "تعذر تحميل مكتبة المصادقة. أعد تحميل الصفحة.", "error");
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !password) return showMessage("login-message", "أدخل البريد الإلكتروني وكلمة المرور بصورة صحيحة.", "error");
+      setBusy("login-submit", true, "جارٍ التحقق وإنشاء الجلسة…");
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error || !data?.session?.access_token) {
+          throw new Error("INVALID_LOGIN_CREDENTIALS");
+        }
+        const ok = await establishAqxServiceSession(data.session);
+        if (ok) showMessage("login-message", "تم اعتماد جلسة AQX Advertising بنجاح.", "success");
+      } catch (error) {
+        showMessage("login-message", error.code ? loginErrorMessage(error.code) : (
+          error.message === "INVALID_LOGIN_CREDENTIALS"
+            ? "بيانات الدخول غير صحيحة أو تعذر التحقق منها."
+            : loginErrorMessage(error.message || "LOGIN_FAILED")
+        ), "error");
+      } finally {
+        setBusy("login-submit", false);
+      }
+    });
+
+    async function checkExistingServiceSession() {
+      const token = sessionStorage.getItem("aqx_advertising_service_session");
+      if (!token) return;
+      try {
+        const response = await fetch(AQX_IDENTITY_URL + "/v1/service/session/check", {
+          method: "POST",
+          headers: {
+            "apikey": AQX_PUBLISHABLE_KEY,
+            "Content-Type": "application/json",
+            "x-aqx-service-session": token
+          },
+          body: "{}"
+        });
+        const state = await response.json().catch(() => ({}));
+        if (response.ok && state.valid === true) {
+          $("register-panel").hidden = true;
+          $("login-panel").hidden = true;
+          $("register-tab").hidden = true;
+          $("login-tab").hidden = true;
+          $("session-ready").classList.add("show");
+          $("system-status").textContent = "تم التحقق من صلاحية جلسة خدمة الإعلانات";
+        } else {
+          sessionStorage.removeItem("aqx_advertising_service_session");
+          sessionStorage.removeItem("aqx_advertising_session_expires_at");
+          sessionStorage.removeItem("aqx_identity_session_token");
+          sessionStorage.removeItem("aqx_identity_login_proof");
+        }
+      } catch (_) {
+        $("system-status").textContent = "تعذر التحقق من الجلسة الحالية؛ يمكنك إعادة تسجيل الدخول.";
+      }
+    }
+
+    (async function init() {
+      await loadRegistrationStatus();
+      await checkExistingServiceSession();
+      if (!supabaseClient) $("system-status").textContent = "تعذر تحميل مكتبة المصادقة المركزية";
+    })();
+  </script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onAQXTurnstileReady&render=explicit" async defer></script>
+</body>
+</html>
