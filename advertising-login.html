@@ -194,8 +194,10 @@
       $("register-panel").hidden = !register;
       $("login-panel").hidden = register;
       $("session-ready").classList.remove("show");
-      if (register) $("register-email").focus();
-      else $("login-email").focus();
+      if (register) {
+        $("register-email").focus();
+        if (registrationStatus?.captcha?.site_key) mountTurnstile(registrationStatus.captcha.site_key);
+      } else $("login-email").focus();
     }
     $("register-tab").addEventListener("click", () => switchTab("register"));
     $("login-tab").addEventListener("click", () => switchTab("login"));
@@ -270,7 +272,7 @@
       if (registrationStatus?.captcha?.site_key) mountTurnstile(registrationStatus.captcha.site_key);
     };
     function mountTurnstile(siteKey) {
-      if (!window.turnstile || turnstileWidgetId !== null || !$("aqx-turnstile")) return;
+      if (!window.turnstile || turnstileWidgetId !== null || !$("aqx-turnstile") || $("register-panel").hidden) return;
       try {
         turnstileWidgetId = window.turnstile.render("#aqx-turnstile", {
           sitekey: siteKey,
