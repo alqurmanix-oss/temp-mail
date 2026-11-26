@@ -337,7 +337,7 @@ footer b{color:#fff}
     }));
     calcLines.innerHTML="";
     if(prior.length){prior.forEach(line=>addLine(line.country,Number(line.count)||0));}
-    else addLine("EG",5000);
+    else addLine(rates.some(r=>r.country_code==="EG")?"EG":(rates[0]?.country_code||"__OTHER__"),pricing.minimum_paid_impressions_per_campaign);
     addCountryLine.disabled=false;
     calculate();
   }
@@ -369,7 +369,7 @@ footer b{color:#fff}
     const minimum=Number(pricing.minimum_paid_impressions_per_campaign);
     document.getElementById("calcMessage").textContent=paidTotal<minimum?
       "الحد الأدنى لهذه المساحة هو "+fmtInteger(minimum)+" ظهور مدفوع للحملة الواحدة. لن يُحتسب البونص قبل بلوغ الحد الأدنى. الحاسبة تقديرية ولا تُنشئ حملة أو تطلقها.":
-      "تم احتساب الخصم على إجمالي "+fmtInteger(paidTotal)+" ظهور مدفوع عبر "+validLines+" بند/بنود دولة في الحملة نفسها. البونص مجاني ومنفصل عن الفوترة. الحاسبة تقديرية ولا تُنشئ حملة أو تطلقها.";
+      "تم احتساب الخصم على إجمالي "+fmtInteger(paidTotal)+" ظهور مدفوع عبر "+validLines+" بند/بنود دولة في الحملة نفسها. "+(pricing.bonus_is_free&&!pricing.bonus_is_billable?"البونص مجاني ومنفصل عن الفوترة.":"تُطبق المعالجة المالية للبونص وفق إعدادات AQX الحالية.")+" الحاسبة تقديرية ولا تُنشئ حملة أو تطلقها.";
   }
 
   function applyPricing(data){
