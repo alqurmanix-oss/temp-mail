@@ -93,6 +93,15 @@ tr:last-child td{border-bottom:0}
 .rate-controls input{border:1px solid var(--line);border-radius:9px;padding:9px 12px;min-width:190px}
 .rate-note{font-size:12px;color:var(--muted);margin:10px 0 0}
 .calc{border:1px solid var(--line);border-radius:16px;padding:22px;background:#fff}
+.calc-lines{display:grid;gap:11px;margin-bottom:13px}
+.calc-line{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 42px;gap:11px;align-items:end;border:1px solid var(--line);border-radius:12px;padding:12px;background:#fbfdfd}
+.calc-line .field{min-width:0}
+.calc-line .remove-line{height:43px;border:1px solid #ecd7d7;border-radius:9px;background:#fff;color:#a33;font-size:22px;cursor:pointer}
+.calc-loading{padding:15px;color:var(--muted);font-size:13px}
+.add-country{border:1px solid #b9d8d7;background:#eff8f7;color:var(--teal);border-radius:9px;padding:10px 15px;font:inherit;font-weight:800;cursor:pointer}
+.add-country:disabled{opacity:.5;cursor:not-allowed}
+@media(max-width:560px){.calc-line{grid-template-columns:1fr 1fr 38px;gap:7px;padding:9px}.calc-line .field label{font-size:11px}.calc-line .field select,.calc-line .field input{padding:9px 7px;font-size:12px}}
+
 .calc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
 .field label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-bottom:5px}
 .field select,.field input{width:100%;border:1px solid #dce6e8;border-radius:9px;padding:11px;background:#fff;color:var(--ink)}
@@ -135,7 +144,7 @@ footer b{color:#fff}
 <p class="eyebrow">AQX ADS · مساحة إعلانية مملوكة لـ AQX</p>
 <h1>AQX Favorites<br>مساحة الأيقونة العائمة</h1><p class="eyebrow" style="margin-top:-5px;color:#d8e8ed">موضع إعلاني ضمن منظومة AQX الرقمية · 300×250 بكسل</p>
 <p class="lead">وسّع انتشار علامتك التجارية عبر منظومة AQX الرقمية، التي تضم منصات ومواقع إلكترونية تصل إلى جمهور حول العالم. تظهر أيقونة AQX Favorites العائمة عبر جميع منصات AQX، وكذلك على أي موقع إلكتروني يضيف كود التضمين الخاص بها، بصرف النظر عن منصته أو نظامه أو نطاقه الجغرافي. ويمنح ذلك المعلنين فرصة للوصول إلى الجمهور من خلال موضع إعلاني بمقاس 300×250 بكسل ضمن تجربة الأيقونة، وفق التسعير الجغرافي المعتمد واحتساب الظهورات الإعلانية المؤهلة.</p>
-<div class="tags"><span class="tag">Display · 300×250 px</span><span class="tag">CPM بالدولار</span><span class="tag">استهداف حسب الدولة</span><span class="tag">100% ظهورات بونص للحملات المؤهلة</span></div>
+<div class="tags"><span class="tag">Display · 300×250 px</span><span class="tag">CPM بالدولار</span><span class="tag">استهداف حسب الدولة</span><span class="tag" id="heroBonusTag">بونص الظهورات وفق إعدادات الحملة</span></div>
 </div>
 <div class="preview-shell" style="min-height:220px;display:flex;flex-direction:column;justify-content:center">
 <div class="preview-head"><b>الأيقونة العائمة لـ AQX Favorites</b><span class="live-dot">تجربة موحّدة</span></div>
@@ -162,7 +171,7 @@ footer b{color:#fff}
 <div class="specs">
 <div class="spec"><b>300×250</b><small>العرض × الارتفاع · px</small></div>
 <div class="spec"><b>CPM</b><small>التكلفة لكل ألف ظهور صالح</small></div>
-<div class="spec"><b>USD</b><small>عملة التسعير</small></div>
+<div class="spec"><b id="currencyCode">—</b><small>عملة التسعير</small></div>
 <div class="spec"><b>Display</b><small>صيغة إعلان عرض مستطيل</small></div>
 </div>
 </div>
@@ -174,95 +183,21 @@ footer b{color:#fff}
 <div class="price-layout">
 <div class="price-card">
 <h3>السعر العام للدول غير المدرجة</h3>
-<div class="big">$0.30 <small>/ 1,000 ظهور</small></div>
+<div class="big" id="defaultRateValue">— <small>/ 1,000 ظهور</small></div>
 <p>يُطبق هذا السعر على الدول غير المدرجة ضمن قائمة الأسعار الجغرافية المحددة.</p>
 <div class="price-points">
-<div><span>مصر</span><bdi dir="ltr">$0.35 CPM</bdi></div>
-<div><span>السعودية</span><bdi dir="ltr">$1.50 CPM</bdi></div>
-<div><span>بريطانيا</span><bdi dir="ltr">$2.40 CPM</bdi></div>
-<div><span>الولايات المتحدة</span><bdi dir="ltr">$2.50 CPM</bdi></div>
+<div><span>الدول ذات السعر المحدد</span><b id="countryRateCount">—</b></div>
+<div><span>نموذج التسعير</span><b>CPM</b></div>
+<div><span>إصدار إعدادات التسعير</span><b id="pricingVersion">—</b></div>
 </div>
 </div>
 <div>
 <button class="rates-toggle" id="ratesToggle" type="button" aria-expanded="false" aria-controls="ratesPanel"><span>عرض قائمة أسعار الدول</span><span class="rates-toggle-icon" aria-hidden="true">＋</span></button>
 <div class="rates-panel" id="ratesPanel" hidden>
 <div class="rate-controls"><input id="countrySearch" type="search" placeholder="ابحث عن دولة أو رمزها..." aria-label="ابحث في أسعار الدول"></div>
-<div class="table-wrap"><table><thead><tr><th>الدولة</th><th>الرمز</th><th>CPM بالدولار</th></tr></thead><tbody id="ratesBody">
-<tr><td>الولايات المتحدة</td><td>US</td><td>$2.50</td></tr>
-<tr><td>كندا</td><td>CA</td><td>$2.20</td></tr>
-<tr><td>المملكة المتحدة</td><td>GB</td><td>$2.40</td></tr>
-<tr><td>أستراليا</td><td>AU</td><td>$2.20</td></tr>
-<tr><td>نيوزيلندا</td><td>NZ</td><td>$1.80</td></tr>
-<tr><td>ألمانيا</td><td>DE</td><td>$2.00</td></tr>
-<tr><td>فرنسا</td><td>FR</td><td>$1.80</td></tr>
-<tr><td>هولندا</td><td>NL</td><td>$2.00</td></tr>
-<tr><td>سويسرا</td><td>CH</td><td>$2.50</td></tr>
-<tr><td>النمسا</td><td>AT</td><td>$1.60</td></tr>
-<tr><td>بلجيكا</td><td>BE</td><td>$1.60</td></tr>
-<tr><td>أيرلندا</td><td>IE</td><td>$1.80</td></tr>
-<tr><td>السويد</td><td>SE</td><td>$1.80</td></tr>
-<tr><td>النرويج</td><td>NO</td><td>$2.00</td></tr>
-<tr><td>الدنمارك</td><td>DK</td><td>$1.80</td></tr>
-<tr><td>فنلندا</td><td>FI</td><td>$1.60</td></tr>
-<tr><td>آيسلندا</td><td>IS</td><td>$1.50</td></tr>
-<tr><td>إيطاليا</td><td>IT</td><td>$1.40</td></tr>
-<tr><td>إسبانيا</td><td>ES</td><td>$1.30</td></tr>
-<tr><td>البرتغال</td><td>PT</td><td>$1.00</td></tr>
-<tr><td>اليونان</td><td>GR</td><td>$0.90</td></tr>
-<tr><td>بولندا</td><td>PL</td><td>$1.00</td></tr>
-<tr><td>التشيك</td><td>CZ</td><td>$1.00</td></tr>
-<tr><td>سلوفاكيا</td><td>SK</td><td>$0.80</td></tr>
-<tr><td>المجر</td><td>HU</td><td>$0.80</td></tr>
-<tr><td>رومانيا</td><td>RO</td><td>$0.70</td></tr>
-<tr><td>بلغاريا</td><td>BG</td><td>$0.60</td></tr>
-<tr><td>كرواتيا</td><td>HR</td><td>$0.80</td></tr>
-<tr><td>سلوفينيا</td><td>SI</td><td>$0.90</td></tr>
-<tr><td>إستونيا</td><td>EE</td><td>$0.90</td></tr>
-<tr><td>لاتفيا</td><td>LV</td><td>$0.80</td></tr>
-<tr><td>ليتوانيا</td><td>LT</td><td>$0.80</td></tr>
-<tr><td>أوكرانيا</td><td>UA</td><td>$0.55</td></tr>
-<tr><td>تركيا</td><td>TR</td><td>$0.65</td></tr>
-<tr><td>كازاخستان</td><td>KZ</td><td>$0.45</td></tr>
-<tr><td>اليابان</td><td>JP</td><td>$2.00</td></tr>
-<tr><td>كوريا الجنوبية</td><td>KR</td><td>$1.80</td></tr>
-<tr><td>سنغافورة</td><td>SG</td><td>$2.20</td></tr>
-<tr><td>هونغ كونغ</td><td>HK</td><td>$2.00</td></tr>
-<tr><td>تايوان</td><td>TW</td><td>$1.40</td></tr>
-<tr><td>ماليزيا</td><td>MY</td><td>$0.70</td></tr>
-<tr><td>تايلاند</td><td>TH</td><td>$0.60</td></tr>
-<tr><td>إندونيسيا</td><td>ID</td><td>$0.45</td></tr>
-<tr><td>الفلبين</td><td>PH</td><td>$0.45</td></tr>
-<tr><td>فيتنام</td><td>VN</td><td>$0.40</td></tr>
-<tr><td>الهند</td><td>IN</td><td>$0.45</td></tr>
-<tr><td>باكستان</td><td>PK</td><td>$0.30</td></tr>
-<tr><td>بنغلاديش</td><td>BD</td><td>$0.28</td></tr>
-<tr><td>الإمارات</td><td>AE</td><td>$1.80</td></tr>
-<tr><td>السعودية</td><td>SA</td><td>$1.50</td></tr>
-<tr><td>قطر</td><td>QA</td><td>$1.60</td></tr>
-<tr><td>الكويت</td><td>KW</td><td>$1.50</td></tr>
-<tr><td>البحرين</td><td>BH</td><td>$1.20</td></tr>
-<tr><td>عُمان</td><td>OM</td><td>$1.10</td></tr>
-<tr><td>الأردن</td><td>JO</td><td>$0.65</td></tr>
-<tr><td>لبنان</td><td>LB</td><td>$0.65</td></tr>
-<tr><td>العراق</td><td>IQ</td><td>$0.45</td></tr>
-<tr><td>مصر</td><td>EG</td><td>$0.35</td></tr>
-<tr><td>المغرب</td><td>MA</td><td>$0.40</td></tr>
-<tr><td>تونس</td><td>TN</td><td>$0.35</td></tr>
-<tr><td>الجزائر</td><td>DZ</td><td>$0.35</td></tr>
-<tr><td>جنوب أفريقيا</td><td>ZA</td><td>$0.70</td></tr>
-<tr><td>نيجيريا</td><td>NG</td><td>$0.40</td></tr>
-<tr><td>كينيا</td><td>KE</td><td>$0.40</td></tr>
-<tr><td>غانا</td><td>GH</td><td>$0.35</td></tr>
-<tr><td>البرازيل</td><td>BR</td><td>$0.80</td></tr>
-<tr><td>المكسيك</td><td>MX</td><td>$0.85</td></tr>
-<tr><td>الأرجنتين</td><td>AR</td><td>$0.55</td></tr>
-<tr><td>تشيلي</td><td>CL</td><td>$0.75</td></tr>
-<tr><td>كولومبيا</td><td>CO</td><td>$0.55</td></tr>
-<tr><td>بيرو</td><td>PE</td><td>$0.45</td></tr>
-<tr><td>أوروغواي</td><td>UY</td><td>$0.60</td></tr>
-</tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>الدولة</th><th>الرمز</th><th>CPM (<span id="tableCurrency">USD</span>)</th></tr></thead><tbody id="ratesBody"><tr><td colspan="3">جارٍ تحميل الأسعار من قاعدة بيانات AQX...</td></tr></tbody></table></div>
 </div>
-<p class="rate-note">الدول غير المدرجة: $0.30 CPM. تُطبق الأسعار المعتمدة وقت إنشاء الحملة، وتخضع أي تحديثات لاحقة لسياسات AQX المعتمدة.</p>
+<p class="rate-note" id="pricingStatus">يتم تحميل قائمة الأسعار من قاعدة بيانات AQX...</p>
 </div>
 </div>
 </div>
@@ -272,21 +207,18 @@ footer b{color:#fff}
 <div class="wrap">
 <div class="section-head"><h2>حاسبة تكلفة الحملة</h2><p>غيّر الدولة وعدد الظهورات المدفوعة للاطلاع على التكلفة الأساسية والخصم والظهورات الإضافية المجانية.</p></div>
 <div class="calc">
-<div class="calc-grid">
-<div class="field"><label for="calcCountry">دولة الاستهداف</label><select id="calcCountry">
-<option value="0.35">مصر — EG</option><option value="2.50">الولايات المتحدة — US</option><option value="2.40">المملكة المتحدة — GB</option><option value="1.50">السعودية — SA</option><option value="1.80">الإمارات — AE</option><option value="0.30">دولة أخرى — السعر العام</option>
-</select></div>
-<div class="field"><label for="paidImpressions">الظهورات المدفوعة المطلوبة</label><input id="paidImpressions" type="number" min="5000" step="1000" value="5000"></div>
-</div>
+<p class="calc-foot" style="margin:0 0 14px">أضف دولة واحدة أو أكثر لتكوين حملة واحدة؛ يُحتسب الخصم على إجمالي الظهورات المدفوعة عبر جميع الدول في الحملة نفسها.</p>
+<div id="calcLines" class="calc-lines"><div class="calc-loading">جارٍ تحميل أسعار الدول وقواعد الحاسبة...</div></div>
+<button class="add-country" id="addCountryLine" type="button" disabled>＋ إضافة دولة إلى الحملة</button>
 <div class="results">
 <div class="result"><small>التكلفة قبل الخصم</small><b id="grossCost">$1.75</b></div>
 <div class="result"><small>خصم الحجم</small><b id="discountValue">0%</b></div>
 <div class="result"><small>إجمالي تكلفة الحملة</small><b id="netCost">$1.75</b></div>
 <div class="result"><small>ظهورات البونص</small><b id="bonusCount">5,000</b></div>
 <div class="result"><small>إجمالي التسليم المستهدف</small><b id="deliveryCount">10,000</b></div>
-<div class="result"><small>سعر CPM المختار</small><b id="selectedCpm">$0.35</b></div>
+<div class="result"><small>إجمالي الظهورات المدفوعة</small><b id="paidCount">—</b></div>
 </div>
-<p class="calc-foot" id="calcMessage">الحد الأدنى المهيأ لهذه المساحة هو 5,000 ظهور مدفوع. البونص مجاني ويُسجل منفصلًا ولا يدخل في أساس الفوترة. تعرض الحاسبة التكلفة وفق الأسعار المعتمدة فعليًا، وهي مخصصة للاطلاع فقط ولا تُنشئ حملة إعلانية أو تطلقها.</p>
+<p class="calc-foot" id="calcMessage">تُحمّل الأسعار والحد الأدنى وشرائح الخصم والبونص مباشرة من قاعدة بيانات AQX. الحاسبة تقديرية ولا تُنشئ حملة أو تطلقها.</p>
 </div>
 </div>
 </section>
@@ -294,10 +226,10 @@ footer b{color:#fff}
 <section class="soft">
 <div class="wrap">
 <div class="section-head"><h2>البونص والخصومات وحد الحملة</h2><p>قواعد مستقلة لهذه المساحة تحديدًا، ولا تُعمم تلقائيًا على مساحات AQX الأخرى.</p></div>
-<div class="bonus"><div><b>بونص الظهورات للحملة المؤهلة</b><div style="color:var(--muted);font-size:13px">كل ظهور مدفوع يقابله ظهور بونص واحد، دون تكلفة إضافية.</div></div><strong>100% Bonus</strong></div>
+<div class="bonus"><div><b>بونص الظهورات للحملة المؤهلة</b><div id="bonusPolicyText" style="color:var(--muted);font-size:13px">يتم تحميل نسبة البونص وشروطه من إعدادات AQX.</div></div><strong id="bonusRatioLabel">—</strong></div>
 <div class="rules">
-<article class="rule"><h3>الحد الأدنى</h3><p>الحد الأدنى المهيأ للحملة هو <b>5,000 ظهور مدفوع</b>. وعند استيفاء شروط البونص تحصل الحملة على 5,000 ظهور إضافي مجاني. لا تعتبر هذه الصفحة موافقة على حملات أقل من الحد الأدنى.</p></article>
-<article class="rule"><h3>شرائح خصم الحجم</h3><ul><li>50,000 ظهور مدفوع: خصم 3%.</li><li>100,000 ظهور مدفوع: خصم 5%.</li><li>500,000 ظهور مدفوع: خصم 8%.</li><li>1,000,000 ظهور مدفوع فأكثر: خصم 10%.</li></ul><p>يُطبق أعلى مستوى مستحق فقط، ولا تتراكم نسب الخصم.</p></article>
+<article class="rule"><h3>الحد الأدنى</h3><p>الحد الأدنى المهيأ للحملة هو <b id="minimumPaidText">—</b>. ويُحسب البونص للحملة المؤهلة وفق النسبة المسجلة في قاعدة البيانات. لا تعتبر هذه الصفحة موافقة على حملة أو تفعيلًا للتشغيل.</p></article>
+<article class="rule"><h3>شرائح خصم الحجم</h3><ul id="discountTiersDisplay"><li>جارٍ تحميل شرائح الخصم...</li></ul><p>يُطبق أعلى مستوى مستحق فقط، ولا تتراكم نسب الخصم.</p></article>
 <article class="rule"><h3>أساس حساب الخصم</h3><p>يُحسب مستوى الخصم على إجمالي الظهورات المدفوعة المؤهلة للحملة عبر الدول، لهذه المساحة الإعلانية نفسها. وتُحسب قيمة الفاتورة وفق سعر CPM الخاص بكل دولة قبل تطبيق خصم الحجم المعتمد.</p></article>
 <article class="rule"><h3>كيفية التعامل مع البونص</h3><p>الظهورات المجانية لا تدخل في عدد الظهورات المدفوعة ولا في حساب CPM أو قيمة الفاتورة. وتُسجل منفصلة في التقارير، وتُعرض على المواقع والمنصات التابعة لـ AQX فقط، ولا تُحمّل على مواقع الناشرين الخارجيين.</p></article>
 </div>
@@ -330,26 +262,175 @@ footer b{color:#fff}
 <footer><div class="wrap"><b>AQX Advertising</b> — مساحة الأيقونة العائمة للضيوف · 300×250</div></footer>
 <script>
 (function(){
-const toggle=document.getElementById('ratesToggle'),panel=document.getElementById('ratesPanel');
-toggle.addEventListener('click',function(){const expanded=this.getAttribute('aria-expanded')==='true';this.setAttribute('aria-expanded',String(!expanded));panel.hidden=expanded;this.querySelector('span').textContent=expanded?'عرض قائمة أسعار الدول':'إخفاء قائمة أسعار الدول';this.querySelector('.rates-toggle-icon').textContent=expanded?'＋':'−';});
-const search=document.getElementById('countrySearch');
-const rows=[...document.querySelectorAll('#ratesBody tr')];
-search.addEventListener('input',function(){const q=this.value.trim().toLowerCase();rows.forEach(r=>r.hidden=!r.textContent.toLowerCase().includes(q));});
-const country=document.getElementById('calcCountry'),paid=document.getElementById('paidImpressions');
-const fmt=n=>new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(n);
-function calc(){
- let count=Math.max(0,Number(paid.value)||0),rate=Number(country.value),discount=0;
- if(count>=1000000)discount=.10;else if(count>=500000)discount=.08;else if(count>=100000)discount=.05;else if(count>=50000)discount=.03;
- const gross=count*rate/1000,net=gross*(1-discount),bonus=count>=5000?count:0;
- document.getElementById('grossCost').textContent='$'+fmt(gross);
- document.getElementById('discountValue').textContent=(discount*100)+'%';
- document.getElementById('netCost').textContent='$'+fmt(net);
- document.getElementById('bonusCount').textContent=fmt(bonus);
- document.getElementById('deliveryCount').textContent=fmt(count+bonus);
- document.getElementById('selectedCpm').textContent='$'+fmt(rate);
- document.getElementById('calcMessage').textContent=count<5000?'العدد المدخل أقل من الحد الأدنى المهيأ لهذه المساحة (5,000 ظهور مدفوع). الأرقام المعروضة للاطلاع فقط وفق الأسعار المعتمدة، ولا تعني قبول حملة بهذا الحجم.':'الحد الأدنى المهيأ لهذه المساحة هو 5,000 ظهور مدفوع. البونص مجاني ويُسجل منفصلًا ولا يدخل في أساس الفوترة. تعرض الحاسبة التكلفة وفق الأسعار المعتمدة فعليًا، وهي مخصصة للاطلاع فقط ولا تُنشئ حملة إعلانية أو تطلقها.';
-}
-country.addEventListener('change',calc);paid.addEventListener('input',calc);calc();
+  "use strict";
+  const API_URL="https://vuszqzgldbsscuxdfhdz.supabase.co/functions/v1/aqx-advertising-public-pricing";
+  const API_KEY="sb_publishable_cI7C0sL9M4OLvsa-JGAAFQ_KfqlkI7X";
+  const COUNTRY_NAMES={"US":"الولايات المتحدة","CA":"كندا","GB":"المملكة المتحدة","AU":"أستراليا","NZ":"نيوزيلندا","DE":"ألمانيا","FR":"فرنسا","NL":"هولندا","CH":"سويسرا","AT":"النمسا","BE":"بلجيكا","IE":"أيرلندا","SE":"السويد","NO":"النرويج","DK":"الدنمارك","FI":"فنلندا","IS":"آيسلندا","IT":"إيطاليا","ES":"إسبانيا","PT":"البرتغال","GR":"اليونان","PL":"بولندا","CZ":"التشيك","SK":"سلوفاكيا","HU":"المجر","RO":"رومانيا","BG":"بلغاريا","HR":"كرواتيا","SI":"سلوفينيا","EE":"إستونيا","LV":"لاتفيا","LT":"ليتوانيا","UA":"أوكرانيا","TR":"تركيا","KZ":"كازاخستان","JP":"اليابان","KR":"كوريا الجنوبية","SG":"سنغافورة","HK":"هونغ كونغ","TW":"تايوان","MY":"ماليزيا","TH":"تايلاند","ID":"إندونيسيا","PH":"الفلبين","VN":"فيتنام","IN":"الهند","PK":"باكستان","BD":"بنغلاديش","AE":"الإمارات","SA":"السعودية","QA":"قطر","KW":"الكويت","BH":"البحرين","OM":"عُمان","JO":"الأردن","LB":"لبنان","IQ":"العراق","EG":"مصر","MA":"المغرب","TN":"تونس","DZ":"الجزائر","ZA":"جنوب أفريقيا","NG":"نيجيريا","KE":"كينيا","GH":"غانا","BR":"البرازيل","MX":"المكسيك","AR":"الأرجنتين","CL":"تشيلي","CO":"كولومبيا","PE":"بيرو","UY":"أوروغواي"};
+  const ratesBody=document.getElementById("ratesBody");
+  const countrySearch=document.getElementById("countrySearch");
+  const pricingStatus=document.getElementById("pricingStatus");
+  const calcLines=document.getElementById("calcLines");
+  const addCountryLine=document.getElementById("addCountryLine");
+  let pricing=null;
+  let rates=[];
+  let refreshTimer=null;
+
+  const numberFormat=new Intl.NumberFormat("en-US",{maximumFractionDigits:2});
+  const integerFormat=new Intl.NumberFormat("en-US",{maximumFractionDigits:0});
+  const fmtNumber=n=>numberFormat.format(Number(n)||0);
+  const fmtInteger=n=>integerFormat.format(Number(n)||0);
+  const money=n=>{
+    const value=Number(n)||0;
+    try{return new Intl.NumberFormat("en-US",{style:"currency",currency:pricing?.currency||"USD",minimumFractionDigits:2,maximumFractionDigits:2}).format(value);}
+    catch{return (pricing?.currency||"USD")+" "+fmtNumber(value);}
+  };
+  const countryName=code=>COUNTRY_NAMES[code]||code;
+
+  function renderTable(){
+    const q=(countrySearch?.value||"").trim().toLocaleLowerCase();
+    const visible=rates.filter(r=>(countryName(r.country_code)+" "+r.country_code).toLocaleLowerCase().includes(q));
+    ratesBody.innerHTML="";
+    if(!visible.length){
+      const tr=document.createElement("tr"),td=document.createElement("td");
+      td.colSpan=3;td.textContent="لا توجد دولة مطابقة لبحثك.";tr.appendChild(td);ratesBody.appendChild(tr);return;
+    }
+    visible.forEach(r=>{
+      const tr=document.createElement("tr");
+      const name=document.createElement("td");name.textContent=countryName(r.country_code);
+      const code=document.createElement("td");code.textContent=r.country_code;
+      const price=document.createElement("td");price.textContent=money(r.cpm_usd);
+      tr.append(name,code,price);ratesBody.appendChild(tr);
+    });
+  }
+
+  function countryOptions(selected){
+    const select=document.createElement("select");
+    select.dataset.country="true";
+    const choices=rates.map(r=>({value:r.country_code,label:countryName(r.country_code)+" — "+r.country_code}));
+    choices.push({value:"__OTHER__",label:"دولة أخرى — السعر العام"});
+    choices.forEach(c=>{
+      const option=document.createElement("option");option.value=c.value;option.textContent=c.label;
+      if(c.value===selected)option.selected=true;select.appendChild(option);
+    });
+    if(!choices.some(c=>c.value===selected))select.value=rates.some(r=>r.country_code==="EG")?"EG":rates[0]?.country_code;
+    return select;
+  }
+
+  function addLine(country="EG",count=5000){
+    const row=document.createElement("div");row.className="calc-line";
+    const countryField=document.createElement("div");countryField.className="field";
+    const countryLabel=document.createElement("label");countryLabel.textContent="دولة الاستهداف";
+    const select=countryOptions(country);countryLabel.appendChild(select);countryField.appendChild(countryLabel);
+    const countField=document.createElement("div");countField.className="field";
+    const countLabel=document.createElement("label");countLabel.textContent="الظهورات المدفوعة";
+    const input=document.createElement("input");input.type="number";input.min="0";input.step="1000";input.value=String(count);input.inputMode="numeric";input.dataset.impressions="true";input.setAttribute("aria-label","عدد الظهورات المدفوعة لهذه الدولة");
+    countLabel.appendChild(input);countField.appendChild(countLabel);
+    const remove=document.createElement("button");remove.type="button";remove.className="remove-line";remove.textContent="×";remove.setAttribute("aria-label","حذف الدولة من الحملة");
+    remove.addEventListener("click",()=>{if(calcLines.children.length>1){row.remove();calculate();}});
+    row.append(countryField,countField,remove);calcLines.appendChild(row);
+  }
+
+  function renderCalculator(){
+    const prior=[...calcLines.querySelectorAll(".calc-line")].map(row=>({
+      country:row.querySelector("[data-country]")?.value||"EG",
+      count:row.querySelector("[data-impressions]")?.value||"0"
+    }));
+    calcLines.innerHTML="";
+    if(prior.length){prior.forEach(line=>addLine(line.country,Number(line.count)||0));}
+    else addLine("EG",5000);
+    addCountryLine.disabled=false;
+    calculate();
+  }
+
+  function calculate(){
+    if(!pricing)return;
+    const lines=[...calcLines.querySelectorAll(".calc-line")];
+    let paidTotal=0,gross=0,validLines=0;
+    for(const line of lines){
+      const code=line.querySelector("[data-country]").value;
+      const raw=Number(line.querySelector("[data-impressions]").value);
+      const count=Number.isFinite(raw)?Math.max(0,Math.floor(raw)):0;
+      const rate=code==="__OTHER__"?pricing.unlisted_country_default_usd_cpm:
+        Number(rates.find(r=>r.country_code===code)?.cpm_usd);
+      if(Number.isFinite(rate)){paidTotal+=count;gross+=(count*rate)/1000;validLines++;}
+    }
+    const tier=[...pricing.volume_discounts].filter(t=>paidTotal>=Number(t.min_impressions)).sort((a,b)=>b.min_impressions-a.min_impressions)[0];
+    const discountPercent=tier?Number(tier.discount_percent):0;
+    const net=gross*(1-discountPercent/100);
+    const ratio=pricing.bonus_ratio;
+    const bonus=paidTotal>=pricing.minimum_paid_impressions_per_campaign?
+      Math.floor(paidTotal*Number(ratio.bonus_impressions)/Number(ratio.paid_impressions)):0;
+    document.getElementById("grossCost").textContent=money(gross);
+    document.getElementById("discountValue").textContent=fmtNumber(discountPercent)+"%";
+    document.getElementById("netCost").textContent=money(Math.round((net+Number.EPSILON)*100)/100);
+    document.getElementById("paidCount").textContent=fmtInteger(paidTotal);
+    document.getElementById("bonusCount").textContent=fmtInteger(bonus);
+    document.getElementById("deliveryCount").textContent=fmtInteger(paidTotal+bonus);
+    const minimum=Number(pricing.minimum_paid_impressions_per_campaign);
+    document.getElementById("calcMessage").textContent=paidTotal<minimum?
+      "الحد الأدنى لهذه المساحة هو "+fmtInteger(minimum)+" ظهور مدفوع للحملة الواحدة. لن يُحتسب البونص قبل بلوغ الحد الأدنى. الحاسبة تقديرية ولا تُنشئ حملة أو تطلقها.":
+      "تم احتساب الخصم على إجمالي "+fmtInteger(paidTotal)+" ظهور مدفوع عبر "+validLines+" بند/بنود دولة في الحملة نفسها. البونص مجاني ومنفصل عن الفوترة. الحاسبة تقديرية ولا تُنشئ حملة أو تطلقها.";
+  }
+
+  function applyPricing(data){
+    pricing=data;
+    rates=data.country_rates.slice().sort((a,b)=>countryName(a.country_code).localeCompare(countryName(b.country_code),"ar"));
+    document.getElementById("defaultRateValue").innerHTML="";
+    document.getElementById("defaultRateValue").append(document.createTextNode(money(data.unlisted_country_default_usd_cpm)+" "));
+    const small=document.createElement("small");small.textContent="/ 1,000 ظهور";document.getElementById("defaultRateValue").appendChild(small);
+    document.getElementById("countryRateCount").textContent=fmtInteger(rates.length)+" دولة";
+    document.getElementById("pricingVersion").textContent=data.pricing_version||"—";
+    document.getElementById("tableCurrency").textContent=data.currency;
+    document.getElementById("currencyCode").textContent=data.currency;
+    document.getElementById("minimumPaidText").textContent=fmtInteger(data.minimum_paid_impressions_per_campaign)+" ظهور مدفوع";
+    document.getElementById("bonusRatioLabel").textContent=(Number(data.bonus_ratio.bonus_impressions)/Number(data.bonus_ratio.paid_impressions)*100)+"% Bonus";
+    document.getElementById("heroBonusTag").textContent="بونص "+(Number(data.bonus_ratio.bonus_impressions)/Number(data.bonus_ratio.paid_impressions)*100)+"% للحملات المؤهلة";
+    document.getElementById("bonusPolicyText").textContent="مقابل كل "+fmtNumber(data.bonus_ratio.paid_impressions)+" ظهور مدفوع، يُضاف "+fmtNumber(data.bonus_ratio.bonus_impressions)+" ظهور مجاني بعد بلوغ الحد الأدنى للحملة.";
+    const tiers=document.getElementById("discountTiersDisplay");tiers.innerHTML="";
+    data.volume_discounts.forEach(t=>{
+      const li=document.createElement("li");
+      li.textContent=fmtInteger(t.min_impressions)+" ظهور مدفوع: خصم "+fmtNumber(t.discount_percent)+"%.";
+      tiers.appendChild(li);
+    });
+    renderTable();
+    renderCalculator();
+    const stamp=new Date().toLocaleString("ar-EG");
+    pricingStatus.textContent="تم تحميل "+fmtInteger(rates.length)+" سعر دولة من قاعدة بيانات AQX · آخر تحديث للبيانات في هذه الصفحة: "+stamp+". السعر العام للدول غير المدرجة: "+money(data.unlisted_country_default_usd_cpm)+" CPM.";
+  }
+
+  async function loadPricing(){
+    try{
+      const response=await fetch(API_URL,{method:"GET",headers:{apikey:API_KEY,Authorization:"Bearer "+API_KEY},cache:"no-store"});
+      if(!response.ok)throw new Error("pricing_api_http_"+response.status);
+      const data=await response.json();
+      if(data.placement_key!=="aqx_favorites_floating_icon_primary_300x250"||!Array.isArray(data.country_rates)||!data.volume_discounts?.length)throw new Error("invalid_pricing_payload");
+      applyPricing(data);
+    }catch(error){
+      console.error("AQX pricing load failed",error);
+      if(!pricing){
+        ratesBody.innerHTML='<tr><td colspan="3">تعذر تحميل الأسعار حاليًا. أعد تحميل الصفحة لاحقًا.</td></tr>';
+        pricingStatus.textContent="تعذر الاتصال بإعدادات التسعير في قاعدة بيانات AQX.";
+        calcLines.innerHTML='<div class="calc-loading">الحاسبة غير متاحة حتى يتم تحميل الأسعار المعتمدة من قاعدة البيانات.</div>';
+        addCountryLine.disabled=true;
+      }else{
+        pricingStatus.textContent="تعذر تحديث الأسعار الآن؛ ما زالت الصفحة تعرض آخر بيانات تم تحميلها بنجاح.";
+      }
+    }
+  }
+
+  countrySearch?.addEventListener("input",renderTable);
+  addCountryLine.addEventListener("click",()=>{addLine("EG",0);calculate();});
+  calcLines.addEventListener("input",calculate);
+  calcLines.addEventListener("change",calculate);
+  const toggle=document.getElementById("ratesToggle"),panel=document.getElementById("ratesPanel");
+  toggle.addEventListener("click",function(){
+    const expanded=this.getAttribute("aria-expanded")==="true";
+    this.setAttribute("aria-expanded",String(!expanded));panel.hidden=expanded;
+    this.querySelector("span").textContent=expanded?"عرض قائمة أسعار الدول":"إخفاء قائمة أسعار الدول";
+    this.querySelector(".rates-toggle-icon").textContent=expanded?"＋":"−";
+  });
+  loadPricing();
+  refreshTimer=window.setInterval(loadPricing,5*60*1000);
 })();
 </script>
 </body>
