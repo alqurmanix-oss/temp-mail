@@ -88,6 +88,7 @@ th,td{padding:11px 13px;text-align:right;border-bottom:1px solid var(--line)}
 th{background:#f0f6f7;color:var(--deep);font-weight:900}
 td:last-child,th:last-child{direction:ltr;text-align:left;font-variant-numeric:tabular-nums}
 tr:last-child td{border-bottom:0}
+.rates-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--deep);padding:14px 16px;font:inherit;font-size:14px;font-weight:900;cursor:pointer;text-align:right;transition:background .2s,border-color .2s}.rates-toggle:hover{background:#f7fbfb;border-color:#b8d8d7}.rates-toggle-icon{font-size:20px;line-height:1;color:var(--teal)}.rates-panel{margin-top:12px}.rates-panel[hidden]{display:none}
 .rate-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 13px}
 .rate-controls input{border:1px solid var(--line);border-radius:9px;padding:9px 12px;min-width:190px}
 .rate-note{font-size:12px;color:var(--muted);margin:10px 0 0}
@@ -183,6 +184,8 @@ footer b{color:#fff}
 </div>
 </div>
 <div>
+<button class="rates-toggle" id="ratesToggle" type="button" aria-expanded="false" aria-controls="ratesPanel"><span>عرض قائمة أسعار الدول</span><span class="rates-toggle-icon" aria-hidden="true">＋</span></button>
+<div class="rates-panel" id="ratesPanel" hidden>
 <div class="rate-controls"><input id="countrySearch" type="search" placeholder="ابحث عن دولة أو رمزها..." aria-label="ابحث في أسعار الدول"></div>
 <div class="table-wrap"><table><thead><tr><th>الدولة</th><th>الرمز</th><th>CPM بالدولار</th></tr></thead><tbody id="ratesBody">
 <tr><td>الولايات المتحدة</td><td>US</td><td>$2.50</td></tr>
@@ -258,7 +261,8 @@ footer b{color:#fff}
 <tr><td>بيرو</td><td>PE</td><td>$0.45</td></tr>
 <tr><td>أوروغواي</td><td>UY</td><td>$0.60</td></tr>
 </tbody></table></div>
-<p class="rate-note">الدول غير المدرجة: $0.30 CPM. السودان وفلسطين غير مدرجتين ضمن القائمة الحالية، ويُطبق عليهما السعر العام. تُطبق الأسعار المعتمدة وقت إنشاء الحملة، وتخضع أي تحديثات لاحقة لسياسات AQX المعتمدة.</p>
+</div>
+<p class="rate-note">الدول غير المدرجة: $0.30 CPM. تُطبق الأسعار المعتمدة وقت إنشاء الحملة، وتخضع أي تحديثات لاحقة لسياسات AQX المعتمدة.</p>
 </div>
 </div>
 </div>
@@ -326,6 +330,8 @@ footer b{color:#fff}
 <footer><div class="wrap"><b>AQX ADS</b> — شبكة القرماني إكس الإعلانية · صفحة تعريفية لموضع الأيقونة العائمة للضيوف · 300×250</div></footer>
 <script>
 (function(){
+const toggle=document.getElementById('ratesToggle'),panel=document.getElementById('ratesPanel');
+toggle.addEventListener('click',function(){const expanded=this.getAttribute('aria-expanded')==='true';this.setAttribute('aria-expanded',String(!expanded));panel.hidden=expanded;this.querySelector('span').textContent=expanded?'عرض قائمة أسعار الدول':'إخفاء قائمة أسعار الدول';this.querySelector('.rates-toggle-icon').textContent=expanded?'＋':'−';});
 const search=document.getElementById('countrySearch');
 const rows=[...document.querySelectorAll('#ratesBody tr')];
 search.addEventListener('input',function(){const q=this.value.trim().toLowerCase();rows.forEach(r=>r.hidden=!r.textContent.toLowerCase().includes(q));});
