@@ -489,7 +489,7 @@
     function loginEmailFeedback(text, kind = "info", path = "") {
       loginEmailState.className = "email-state " + kind;
       loginEmailState.replaceChildren(document.createTextNode(text));
-      if (path && /^[a-z0-9-]+\\.html$/i.test(path)) {
+      if (path && /^[a-z0-9-]+\.html$/i.test(path)) {
         const link = document.createElement("a");
         link.href = "./" + path;
         link.textContent = " · فتح صفحة الحالة";
@@ -501,7 +501,7 @@
       const email = $("login-email").value.trim().toLowerCase();
       loginEmailState.textContent = "";
       loginEmailState.className = "email-state";
-      if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) return;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
       loginEmailFeedback("جارٍ التحقق من حالة البريد لدى AQX Identity…", "info");
       const sequence = ++loginEmailCheckSequence;
       loginEmailCheckTimer = setTimeout(async () => {
@@ -535,7 +535,7 @@
     $("login-email").addEventListener("blur", () => {
       clearTimeout(loginEmailCheckTimer);
       const email = $("login-email").value.trim().toLowerCase();
-      if (/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         $("login-email").dispatchEvent(new Event("input"));
       }
     });
