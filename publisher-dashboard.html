@@ -5,5 +5,28 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>لوحة تحكم الناشر | AQX Advertising</title>
 </head>
-<body></body>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(()=>{const U="https://fkiokwwztbyztleeuwks.supabase.co",K="sb_publishable_4DCXObCqPUoNnI8ANOo8dA_nRAg0y5_";const client=window.supabase.createClient(U,K,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+async function guard(){
+ const login="./advertising-login.html?reason=security";
+ const current=await client.auth.getSession(),user=current.data?.session?.user;
+ if(!user){location.replace(login);return}
+ const key="aqx_ads_active_tab:"+user.id,activityKey="aqx_ads_last_activity:"+user.id,owner=(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random().toString(36).slice(2)),now=Date.now();
+ let lock=null;try{lock=JSON.parse(localStorage.getItem(key)||"null")}catch{}
+ if(lock&&lock.owner!==owner&&now-Number(lock.at||0)<10000){location.replace(login);return}
+ const claim=()=>localStorage.setItem(key,JSON.stringify({owner,at:Date.now()}));claim();await new Promise(r=>setTimeout(r,120));
+ try{lock=JSON.parse(localStorage.getItem(key)||"null")}catch{lock=null}
+ if(!lock||lock.owner!==owner){location.replace(login);return}
+ let last=Number(localStorage.getItem(activityKey)||now);if(!Number.isFinite(last)||last>now)last=now;
+ const mark=()=>{last=Date.now();try{localStorage.setItem(activityKey,String(last))}catch{}},events=["pointerdown","keydown","touchstart","wheel","click"];
+ events.forEach(n=>addEventListener(n,mark,{passive:true}));
+ const heartbeat=setInterval(()=>{if(Date.now()-last>=900000){clearInterval(heartbeat);client.auth.signOut({scope:"local"}).finally(()=>location.replace(login));return}
+ try{const x=JSON.parse(localStorage.getItem(key)||"null");if(!x||x.owner!==owner){clearInterval(heartbeat);location.replace(login);return}claim()}catch{clearInterval(heartbeat);location.replace(login)}},2000);
+ addEventListener("pagehide",()=>{clearInterval(heartbeat);events.forEach(n=>removeEventListener(n,mark));try{const x=JSON.parse(localStorage.getItem(key)||"null");if(x?.owner===owner)localStorage.removeItem(key)}catch{}},{once:true});
+}guard().catch(()=>location.replace(login));
+})();
+</script>
+</body>
 </html>
