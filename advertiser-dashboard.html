@@ -101,7 +101,7 @@ main{min-width:0;padding:27px clamp(16px,3vw,42px) 55px;max-width:1600px;width:1
   const locale=navigator.language||'ar';
   const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'التوقيت المحلي';
   const region=(locale.match(/[-_]([A-Z]{2})$/)||[])[1];
-  country.textContent=region?'دولة/منطقة الزائر: '+region:'التاريخ والوقت المحليان للزائر';
+  country.textContent=region?'إعدادات المنطقة بالمتصفح: '+region:'التاريخ والوقت المحليان للزائر';
   zone.textContent='المنطقة الزمنية: '+tz;
   function tick(){
     const now=new Date();
