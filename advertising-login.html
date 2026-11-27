@@ -472,6 +472,16 @@
       }
     });
 
+    function showStatusLinkMessage(messageId, text, path) {
+      const el = $(messageId);
+      el.replaceChildren(document.createTextNode(text + " "));
+      const link = document.createElement("a");
+      link.href = "./" + path;
+      link.textContent = "عرض ملف الحالة";
+      link.style.cssText = "color:var(--cyan);font-weight:800;text-decoration:underline";
+      el.append(link);
+      el.className = "message show error";
+    }
     function loginErrorMessage(code) {
       const map = {
         EMAIL_NOT_VERIFIED: "يجب تأكيد البريد الإلكتروني من رسالة AQX قبل إنشاء جلسة الدخول.",
@@ -540,11 +550,18 @@
           window.location.assign("./security-check.html");
         }
       } catch (error) {
-        showMessage("login-message", error.code ? loginErrorMessage(error.code) : (
-          error.message === "INVALID_LOGIN_CREDENTIALS"
-            ? "بيانات الدخول غير صحيحة أو تعذر التحقق منها."
-            : loginErrorMessage(error.message || "LOGIN_FAILED")
-        ), "error");
+        const loginCode = error.code || error.message || "LOGIN_FAILED";
+        if (loginCode === "ACCOUNT_SELF_DISABLED" || loginCode === "ACCOUNT_ADMIN_DISABLED") {
+          showStatusLinkMessage("login-message", loginErrorMessage(loginCode), "account-disabled.html");
+        } else if (loginCode === "CENTRAL_ACCESS_BLOCKED" || loginCode === "ACCOUNT_SUSPENDED") {
+          showStatusLinkMessage("login-message", loginErrorMessage(loginCode), "account-suspended.html");
+        } else {
+          showMessage("login-message", error.code ? loginErrorMessage(error.code) : (
+            error.message === "INVALID_LOGIN_CREDENTIALS"
+              ? "بيانات الدخول غير صحيحة أو تعذر التحقق منها."
+              : loginErrorMessage(error.message || "LOGIN_FAILED")
+          ), "error");
+        }
       } finally {
         setBusy("login-submit", false);
       }
