@@ -52,6 +52,49 @@ const U="https://fkiokwwztbyztleeuwks.supabase.co";
 const K="sb_publishable_4DCXObCqPUoNnI8ANOo8dA_nRAg0y5_";
 const API=U+"/functions/v1/aqx-identity";
 const client=window.supabase.createClient(U,K,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+async function installAdvertisingGuard(required){
+ const login="./advertising-login.html?reason=security";
+ const current=await client.auth.getSession();
+ const user=current.data?.session?.user;
+ if(!user){if(required)location.replace(login);return !required}
+ const key="aqx_ads_active_tab:"+user.id;
+ const activityKey="aqx_ads_last_activity:"+user.id;
+ const owner=(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random().toString(36).slice(2));
+ const now=Date.now();
+ let lock=null;
+ try{lock=JSON.parse(localStorage.getItem(key)||"null")}catch{}
+ if(lock&&lock.owner!==owner&&now-Number(lock.at||0)<10000){location.replace(login);return false}
+ const claim=()=>localStorage.setItem(key,JSON.stringify({owner,at:Date.now()}));
+ claim();
+ await new Promise(resolve=>setTimeout(resolve,120));
+ try{lock=JSON.parse(localStorage.getItem(key)||"null")}catch{lock=null}
+ if(!lock||lock.owner!==owner){location.replace(login);return false}
+ let last=Number(localStorage.getItem(activityKey)||now);
+ if(!Number.isFinite(last)||last>now)last=now;
+ const mark=()=>{last=Date.now();try{localStorage.setItem(activityKey,String(last))}catch{}};
+ const activity=["pointerdown","keydown","touchstart","wheel","click"];
+ activity.forEach(name=>addEventListener(name,mark,{passive:true}));
+ const heartbeat=setInterval(()=>{
+  if(Date.now()-last>=15*60*1000){
+   clearInterval(heartbeat);
+   activity.forEach(name=>removeEventListener(name,mark));
+   client.auth.signOut({scope:"local"}).finally(()=>location.replace(login));
+   return;
+  }
+  try{
+   const latest=JSON.parse(localStorage.getItem(key)||"null");
+   if(!latest||latest.owner!==owner){clearInterval(heartbeat);location.replace(login);return}
+   claim();
+  }catch{clearInterval(heartbeat);location.replace(login)}
+ },2000);
+ addEventListener("pagehide",()=>{
+  clearInterval(heartbeat);
+  activity.forEach(name=>removeEventListener(name,mark));
+  try{const latest=JSON.parse(localStorage.getItem(key)||"null");if(latest?.owner===owner)localStorage.removeItem(key)}catch{}
+ },{once:true});
+ return true;
+}
+
 let session=null;
 async function init(){
  const result=await client.auth.getSession();
@@ -67,7 +110,7 @@ async function openRole(role,link){
    body:"{}"
   });
   const j=await r.json();
-  if(!r.ok||j.success!==true)throw Error(j.error||"STATUS_UNAVAILABLE");
+  if(!r.ok||j.success!==true){if(r.status===401||r.status===403){await client.auth.signOut({scope:"local"});location.replace("./advertising-login.html?reason=security");return}throw Error(j.error||"STATUS_UNAVAILABLE")};
   const versions=j.active_versions||{},record=j.roles?.[role];
   const terms=role==="publisher"?versions.publisher_terms:versions.advertiser_terms;
   const accepted=record&&record.terms_version===terms&&record.privacy_version===versions.privacy;
@@ -81,7 +124,7 @@ document.querySelectorAll(".start-button").forEach(link=>{
  const role=link.getAttribute("href").includes("publisher")?"publisher":"advertiser";
  link.addEventListener("click",e=>{e.preventDefault();openRole(role,link)});
 });
-init();
+installAdvertisingGuard(false).then(()=>init());
 })();
 </script>
 </body>
