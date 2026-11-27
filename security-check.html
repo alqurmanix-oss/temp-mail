@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#071426">
-<title>الفحص الأمني واختيار الصفة | AQX Advertising</title>
+<title>اختيار الصفة | AQX Advertising</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -14,25 +14,35 @@
 body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 18% 8%,rgba(36,115,169,.2),transparent 42%),radial-gradient(ellipse at 90% 95%,rgba(44,91,150,.16),transparent 38%),var(--bg);color:var(--text);font-family:Cairo,sans-serif}
 main{width:min(100%,760px)}
 .brand{width:58px;height:58px;display:grid;place-items:center;margin:0 auto 18px;border:1px solid #53d6e877;border-radius:18px;color:var(--cyan);font-size:20px;font-weight:900;background:#0b2035}
-h1{text-align:center;font-size:clamp(24px,5vw,34px)}
 .subtitle{text-align:center;color:var(--muted);font-size:14px;line-height:2}
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}
-.card{min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px;text-align:center;text-decoration:none;color:var(--text);border:1px solid var(--line);border-radius:20px;background:linear-gradient(150deg,#13304d,#091c30);transition:.18s}
+.card{min-height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;border:1px solid var(--line);border-radius:20px;background:linear-gradient(150deg,#13304d,#091c30);transition:.18s}
 .card:hover{transform:translateY(-4px);border-color:#53d6e8aa}
 .symbol{width:60px;height:60px;display:grid;place-items:center;margin-bottom:14px;border:1px solid #53d6e855;border-radius:18px;background:#53d6e814;color:var(--cyan);font-size:28px}
 .card strong{font-size:22px}
-.card span:last-child{margin-top:7px;color:var(--muted);font-size:12px}
-@media(max-width:560px){.cards{grid-template-columns:1fr}.card{min-height:165px}}
+.description{margin:10px 0 20px;color:var(--muted);font-size:13px;line-height:2}
+.start-button{display:inline-flex;align-items:center;justify-content:center;min-width:150px;padding:10px 22px;border:1px solid #53d6e8;border-radius:12px;background:linear-gradient(135deg,#53d6e8,#36a9ca);color:#061827;font:800 14px Cairo,sans-serif;text-decoration:none;transition:.18s}
+.start-button:hover{filter:brightness(1.08);transform:translateY(-2px)}
+@media(max-width:560px){.cards{grid-template-columns:1fr}.card{min-height:230px}}
 </style>
 </head>
 <body>
 <main>
 <div class="brand">AQX</div>
-<h1>التحقق الأمني واختيار الصفة</h1>
 <p class="subtitle">اختر مسارك في AQX Advertising، وانطلق نحو فرص جديدة للنمو وتحقيق أهدافك الرقمية.</p>
 <section class="cards" id="role-cards" aria-label="اختيار الصفة">
-<a class="card" href="./publisher-terms.html"><span class="symbol">▤</span><strong>ناشر</strong><span>ابدأ كناشر، وحوّل مساحاتك الرقمية إلى فرص لتحقيق العائد.</span></a>
-<a class="card" href="./advertiser-terms.html"><span class="symbol">◎</span><strong>معلن</strong><span>ابدأ كمعلن، ووسّع حضور علامتك التجارية أمام جمهورك المستهدف.</span></a>
+<article class="card">
+<span class="symbol" aria-hidden="true">▤</span>
+<strong>ناشر</strong>
+<p class="description">حوّل منصتك الرقمية إلى فرصة للنمو وتحقيق العائد. انضم إلى شبكة ناشري AQX، واستفد من فرص إعلانية تساعدك على تنمية أرباحك وتوسيع حضور محتواك.</p>
+<a class="start-button" href="./publisher-terms.html">ابدأ كناشر</a>
+</article>
+<article class="card">
+<span class="symbol" aria-hidden="true">◎</span>
+<strong>معلن</strong>
+<p class="description">وسّع نطاق علامتك التجارية، ووصل برسالتك إلى جمهور أوسع. أطلق حملاتك عبر AQX Advertising، واستفد من فرص إعلانية تدعم حضورك وتساعدك على تحقيق أهدافك التسويقية.</p>
+<a class="start-button" href="./advertiser-terms.html">ابدأ كمعلن</a>
+</article>
 </section>
 </main>
 </body>
