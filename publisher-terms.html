@@ -34,8 +34,51 @@ a{color:var(--cyan);text-decoration:underline;text-underline-offset:3px}
 <h2>16. أحكام عامة</h2><p>إذا بطل حكم من هذه الشروط، تبقى الأحكام الأخرى نافذة بالقدر القانوني. عدم ممارسة AQX لحق لا يعد تنازلًا عنه. لا يجوز للناشر نقل حسابه أو حقوقه أو التزاماته دون موافقة مكتوبة. تشكل هذه الشروط مع السياسات والإشعارات المعروضة جزءًا من الاتفاق، وتُفسر بما لا ينتقص من الحقوق القانونية الإلزامية.</p>
 <h2>17. الإقرار</h2><p>يقر الناشر بأنه قرأ هذه الشروط وفهمها، وأنه يملك صلاحية الانضمام والالتزام بها، وأن البيانات التي يقدمها صحيحة، وأنه لن يستخدم الخدمة لتوليد نشاط أو محتوى مخالف.</p>
 <hr style="border:0;border-top:1px solid #ffffff22;margin:26px 0"><h2>الموافقة على المستندات</h2><p>الموافقة على كل مستند مستقلة ومطلوبة لتفعيل شخصية الناشر.</p><form id="accept-form"><label class="consent"><input id="agree-terms" type="checkbox" disabled><span>أوافق على <strong>شروط وأحكام الناشر</strong> الواردة في هذه الصفحة.</span></label><label class="consent"><input id="agree-privacy" type="checkbox" disabled><span>قرأت وأوافق على <a href="./privacy-policy.html" target="_blank" rel="noopener">سياسة الخصوصية</a> المشتركة لخدمة AQX Advertising.</span></label><div class="meta" id="terms-version">جارٍ تحميل الإصدارات القانونية المعتمدة…</div><button class="btn" id="accept" type="submit" disabled>أوافق وأتابع إلى لوحة التحكم</button><div class="msg" id="message" role="status" aria-live="polite"></div></form><div class="actions"><a class="btn secondary" href="./security-check.html">العودة لاختيار الصفة</a></div></article><div class="meta">AQX Advertising · الإصدار 1.0.0 · 27 نوفمبر 2026</div></main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
-(()=>{const U="https://fkiokwwztbyztleeuwks.supabase.co",K="sb_publishable_4DCXObCqPUoNnI8ANOo8dA_nRAg0y5_",API=U+"/functions/v1/aqx-identity";const client=window.supabase.createClient(U,K,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});const $=id=>document.getElementById(id);let versions=null,role='publisher';const dash=role==="publisher"?"./publisher-dashboard.html":"./advertiser-dashboard.html";async function call(path,body){const {data:{session}}=await client.auth.getSession();if(!session?.access_token)throw Error("LOGIN_REQUIRED");const r=await fetch(API+path,{method:"POST",headers:{"Content-Type":"application/json","apikey":K,Authorization:"Bearer "+session.access_token},body:JSON.stringify(body||{})});const j=await r.json().catch(()=>({}));if(!r.ok||j.success===false)throw Error(j.error||"REQUEST_FAILED");return j}
+(()=>{const U="https://fkiokwwztbyztleeuwks.supabase.co",K="sb_publishable_4DCXObCqPUoNnI8ANOo8dA_nRAg0y5_",API=U+"/functions/v1/aqx-identity";const client=window.supabase.createClient(U,K,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+async function installAdvertisingGuard(required){
+ const login="./advertising-login.html?reason=security";
+ const current=await client.auth.getSession();
+ const user=current.data?.session?.user;
+ if(!user){if(required)location.replace(login);return !required}
+ const key="aqx_ads_active_tab:"+user.id;
+ const activityKey="aqx_ads_last_activity:"+user.id;
+ const owner=(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random().toString(36).slice(2));
+ const now=Date.now();
+ let lock=null;
+ try{lock=JSON.parse(localStorage.getItem(key)||"null")}catch{}
+ if(lock&&lock.owner!==owner&&now-Number(lock.at||0)<10000){location.replace(login);return false}
+ const claim=()=>localStorage.setItem(key,JSON.stringify({owner,at:Date.now()}));
+ claim();
+ await new Promise(resolve=>setTimeout(resolve,120));
+ try{lock=JSON.parse(localStorage.getItem(key)||"null")}catch{lock=null}
+ if(!lock||lock.owner!==owner){location.replace(login);return false}
+ let last=Number(localStorage.getItem(activityKey)||now);
+ if(!Number.isFinite(last)||last>now)last=now;
+ const mark=()=>{last=Date.now();try{localStorage.setItem(activityKey,String(last))}catch{}};
+ const activity=["pointerdown","keydown","touchstart","wheel","click"];
+ activity.forEach(name=>addEventListener(name,mark,{passive:true}));
+ const heartbeat=setInterval(()=>{
+  if(Date.now()-last>=15*60*1000){
+   clearInterval(heartbeat);
+   activity.forEach(name=>removeEventListener(name,mark));
+   client.auth.signOut({scope:"local"}).finally(()=>location.replace(login));
+   return;
+  }
+  try{
+   const latest=JSON.parse(localStorage.getItem(key)||"null");
+   if(!latest||latest.owner!==owner){clearInterval(heartbeat);location.replace(login);return}
+   claim();
+  }catch{clearInterval(heartbeat);location.replace(login)}
+ },2000);
+ addEventListener("pagehide",()=>{
+  clearInterval(heartbeat);
+  activity.forEach(name=>removeEventListener(name,mark));
+  try{const latest=JSON.parse(localStorage.getItem(key)||"null");if(latest?.owner===owner)localStorage.removeItem(key)}catch{}
+ },{once:true});
+ return true;
+}
+const $=id=>document.getElementById(id);let versions=null,role='publisher';const dash=role==="publisher"?"./publisher-dashboard.html":"./advertiser-dashboard.html";async function call(path,body){const {data:{session}}=await client.auth.getSession();if(!session?.access_token)throw Error("LOGIN_REQUIRED");const r=await fetch(API+path,{method:"POST",headers:{"Content-Type":"application/json","apikey":K,Authorization:"Bearer "+session.access_token},body:JSON.stringify(body||{})});const j=await r.json().catch(()=>({}));if(!r.ok||j.success===false){if(r.status===401||r.status===403){await client.auth.signOut({scope:"local"});location.replace("./advertising-login.html?reason=security");throw Error("SESSION_REJECTED")}throw Error(j.error||"REQUEST_FAILED")};return j}
 async function init(){try{const s=await call("/v1/advertising/onboarding/status");versions=s.active_versions||{};const record=s.roles?.[role];const tv=role==="publisher"?versions.publisher_terms:versions.advertiser_terms;if(record&&record.terms_version===tv&&record.privacy_version===versions.privacy){location.replace(dash);return}$("terms-version").textContent="إصدار الشروط: "+(tv||"غير متاح")+" · إصدار سياسة الخصوصية: "+(versions.privacy||"غير متاح");$("agree-terms").disabled=false;$("agree-privacy").disabled=false;$("accept").disabled=false}catch(e){$("message").textContent=e.message==="LOGIN_REQUIRED"?"انتهت جلسة الدخول. سجّل الدخول مرة أخرى.":"تعذر التحقق من حالة الموافقات المركزية. أعد المحاولة لاحقًا.";$("message").className="msg error"}}
 $("accept-form").addEventListener("submit",async e=>{e.preventDefault();$("message").className="msg";if(!$("agree-terms").checked||!$("agree-privacy").checked){$("message").textContent="يجب الموافقة على الشروط وسياسة الخصوصية معًا.";return}const terms=role==="publisher"?versions?.publisher_terms:versions?.advertiser_terms;if(!terms||!versions?.privacy){$("message").textContent="الإصدارات القانونية غير متاحة.";return}const btn=$("accept");btn.disabled=true;btn.textContent="جارٍ تسجيل الموافقة مركزيًا…";try{await call("/v1/advertising/onboarding/accept",{role,terms_version:terms,privacy_version:versions.privacy,terms_accepted:true,privacy_accepted:true});$("message").textContent="تم تسجيل موافقتك وتفعيل الشخصية. جارٍ فتح لوحة التحكم…";$("message").className="msg success";location.assign(dash)}catch(err){$("message").textContent="تعذر تسجيل الموافقة: "+err.message;$("message").className="msg error";btn.disabled=false;btn.textContent="أوافق وأتابع إلى لوحة التحكم"}});
-init()})();
+installAdvertisingGuard(true).then(ok=>{if(ok)init()})})();
 </script></body></html>
