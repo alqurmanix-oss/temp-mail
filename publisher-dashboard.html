@@ -7,8 +7,9 @@
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./advertising-session-guard.js"></script>
 <script>
-(()=>{const U="https://fkiokwwztbyztleeuwks.supabase.co",K="sb_publishable_4DCXObCqPUoNnI8ANOo8dA_nRAg0y5_";const client=window.supabase.createClient(U,K,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+(()=>{const U="https://fkiokwwztbyztleeuwks.supabase.co",K="sb_publishable_4DCXObCqPUoNnI8ANOo8dA_nRAg0y5_";const client=window.AQXAdvertisingSessionGuard.client;
 async function guard(){
  const login="./advertising-login.html?reason=security";
  const current=await client.auth.getSession(),user=current.data?.session?.user;
@@ -25,7 +26,7 @@ async function guard(){
  const heartbeat=setInterval(()=>{if(Date.now()-last>=900000){clearInterval(heartbeat);client.auth.signOut({scope:"local"}).finally(()=>location.replace(login));return}
  try{const x=JSON.parse(localStorage.getItem(key)||"null");if(!x||x.owner!==owner){clearInterval(heartbeat);location.replace(login);return}claim()}catch{clearInterval(heartbeat);location.replace(login)}},2000);
  addEventListener("pagehide",()=>{clearInterval(heartbeat);events.forEach(n=>removeEventListener(n,mark));try{const x=JSON.parse(localStorage.getItem(key)||"null");if(x?.owner===owner)localStorage.removeItem(key)}catch{}},{once:true});
-}guard().catch(()=>location.replace("./advertising-login.html?reason=security"));
+}window.AQXAdvertisingSessionGuard.start(true).then(ok=>ok?guard():false).catch(()=>location.replace("./advertising-login.html?reason=security"));
 })();
 </script>
 </body>
