@@ -25,6 +25,7 @@ main{width:min(100%,760px)}
 .start-button:hover{filter:brightness(1.08);transform:translateY(-2px)}
 @media(max-width:560px){.cards{grid-template-columns:1fr}.card{min-height:230px}}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <main>
@@ -45,5 +46,43 @@ main{width:min(100%,760px)}
 </article>
 </section>
 </main>
+<script>
+(()=>{
+const U="https://fkiokwwztbyztleeuwks.supabase.co";
+const K="sb_publishable_4DCXObCqPUoNnI8ANOo8dA_nRAg0y5_";
+const API=U+"/functions/v1/aqx-identity";
+const client=window.supabase.createClient(U,K,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+let session=null;
+async function init(){
+ const result=await client.auth.getSession();
+ session=result.data?.session||null;
+}
+async function openRole(role,link){
+ link.style.pointerEvents="none";
+ if(!session?.access_token){location.assign(link.href);return}
+ try{
+  const r=await fetch(API+"/v1/advertising/onboarding/status",{
+   method:"POST",
+   headers:{"Content-Type":"application/json","apikey":K,Authorization:"Bearer "+session.access_token},
+   body:"{}"
+  });
+  const j=await r.json();
+  if(!r.ok||j.success!==true)throw Error(j.error||"STATUS_UNAVAILABLE");
+  const versions=j.active_versions||{},record=j.roles?.[role];
+  const terms=role==="publisher"?versions.publisher_terms:versions.advertiser_terms;
+  const accepted=record&&record.terms_version===terms&&record.privacy_version===versions.privacy;
+  location.assign(accepted?(role==="publisher"?"./publisher-dashboard.html":"./advertiser-dashboard.html"):(role==="publisher"?"./publisher-terms.html":"./advertiser-terms.html"));
+ }catch(e){
+  link.style.pointerEvents="";
+  alert("تعذر التحقق من حالة الانضمام. حاول مرة أخرى بعد التأكد من تسجيل الدخول.");
+ }
+}
+document.querySelectorAll(".start-button").forEach(link=>{
+ const role=link.getAttribute("href").includes("publisher")?"publisher":"advertiser";
+ link.addEventListener("click",e=>{e.preventDefault();openRole(role,link)});
+});
+init();
+})();
+</script>
 </body>
 </html>
