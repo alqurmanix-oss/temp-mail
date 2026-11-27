@@ -3,31 +3,89 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>لوحة تحكم المعلن | AQX Advertising</title>
+<meta name="theme-color" content="#071426">
+<title>لوحة المعلن | AQX Advertising</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#071321;--panel:#0d2034;--panel2:#102943;--line:rgba(160,190,220,.15);--text:#f3f7fc;--muted:#9fb1c4;--cyan:#55d7e8;--blue:#5b9df2;--gold:#e5c17a;--green:#76d9b2;--shadow:0 18px 55px #0003}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 75% -10%,#174565 0,transparent 34%),radial-gradient(ellipse at 0% 75%,#102c47 0,transparent 30%),var(--bg);color:var(--text);font-family:Cairo,Arial,sans-serif}
+a{color:inherit;text-decoration:none}button{font:inherit}.layout{min-height:100vh;display:grid;grid-template-columns:260px minmax(0,1fr)}
+.sidebar{position:sticky;top:0;height:100vh;padding:25px 17px;border-left:1px solid var(--line);background:#08192bd9;backdrop-filter:blur(16px);display:flex;flex-direction:column;z-index:5}
+.brand{display:flex;align-items:center;gap:12px;padding:3px 8px 27px}.mark{width:43px;height:43px;border:1px solid #55d7e855;border-radius:13px;background:#55d7e812;display:grid;place-items:center;color:var(--cyan);font-weight:900;font-size:14px}.brand strong{display:block;font-size:13px;letter-spacing:1px}.brand small{display:block;color:var(--muted);font-size:10px}
+.nav-label{padding:9px 12px 7px;color:#70869c;font-size:10px;font-weight:800;letter-spacing:1px}.nav{display:grid;gap:5px}.nav a{display:flex;align-items:center;gap:11px;padding:10px 12px;border:1px solid transparent;border-radius:10px;color:#b8c8d8;font-size:12px;transition:.2s}.nav a:hover,.nav a.active{background:#55d7e811;border-color:#55d7e826;color:#eafaff}.nav a.active{box-shadow:inset -2px 0 var(--cyan)}.nav-icon{width:20px;text-align:center;color:var(--cyan);font-size:15px}.soon{margin-right:auto;padding:2px 7px;border:1px solid #e5c17a35;border-radius:20px;color:var(--gold);font-size:9px}
+.sidebar-bottom{margin-top:auto;padding:15px 12px;border:1px solid var(--line);border-radius:13px;background:#ffffff05}.sidebar-bottom b{font-size:11px}.sidebar-bottom p{margin:5px 0 0;color:var(--muted);font-size:10px;line-height:1.9}
+main{min-width:0;padding:27px clamp(16px,3vw,42px) 55px;max-width:1600px;width:100%;margin:auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:27px}.crumb{font-size:11px;color:var(--muted)}.crumb strong{color:#e8f3fb}.top-actions{display:flex;align-items:center;gap:9px}.icon-btn{width:38px;height:38px;border:1px solid var(--line);border-radius:11px;background:#ffffff06;color:#c9d7e4;display:grid;place-items:center}.profile{display:flex;align-items:center;gap:9px;padding:5px 10px 5px 5px;border:1px solid var(--line);border-radius:30px;color:#dbe6ef;font-size:11px}.avatar{width:29px;height:29px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(140deg,#1d6278,#31528c);font-weight:900;color:#eaffff}
+.heading{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:22px}.eyebrow{color:var(--cyan);font-size:10px;font-weight:900;letter-spacing:1.4px}.heading h1{font-size:clamp(23px,3vw,32px);margin:5px 0 4px;line-height:1.5}.heading p{margin:0;color:var(--muted);font-size:12px}.primary{border:1px solid #55d7e855;border-radius:11px;padding:10px 17px;background:linear-gradient(110deg,#45c7d8,#438fdf);color:#061827;font-weight:900;font-size:12px;opacity:.55;cursor:not-allowed;white-space:nowrap}
+.launch{display:flex;align-items:center;gap:14px;padding:17px 19px;margin-bottom:21px;border:1px solid #e5c17a3d;border-radius:15px;background:linear-gradient(100deg,#e5c17a10,#55d7e808)}.launch-icon{width:39px;height:39px;flex:0 0 auto;border:1px solid #e5c17a55;border-radius:12px;display:grid;place-items:center;color:var(--gold);font-size:18px}.launch-copy{flex:1}.launch-copy b{display:block;color:#f0d9a8;font-size:12px}.launch-copy span{display:block;color:#b7b6aa;font-size:10px;line-height:1.9;margin-top:2px}.launch-tag{border:1px solid #e5c17a55;border-radius:30px;padding:5px 10px;color:var(--gold);font-size:10px;font-weight:800;white-space:nowrap}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:27px 0 12px}.section-title h2{font-size:14px;margin:0}.section-title span{font-size:10px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.stat{padding:17px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#102943c9,#0b1d30d9);box-shadow:var(--shadow);min-width:0}.stat-top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:10px}.stat-icon{width:31px;height:31px;border-radius:9px;background:#55d7e811;color:var(--cyan);display:grid;place-items:center;font-size:15px}.stat strong{display:block;margin:12px 0 2px;font-size:25px;letter-spacing:.5px;color:#f4f8fc}.stat small{font-size:9px;color:#8297aa}
+.grid-main{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,.85fr);gap:14px}.panel{border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#102943d9,#0b1d30e8);box-shadow:var(--shadow);padding:18px;min-width:0}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.panel-head h3{font-size:12px;margin:0}.muted{color:var(--muted);font-size:10px}.empty-chart{height:185px;border:1px dashed #7893aa35;border-radius:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:repeating-linear-gradient(to bottom,transparent 0,transparent 44px,#ffffff08 45px)}.empty-chart .chart-icon{font-size:25px;color:#6e91a9;margin-bottom:8px}.empty-chart b{font-size:11px;color:#cbd8e4}.empty-chart span{font-size:9px;color:#8094a8;margin-top:5px}
+.mini-list{display:grid;gap:11px}.mini-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:10px;border-bottom:1px solid #ffffff0d}.mini-row:last-child{border:0;padding:0}.mini-row span{font-size:10px;color:#aebfd0}.mini-row b{font-size:11px;color:#dce7f0}.empty-state{padding:20px 12px;text-align:center;border:1px dashed #7893aa35;border-radius:11px}.empty-state b{display:block;font-size:11px}.empty-state p{font-size:9px;color:var(--muted);margin:5px 0 0;line-height:1.9}
+.features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.feature{display:flex;gap:12px;padding:15px;border:1px solid var(--line);border-radius:13px;background:#0d2038b8;min-width:0}.feature-icon{width:35px;height:35px;flex:0 0 auto;border-radius:10px;background:#55d7e811;color:var(--cyan);display:grid;place-items:center}.feature b{display:block;font-size:11px}.feature p{margin:3px 0 0;color:var(--muted);font-size:9px;line-height:1.8}.feature em{font-style:normal;color:var(--gold);font-size:9px;display:block;margin-top:5px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}.table{width:100%;border-collapse:collapse;min-width:500px}.table th,.table td{padding:12px 14px;text-align:right;border-bottom:1px solid #ffffff0d;font-size:10px}.table th{color:#8299ad;background:#ffffff04;font-weight:700}.table td{color:#c4d1dd}.table tr:last-child td{border-bottom:0}.empty-table{text-align:center!important;padding:25px!important;color:#8297aa!important}
+.footer{margin-top:27px;padding:15px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;color:#71869a;font-size:9px}
+@media(max-width:1100px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.features{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:220px minmax(0,1fr)}}
+@media(max-width:760px){.layout{display:block}.sidebar{position:relative;height:auto;padding:12px 14px;border-left:0;border-bottom:1px solid var(--line)}.brand{padding:0 3px 12px}.nav-label,.sidebar-bottom{display:none}.nav{display:flex;overflow:auto;padding-bottom:2px}.nav a{white-space:nowrap;padding:8px 10px}.nav a:not(.active){display:none}.nav a.active{display:flex}.nav a.active:after{content:"القائمة";font-size:9px;color:var(--muted);margin-right:4px}.layout main{padding-top:18px}.topbar{margin-bottom:20px}.grid-main{grid-template-columns:1fr}}
+@media(max-width:520px){.heading{align-items:flex-start;flex-direction:column}.primary{width:100%}.launch{align-items:flex-start;flex-wrap:wrap}.launch-tag{margin-right:53px}.stats{gap:9px}.stat{padding:13px}.stat strong{font-size:21px}.features{grid-template-columns:1fr}.topbar{align-items:flex-start}.profile span{display:none}.footer{flex-direction:column}}
+</style>
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./advertising-session-guard.js"></script>
-<script>
-(()=>{const U="https://fkiokwwztbyztleeuwks.supabase.co",K="sb_publishable_4DCXObCqPUoNnI8ANOo8dA_nRAg0y5_";const client=window.AQXAdvertisingSessionGuard.client;
-async function guard(){
- const login="./advertising-login.html?reason=security";
- const current=await client.auth.getSession(),user=current.data?.session?.user;
- if(!user){location.replace(login);return}
- const key="aqx_ads_active_tab:"+user.id,activityKey="aqx_ads_last_activity:"+user.id,owner=(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random().toString(36).slice(2)),now=Date.now();
- let lock=null;try{lock=JSON.parse(localStorage.getItem(key)||"null")}catch{}
- if(lock&&lock.owner!==owner&&now-Number(lock.at||0)<10000){location.replace(login);return}
- const claim=()=>localStorage.setItem(key,JSON.stringify({owner,at:Date.now()}));claim();await new Promise(r=>setTimeout(r,120));
- try{lock=JSON.parse(localStorage.getItem(key)||"null")}catch{lock=null}
- if(!lock||lock.owner!==owner){location.replace(login);return}
- let last=Number(localStorage.getItem(activityKey)||now);if(!Number.isFinite(last)||last>now)last=now;
- const mark=()=>{last=Date.now();try{localStorage.setItem(activityKey,String(last))}catch{}},events=["pointerdown","keydown","touchstart","wheel","click"];
- events.forEach(n=>addEventListener(n,mark,{passive:true}));
- const heartbeat=setInterval(()=>{if(Date.now()-last>=900000){clearInterval(heartbeat);client.auth.signOut({scope:"local"}).finally(()=>location.replace(login));return}
- try{const x=JSON.parse(localStorage.getItem(key)||"null");if(!x||x.owner!==owner){clearInterval(heartbeat);location.replace(login);return}claim()}catch{clearInterval(heartbeat);location.replace(login)}},2000);
- addEventListener("pagehide",()=>{clearInterval(heartbeat);events.forEach(n=>removeEventListener(n,mark));try{const x=JSON.parse(localStorage.getItem(key)||"null");if(x?.owner===owner)localStorage.removeItem(key)}catch{}},{once:true});
-}window.AQXAdvertisingSessionGuard.start(true).then(ok=>ok?guard():false).catch(()=>location.replace("./advertising-login.html?reason=security"));
-})();
-</script>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="#overview"><span class="mark">AQX</span><span><strong>AQX ADVERTISING</strong><small>مساحة المعلنين</small></span></a>
+  <div class="nav-label">القائمة الرئيسية</div>
+  <nav class="nav" aria-label="القائمة الرئيسية">
+    <a class="active" href="#overview"><span class="nav-icon">▦</span>نظرة عامة</a>
+    <a href="#campaigns"><span class="nav-icon">◈</span>حملاتي <i class="soon">قريبًا</i></a>
+    <a href="#create"><span class="nav-icon">＋</span>إنشاء حملة <i class="soon">قريبًا</i></a>
+    <a href="#audience"><span class="nav-icon">◎</span>الجمهور والاستهداف</a>
+    <a href="#creative"><span class="nav-icon">▧</span>المواد الإعلانية</a>
+    <a href="#billing"><span class="nav-icon">◇</span>الميزانية والفوترة</a>
+    <a href="#reports"><span class="nav-icon">▤</span>التقارير والتحليلات</a>
+  </nav>
+  <div class="nav-label" style="margin-top:17px">إدارة الحساب</div>
+  <nav class="nav">
+    <a href="#team"><span class="nav-icon">♧</span>الفريق والصلاحيات</a>
+    <a href="#settings"><span class="nav-icon">⚙</span>إعدادات المعلن</a>
+    <a href="#support"><span class="nav-icon">؟</span>المساعدة والدعم</a>
+  </nav>
+  <div class="sidebar-bottom"><b>مركز المساعدة</b><p>ستتوفر إرشادات إنشاء الحملات وإدارة الفوترة وسياسات الإعلانات مع إطلاق الخدمة.</p></div>
+</aside>
+<main id="overview">
+  <div class="topbar"><div class="crumb">AQX Advertising <span> / </span> <strong>لوحة المعلن</strong></div><div class="top-actions"><div class="icon-btn" aria-label="الإشعارات">♧</div><div class="profile"><div class="avatar">A</div><span>حساب المعلن</span></div></div></div>
+  <header class="heading"><div><div class="eyebrow">ADVERTISER WORKSPACE</div><h1>مساحة المعلن</h1><p>كل أدوات حملاتك الإعلانية وميزانياتك ونتائجك في مكان واحد.</p></div><button class="primary" type="button" disabled>＋ إنشاء حملة جديدة</button></header>
+  <section class="launch" aria-label="حالة الإطلاق"><div class="launch-icon">◷</div><div class="launch-copy"><b>منظومة AQX Advertising في مرحلة ما قبل الإطلاق</b><span>تم تجهيز مساحة عمل المعلن. إنشاء الحملات، الدفع، النشر، واحتساب النتائج ستُفعّل عند الإطلاق الرسمي بعد اكتمال ربط خدمات التشغيل.</span></div><div class="launch-tag">قريبًا</div></section>
+  <div class="section-title"><h2>ملخص الأداء</h2><span>ستظهر البيانات الفعلية بعد تشغيل الحملات</span></div>
+  <section class="stats" aria-label="ملخص الأداء">
+    <article class="stat"><div class="stat-top"><span>إجمالي الإنفاق</span><span class="stat-icon">◇</span></div><strong>—</strong><small>لا توجد بيانات إنفاق بعد</small></article>
+    <article class="stat"><div class="stat-top"><span>مرات الظهور</span><span class="stat-icon">◉</span></div><strong>—</strong><small>تُحدّث عند بدء عرض الإعلانات</small></article>
+    <article class="stat"><div class="stat-top"><span>النقرات</span><span class="stat-icon">↗</span></div><strong>—</strong><small>قياس النقرات الصالحة فقط</small></article>
+    <article class="stat"><div class="stat-top"><span>التحويلات</span><span class="stat-icon">◎</span></div><strong>—</strong><small>حسب إعداد قياس كل حملة</small></article>
+  </section>
+  <div class="section-title" id="reports"><h2>الأداء والتحليلات</h2><span>نطاق زمني: —</span></div>
+  <section class="grid-main">
+    <article class="panel"><div class="panel-head"><h3>أداء الحملات بمرور الوقت</h3><span class="muted">الظهور · النقرات · التحويلات</span></div><div class="empty-chart"><div class="chart-icon">⌁</div><b>سيظهر الرسم البياني بعد تشغيل أول حملة</b><span>لن يتم عرض أرقام أو نتائج تقديرية على أنها أداء فعلي.</span></div></article>
+    <article class="panel"><div class="panel-head"><h3>ملخص الحساب</h3><span class="muted">الحالة الحالية</span></div><div class="mini-list"><div class="mini-row"><span>حالة المنظومة</span><b style="color:var(--gold)">قبل الإطلاق</b></div><div class="mini-row"><span>الحملات النشطة</span><b>—</b></div><div class="mini-row"><span>الرصيد المتاح</span><b>—</b></div><div class="mini-row"><span>الفواتير المستحقة</span><b>—</b></div><div class="mini-row"><span>حالة المراجعة</span><b>غير مفعّلة</b></div></div></article>
+  </section>
+  <div class="section-title" id="campaigns"><h2>الحملات الإعلانية</h2><span>إدارة ومتابعة جميع حملاتك من مكان واحد</span></div>
+  <section class="panel"><div class="table-wrap"><table class="table"><thead><tr><th>اسم الحملة</th><th>الهدف</th><th>الميزانية</th><th>الحالة</th><th>النتائج</th></tr></thead><tbody><tr><td class="empty-table" colspan="5">لا توجد حملات حتى الآن — ستتمكن من إنشاء حملتك الأولى عند إطلاق الخدمة.</td></tr></tbody></table></div></section>
+  <div class="section-title"><h2>أدوات المعلن</h2><span>وحدات مساحة العمل</span></div>
+  <section class="features">
+    <article class="feature" id="create"><div class="feature-icon">＋</div><div><b>إنشاء وإدارة الحملات</b><p>إنشاء الحملات وتحديد الهدف والميزانية والمدة وجدولة التشغيل والإيقاف.</p><em>تُفعّل عند الإطلاق</em></div></article>
+    <article class="feature" id="audience"><div class="feature-icon">◎</div><div><b>الجمهور والاستهداف</b><p>إعداد الدول والمناطق واللغات والأجهزة وشرائح الجمهور وخيارات الاستهداف المتاحة.</p><em>تُفعّل عند الإطلاق</em></div></article>
+    <article class="feature" id="creative"><div class="feature-icon">▧</div><div><b>مكتبة المواد الإعلانية</b><p>رفع الصور والتصاميم والنصوص والروابط وإدارة نسخ المواد ومراجعتها.</p><em>تُفعّل عند الإطلاق</em></div></article>
+    <article class="feature" id="billing"><div class="feature-icon">◇</div><div><b>الميزانية والفوترة</b><p>إدارة الرصيد وحدود الإنفاق ووسائل الدفع والمعاملات والفواتير والاستردادات.</p><em>تُفعّل عند الإطلاق</em></div></article>
+    <article class="feature"><div class="feature-icon">▤</div><div><b>التقارير والتحليلات</b><p>تقارير الأداء والإنفاق ومؤشرات الظهور والنقرات والتحويلات وتصدير النتائج.</p><em>تُفعّل عند الإطلاق</em></div></article>
+    <article class="feature" id="team"><div class="feature-icon">♧</div><div><b>الفريق والصلاحيات</b><p>إضافة أعضاء الفريق وتحديد أدوارهم وصلاحيات إدارة الحملات والميزانيات.</p><em>تُفعّل عند الإطلاق</em></div></article>
+    <article class="feature" id="settings"><div class="feature-icon">⚙</div><div><b>إعدادات المعلن</b><p>إدارة بيانات النشاط التجاري والتفضيلات والإشعارات وبيانات الفوترة.</p><em>تُفعّل عند الإطلاق</em></div></article>
+    <article class="feature"><div class="feature-icon">✓</div><div><b>مراجعة الإعلانات والسياسات</b><p>متابعة حالة مراجعة المواد وأسباب الرفض وطلبات التعديل والاعتراضات.</p><em>تُفعّل عند الإطلاق</em></div></article>
+    <article class="feature" id="support"><div class="feature-icon">؟</div><div><b>مركز المساعدة والدعم</b><p>الوصول إلى أدلة الاستخدام وفتح طلب دعم ومتابعة الاستفسارات والنزاعات.</p><em>تُفعّل عند الإطلاق</em></div></article>
+  </section>
+  <footer class="footer"><span>AQX ADVERTISING · مساحة المعلن</span><span>واجهة ما قبل الإطلاق · لا توجد حملات أو معاملات تشغيلية معروضة</span></footer>
+</main>
+</div>
 </body>
 </html>
