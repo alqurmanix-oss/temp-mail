@@ -44,6 +44,8 @@ main{min-width:0;padding:27px clamp(16px,3vw,42px) 55px;max-width:1600px;width:1
 body.drawer-open{overflow:hidden}
 @media(max-width:760px){.sidebar{width:min(320px,88vw)!important;height:100dvh!important;max-height:100dvh!important;overflow-y:auto!important;padding:16px!important}.nav{grid-template-columns:1fr!important}.nav a,.nav a:not(.active){min-height:44px}}
 @media(prefers-reduced-motion:reduce){.sidebar,.drawer-backdrop{transition:none}}
+
+.workspace-note{margin-top:28px;padding:18px 2px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.workspace-note strong{font-size:13px;color:#e8f7fc}.workspace-note p{font-size:11px;color:var(--muted);line-height:2;margin:5px 0 0}
 </style>
 </head>
 <body>
@@ -86,25 +88,7 @@ body.drawer-open{overflow:hidden}
     <article class="stat"><div class="stat-top"><span>النقرات</span><span class="stat-icon">↗</span></div><strong>—</strong><small>قياس النقرات الصالحة فقط</small></article>
     <article class="stat"><div class="stat-top"><span>التحويلات</span><span class="stat-icon">◎</span></div><strong>—</strong><small>حسب إعداد قياس كل حملة</small></article>
   </section>
-  <div class="section-title" id="reports"><h2>الأداء والتحليلات</h2><span>نطاق زمني: —</span></div>
-  <section class="grid-main">
-    <article class="panel"><div class="panel-head"><h3>أداء الحملات بمرور الوقت</h3><span class="muted">الظهور · النقرات · التحويلات</span></div><div class="empty-chart"><div class="chart-icon">⌁</div><b>سيظهر الرسم البياني بعد تشغيل أول حملة</b><span>لن يتم عرض أرقام أو نتائج تقديرية على أنها أداء فعلي.</span></div></article>
-    <article class="panel"><div class="panel-head"><h3>ملخص الحساب</h3><span class="muted">نظرة عامة</span></div><div class="mini-list"><div class="mini-row"><span>الحملات النشطة</span><b>—</b></div><div class="mini-row"><span>الرصيد المتاح</span><b>—</b></div><div class="mini-row"><span>الفواتير المستحقة</span><b>—</b></div><div class="mini-row"><span>حالة المراجعة</span><b>—</b></div></div></article>
-  </section>
-  <div class="section-title" id="campaigns"><h2>الحملات الإعلانية</h2><span>إدارة ومتابعة جميع حملاتك من مكان واحد</span></div>
-  <section class="panel"><div class="table-wrap"><table class="table"><thead><tr><th>اسم الحملة</th><th>الهدف</th><th>الميزانية</th><th>الحالة</th><th>النتائج</th></tr></thead><tbody><tr><td class="empty-table" colspan="5">لا توجد حملات حتى الآن — ستتمكن من إنشاء حملتك الأولى عند إطلاق الخدمة.</td></tr></tbody></table></div></section>
-  <div class="section-title"><h2>أدوات المعلن</h2><span>وحدات مساحة العمل</span></div>
-  <section class="features">
-    <article class="feature" id="create"><div class="feature-icon">＋</div><div><b>إنشاء وإدارة الحملات</b><p>إنشاء الحملات وتحديد الهدف والميزانية والمدة وجدولة التشغيل والإيقاف.</p><em>تُفعّل عند الإطلاق</em></div></article>
-    <article class="feature" id="audience"><div class="feature-icon">◎</div><div><b>الجمهور والاستهداف</b><p>إعداد الدول والمناطق واللغات والأجهزة وشرائح الجمهور وخيارات الاستهداف المتاحة.</p><em>تُفعّل عند الإطلاق</em></div></article>
-    <article class="feature" id="creative"><div class="feature-icon">▧</div><div><b>مكتبة المواد الإعلانية</b><p>رفع الصور والتصاميم والنصوص والروابط وإدارة نسخ المواد ومراجعتها.</p><em>تُفعّل عند الإطلاق</em></div></article>
-    <article class="feature" id="billing"><div class="feature-icon">◇</div><div><b>الميزانية والفوترة</b><p>إدارة الرصيد وحدود الإنفاق ووسائل الدفع والمعاملات والفواتير والاستردادات.</p><em>تُفعّل عند الإطلاق</em></div></article>
-    <article class="feature"><div class="feature-icon">▤</div><div><b>التقارير والتحليلات</b><p>تقارير الأداء والإنفاق ومؤشرات الظهور والنقرات والتحويلات وتصدير النتائج.</p><em>تُفعّل عند الإطلاق</em></div></article>
-    <article class="feature" id="team"><div class="feature-icon">♧</div><div><b>الفريق والصلاحيات</b><p>إضافة أعضاء الفريق وتحديد أدوارهم وصلاحيات إدارة الحملات والميزانيات.</p><em>تُفعّل عند الإطلاق</em></div></article>
-    <article class="feature" id="settings"><div class="feature-icon">⚙</div><div><b>إعدادات المعلن</b><p>إدارة بيانات النشاط التجاري والتفضيلات والإشعارات وبيانات الفوترة.</p><em>تُفعّل عند الإطلاق</em></div></article>
-    <article class="feature"><div class="feature-icon">✓</div><div><b>مراجعة الإعلانات والسياسات</b><p>متابعة حالة مراجعة المواد وأسباب الرفض وطلبات التعديل والاعتراضات.</p><em>تُفعّل عند الإطلاق</em></div></article>
-    <article class="feature" id="support"><div class="feature-icon">؟</div><div><b>مركز المساعدة والدعم</b><p>الوصول إلى أدلة الاستخدام وفتح طلب دعم ومتابعة الاستفسارات والنزاعات.</p><em>تُفعّل عند الإطلاق</em></div></article>
-  </section>
+  <section class="workspace-note" aria-label="حالة مساحة المعلن"><div><strong>مساحة عملك جاهزة للتنظيم</strong><p>استخدم القائمة الجانبية للوصول مباشرة إلى كل قسم مستقل. ستظهر البيانات الفعلية داخل صفحاتها عند تفعيل خدمات الإعلانات.</p></div></section>
   <footer class="footer"><span>AQX ADVERTISING · مساحة المعلن</span><span>مساحة إدارة المعلن</span></footer>
 </main>
 </div>
