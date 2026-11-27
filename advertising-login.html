@@ -612,9 +612,15 @@
       setBusy("login-submit", true, "جارٍ التحقق وإنشاء الجلسة…");
       try {
         const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-        if (error || !data?.session?.access_token) {
+        if (error) {
+          const authErrorCode = String(error.code || "").toLowerCase();
+          const authErrorMessage = String(error.message || "").toLowerCase();
+          if (authErrorCode === "email_not_confirmed" || authErrorMessage.includes("email not confirmed")) {
+            throw new Error("EMAIL_NOT_VERIFIED");
+          }
           throw new Error("INVALID_LOGIN_CREDENTIALS");
         }
+        if (!data?.session?.access_token) throw new Error("INVALID_LOGIN_CREDENTIALS");
         const ok = await establishAqxServiceSession(data.session);
         if (ok) {
           showMessage("login-message", "تم اعتماد جلسة AQX Advertising بنجاح. جارٍ الانتقال إلى الفحص الأمني…", "success");
@@ -622,7 +628,9 @@
         }
       } catch (error) {
         const loginCode = error.code || error.message || "LOGIN_FAILED";
-        if (loginCode === "ACCOUNT_SELF_DISABLED") {
+        if (loginCode === "EMAIL_NOT_VERIFIED") {
+          showStatusLinkMessage("login-message", loginErrorMessage(loginCode), "email-verification-pending.html", "فتح صفحة تفعيل البريد");
+        } else if (loginCode === "ACCOUNT_SELF_DISABLED") {
           showStatusLinkMessage("login-message", loginErrorMessage(loginCode), "account-disabled.html", "فتح صفحة إعادة التنشيط");
         } else if (loginCode === "ACCOUNT_ADMIN_DISABLED") {
           showStatusLinkMessage("login-message", loginErrorMessage(loginCode), "account-disabled.html", "فتح تفاصيل تعطيل الحساب");
