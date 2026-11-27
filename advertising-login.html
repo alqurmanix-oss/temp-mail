@@ -115,6 +115,7 @@
             <div class="field">
               <label for="login-email">البريد الإلكتروني</label>
               <input id="login-email" name="email" type="email" autocomplete="username" maxlength="254" placeholder="name@example.com" required>
+              <div class="email-state" id="login-email-state" aria-live="polite"></div>
             </div>
             <div class="field">
               <label for="login-password">كلمة المرور</label>
@@ -472,16 +473,73 @@
       }
     });
 
-    function showStatusLinkMessage(messageId, text, path) {
+    function showStatusLinkMessage(messageId, text, path, linkText = "عرض ملف الحالة") {
       const el = $(messageId);
       el.replaceChildren(document.createTextNode(text + " "));
       const link = document.createElement("a");
       link.href = "./" + path;
-      link.textContent = "عرض ملف الحالة";
+      link.textContent = linkText;
       link.style.cssText = "color:var(--cyan);font-weight:800;text-decoration:underline";
       el.append(link);
       el.className = "message show error";
     }
+    const loginEmailState = $("login-email-state");
+    let loginEmailCheckTimer = null;
+    let loginEmailCheckSequence = 0;
+    function loginEmailFeedback(text, kind = "info", path = "") {
+      loginEmailState.className = "email-state " + kind;
+      loginEmailState.replaceChildren(document.createTextNode(text));
+      if (path && /^[a-z0-9-]+\\.html$/i.test(path)) {
+        const link = document.createElement("a");
+        link.href = "./" + path;
+        link.textContent = " · فتح صفحة الحالة";
+        loginEmailState.append(link);
+      }
+    }
+    $("login-email").addEventListener("input", () => {
+      clearTimeout(loginEmailCheckTimer);
+      const email = $("login-email").value.trim().toLowerCase();
+      loginEmailState.textContent = "";
+      loginEmailState.className = "email-state";
+      if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) return;
+      loginEmailFeedback("جارٍ التحقق من حالة البريد لدى AQX Identity…", "info");
+      const sequence = ++loginEmailCheckSequence;
+      loginEmailCheckTimer = setTimeout(async () => {
+        const status = await checkEmailStatus(email);
+        if (sequence !== loginEmailCheckSequence || $("login-email").value.trim().toLowerCase() !== email) return;
+        if (!status) return loginEmailFeedback("تعذر جلب حالة البريد الآن؛ سيظل التحقق النهائي عند تسجيل الدخول عبر الهوية المركزية.", "info");
+        switch (status.status) {
+          case "registered":
+            loginEmailFeedback("تم التعرف على حساب AQX. أدخل كلمة المرور للمتابعة.", "success");
+            break;
+          case "verification_pending":
+            loginEmailFeedback("هذا الحساب لم يُفعّل بعد. فعّل بريدك الإلكتروني أولًا قبل تسجيل الدخول.", "error", status.details_path || "email-verification-pending.html");
+            break;
+          case "reserved":
+            loginEmailFeedback("هذا البريد محجوز حاليًا. راجع سبب الحجز قبل المتابعة.", "error", status.details_path || "email-reserved.html");
+            break;
+          case "blocked":
+            loginEmailFeedback("هذا البريد غير مسموح له باستخدام التسجيل المركزي.", "error", status.details_path || "email-registration-blocked.html");
+            break;
+          case "abuse_blocked":
+            loginEmailFeedback("تم تقييد هذا البريد وفق ضوابط الحماية المركزية.", "error", status.details_path || "email-abuse-blocked.html");
+            break;
+          case "available":
+            loginEmailFeedback("لا يوجد حساب مسجل بهذا البريد حتى الآن. يمكنك إنشاء حساب من تبويب التسجيل.", "info");
+            break;
+          default:
+            loginEmailFeedback("حالة البريد غير متاحة حاليًا؛ سيحسم نظام الهوية النتيجة عند المتابعة.", "info");
+        }
+      }, 480);
+    });
+    $("login-email").addEventListener("blur", () => {
+      clearTimeout(loginEmailCheckTimer);
+      const email = $("login-email").value.trim().toLowerCase();
+      if (/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+        $("login-email").dispatchEvent(new Event("input"));
+      }
+    });
+
     function loginErrorMessage(code) {
       const map = {
         EMAIL_NOT_VERIFIED: "يجب تأكيد البريد الإلكتروني من رسالة AQX قبل إنشاء جلسة الدخول.",
@@ -505,7 +563,20 @@
         return_to: SERVICE_RETURN_TO
       }, authSession.access_token);
       if (started.restricted === true) {
-        showMessage("login-message", "تم التحقق من الحساب، لكن مستوى الوصول الحالي مقيّد. لن نفتح لوحة الخدمة قبل استكمال متطلبات AQX Identity.", "error");
+        if (!started.restricted_session_token) throw new Error("RESTRICTED_SESSION_CREATION_FAILED");
+        sessionStorage.setItem("aqx_restricted_session_token", started.restricted_session_token);
+        sessionStorage.setItem("aqx_restriction_data", JSON.stringify(started.restriction || {}));
+        const restrictionType = String(started.restriction?.target_type || started.restriction?.type || started.restriction?.status || "").toLowerCase();
+        const isSelfDisabled = restrictionType.includes("self") || restrictionType.includes("user_disabled");
+        const isAdminDisabled = restrictionType.includes("admin") || restrictionType.includes("disabled");
+        const statusPath = isSelfDisabled || isAdminDisabled ? "account-disabled.html" : "account-suspended.html";
+        const message = isSelfDisabled
+          ? "تم إنشاء جلسة وصول مؤقتة مقيّدة. حسابك معطّل بناءً على طلب صاحبه، ويلزم طلب إعادة التنشيط."
+          : isAdminDisabled
+            ? "تم إنشاء جلسة وصول مؤقتة مقيّدة. الحساب معطّل إداريًا، ويرجى مراجعة دعم AQX."
+            : "تم إنشاء جلسة وصول مؤقتة مقيّدة لهذا الحساب. لن تُفتح خدمات الإعلانات قبل مراجعة سبب التقييد.";
+        showStatusLinkMessage("login-message", message, statusPath, "فتح صفحة حالة الحساب");
+        $("system-status").textContent = "جلسة مؤقتة مقيّدة — لا تتضمن صلاحية دخول إلى خدمة الإعلانات";
         return false;
       }
       if (!started.aqx_session_token || !started.login_proof?.token || !started.redirect_ticket) {
@@ -551,10 +622,12 @@
         }
       } catch (error) {
         const loginCode = error.code || error.message || "LOGIN_FAILED";
-        if (loginCode === "ACCOUNT_SELF_DISABLED" || loginCode === "ACCOUNT_ADMIN_DISABLED") {
-          showStatusLinkMessage("login-message", loginErrorMessage(loginCode), "account-disabled.html");
-        } else if (loginCode === "CENTRAL_ACCESS_BLOCKED" || loginCode === "ACCOUNT_SUSPENDED") {
-          showStatusLinkMessage("login-message", loginErrorMessage(loginCode), "account-suspended.html");
+        if (loginCode === "ACCOUNT_SELF_DISABLED") {
+          showStatusLinkMessage("login-message", loginErrorMessage(loginCode), "account-disabled.html", "فتح صفحة إعادة التنشيط");
+        } else if (loginCode === "ACCOUNT_ADMIN_DISABLED") {
+          showStatusLinkMessage("login-message", loginErrorMessage(loginCode), "account-disabled.html", "فتح تفاصيل تعطيل الحساب");
+        } else if (loginCode === "CENTRAL_ACCESS_BLOCKED" || loginCode === "ACCOUNT_SUSPENDED" || loginCode === "ACCOUNT_SECURITY_RESTRICTED") {
+          showStatusLinkMessage("login-message", loginErrorMessage(loginCode), "account-suspended.html", "فتح صفحة حالة الحساب");
         } else {
           showMessage("login-message", error.code ? loginErrorMessage(error.code) : (
             error.message === "INVALID_LOGIN_CREDENTIALS"
