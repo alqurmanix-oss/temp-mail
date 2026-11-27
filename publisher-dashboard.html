@@ -66,16 +66,24 @@ h2{font-size:21px;margin:7px 0 9px}
   <section class="identifier" aria-labelledby="publisher-id-label">
     <label class="identifier-label" id="publisher-id-label">معرّف الناشر</label>
     <div class="id-row">
-      <output class="id-value" id="publisher-id" aria-live="polite">سيظهر بعد تفعيل عضوية الناشر</output>
+      <output class="id-value" id="publisher-id" aria-live="polite">جارٍ تحميل معرّف الناشر...</output>
       <button class="copy" id="copy-publisher-id" type="button" disabled>نسخ المعرّف</button>
     </div>
     <p class="id-note">معرّف مستقل خاص بنظام AQX Advertising للناشرين، وفريد لا يتكرر. لا يستخدم معرّف الحساب المركزي.</p>
   </section>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (() => {
+  const SUPABASE_URL = "https://fkiokwwztbyztleeuwks.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_4DCXObCqPUoNnI8ANOo8dA_nRAg0y5_";
+  const API = SUPABASE_URL + "/functions/v1/aqx-identity";
   const value = document.getElementById("publisher-id");
   const button = document.getElementById("copy-publisher-id");
+  const client = window.supabase?.createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+  });
+
   button.addEventListener("click", async () => {
     const id = value.textContent.trim();
     if (!/^AQXP-[A-F0-9]{20}$/.test(id)) return;
@@ -86,6 +94,36 @@ h2{font-size:21px;margin:7px 0 9px}
     } catch {
       button.textContent = "تعذر النسخ";
     }
+  });
+
+  async function loadPublisherId() {
+    if (!client) throw new Error("AUTH_LIBRARY_UNAVAILABLE");
+    const { data, error } = await client.auth.getSession();
+    const token = data?.session?.access_token;
+    if (error || !token) throw new Error("PUBLISHER_SESSION_UNAVAILABLE");
+
+    const response = await fetch(API + "/v1/advertising/publisher/identifier", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + token
+      },
+      body: "{}"
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || result.success !== true ||
+        !/^AQXP-[A-F0-9]{20}$/.test(result.publisher_id || "")) {
+      throw new Error(result.error || "PUBLISHER_IDENTIFIER_UNAVAILABLE");
+    }
+    value.textContent = result.publisher_id;
+    button.disabled = false;
+  }
+
+  loadPublisherId().catch(error => {
+    console.error("AQX publisher identifier load failed:", error);
+    value.textContent = "تعذر تحميل المعرّف — أعد تحميل الصفحة";
+    button.disabled = true;
   });
 })();
 </script>
