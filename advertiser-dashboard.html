@@ -12,9 +12,9 @@
 :root{color-scheme:dark;--bg:#071321;--panel:#0d2034;--panel2:#102943;--line:rgba(160,190,220,.15);--text:#f3f7fc;--muted:#9fb1c4;--cyan:#55d7e8;--blue:#5b9df2;--gold:#e5c17a;--green:#76d9b2;--shadow:0 18px 55px #0003}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 75% -10%,#174565 0,transparent 34%),radial-gradient(ellipse at 0% 75%,#102c47 0,transparent 30%),var(--bg);color:var(--text);font-family:Cairo,Arial,sans-serif}
 a{color:inherit;text-decoration:none}button{font:inherit}.layout{min-height:100vh;display:grid;grid-template-columns:260px minmax(0,1fr)}
-.sidebar{position:sticky;top:0;height:100vh;padding:25px 17px;border-left:1px solid var(--line);background:#08192bd9;backdrop-filter:blur(16px);display:flex;flex-direction:column;z-index:5}
+.sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;padding:22px 15px;border-left:1px solid var(--line);background:#08192bf2;backdrop-filter:blur(16px);display:flex;flex-direction:column;z-index:5}
 .brand{display:flex;align-items:center;gap:12px;padding:3px 8px 27px}.mark{width:43px;height:43px;border:1px solid #55d7e855;border-radius:13px;background:#55d7e812;display:grid;place-items:center;color:var(--cyan);font-weight:900;font-size:14px}.brand strong{display:block;font-size:13px;letter-spacing:1px}.brand small{display:block;color:var(--muted);font-size:10px}
-.nav-label{padding:9px 12px 7px;color:#70869c;font-size:10px;font-weight:800;letter-spacing:1px}.nav{display:grid;gap:5px}.nav a{display:flex;align-items:center;gap:11px;padding:10px 12px;border:1px solid transparent;border-radius:10px;color:#b8c8d8;font-size:12px;transition:.2s}.nav a:hover,.nav a.active{background:#55d7e811;border-color:#55d7e826;color:#eafaff}.nav a.active{box-shadow:inset -2px 0 var(--cyan)}.nav-icon{width:20px;text-align:center;color:var(--cyan);font-size:15px}.soon{margin-right:auto;padding:2px 7px;border:1px solid #e5c17a35;border-radius:20px;color:var(--gold);font-size:9px}
+.visitor-clock{margin:0 3px 13px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#ffffff06}.visitor-clock small{display:block;color:var(--muted);font-size:9px}.visitor-clock strong{display:block;color:#f0f7ff;font-size:12px;margin:4px 0}.visitor-clock span{display:block;color:var(--cyan);font-size:10px;direction:ltr;text-align:right}.advertiser-id{margin:0 3px 13px;padding:11px 12px;border:1px solid #55d7e82b;border-radius:12px;background:#55d7e809}.advertiser-id small{display:block;color:var(--muted);font-size:9px}.advertiser-id b{display:block;color:#e7faff;font-size:11px;margin-top:4px;overflow-wrap:anywhere}.nav-label{padding:9px 12px 7px;color:#70869c;font-size:10px;font-weight:800;letter-spacing:1px}.nav{display:grid;gap:5px}.nav a{display:flex;align-items:center;gap:11px;padding:10px 12px;border:1px solid transparent;border-radius:10px;color:#b8c8d8;font-size:12px;transition:.2s}.nav a:hover,.nav a.active{background:#55d7e811;border-color:#55d7e826;color:#eafaff}.nav a.active{box-shadow:inset -2px 0 var(--cyan)}.nav-icon{width:20px;text-align:center;color:var(--cyan);font-size:15px}.soon{margin-right:auto;padding:2px 7px;border:1px solid #e5c17a35;border-radius:20px;color:var(--gold);font-size:9px}
 .sidebar-bottom{margin-top:auto;padding:15px 12px;border:1px solid var(--line);border-radius:13px;background:#ffffff05}.sidebar-bottom b{font-size:11px}.sidebar-bottom p{margin:5px 0 0;color:var(--muted);font-size:10px;line-height:1.9}
 main{min-width:0;padding:27px clamp(16px,3vw,42px) 55px;max-width:1600px;width:100%;margin:auto}
 .topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:27px}.crumb{font-size:11px;color:var(--muted)}.crumb strong{color:#e8f3fb}.top-actions{display:flex;align-items:center;gap:9px}.icon-btn{width:38px;height:38px;border:1px solid var(--line);border-radius:11px;background:#ffffff06;color:#c9d7e4;display:grid;place-items:center}.profile{display:flex;align-items:center;gap:9px;padding:5px 10px 5px 5px;border:1px solid var(--line);border-radius:30px;color:#dbe6ef;font-size:11px}.avatar{width:29px;height:29px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(140deg,#1d6278,#31528c);font-weight:900;color:#eaffff}
@@ -28,7 +28,7 @@ main{min-width:0;padding:27px clamp(16px,3vw,42px) 55px;max-width:1600px;width:1
 .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}.table{width:100%;border-collapse:collapse;min-width:500px}.table th,.table td{padding:12px 14px;text-align:right;border-bottom:1px solid #ffffff0d;font-size:10px}.table th{color:#8299ad;background:#ffffff04;font-weight:700}.table td{color:#c4d1dd}.table tr:last-child td{border-bottom:0}.empty-table{text-align:center!important;padding:25px!important;color:#8297aa!important}
 .footer{margin-top:27px;padding:15px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;color:#71869a;font-size:9px}
 @media(max-width:1100px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.features{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:220px minmax(0,1fr)}}
-@media(max-width:760px){.layout{display:block}.sidebar{position:relative;height:auto;padding:12px 14px;border-left:0;border-bottom:1px solid var(--line)}.brand{padding:0 3px 12px}.nav-label,.sidebar-bottom{display:none}.nav{display:flex;overflow:auto;padding-bottom:2px}.nav a{white-space:nowrap;padding:8px 10px}.nav a:not(.active){display:none}.nav a.active{display:flex}.nav a.active:after{content:"القائمة";font-size:9px;color:var(--muted);margin-right:4px}.layout main{padding-top:18px}.topbar{margin-bottom:20px}.grid-main{grid-template-columns:1fr}}
+@media(max-width:760px){.layout{display:block}.sidebar{position:relative;height:auto;max-height:none;padding:12px 14px;border-left:0;border-bottom:1px solid var(--line)}.brand{padding:0 3px 12px}.visitor-clock,.advertiser-id{margin:0 0 9px}.nav-label{display:block;flex:0 0 auto}.nav{display:flex;overflow-x:auto;overflow-y:hidden;padding-bottom:5px;gap:5px}.nav a{white-space:nowrap;flex:0 0 auto;padding:8px 10px}.nav a:not(.active){display:flex}.nav a.active:after{display:none}.layout main{padding-top:18px}.topbar{margin-bottom:20px}.grid-main{grid-template-columns:1fr}}
 @media(max-width:520px){.heading{align-items:flex-start;flex-direction:column}.primary{width:100%}.launch{align-items:flex-start;flex-wrap:wrap}.launch-tag{margin-right:53px}.stats{gap:9px}.stat{padding:13px}.stat strong{font-size:21px}.features{grid-template-columns:1fr}.topbar{align-items:flex-start}.profile span{display:none}.footer{flex-direction:column}}
 </style>
 </head>
@@ -36,7 +36,29 @@ main{min-width:0;padding:27px clamp(16px,3vw,42px) 55px;max-width:1600px;width:1
 <div class="layout">
 <aside class="sidebar">
   <a class="brand" href="#overview"><span class="mark">AQX</span><span><strong>AQX ADVERTISING</strong><small>مساحة المعلنين</small></span></a>
-  <nav class="nav" aria-label="القائمة الجانبية"></nav>
+  <div class="visitor-clock" aria-live="off"><small id="visitor-country">التوقيت المحلي للزائر</small><strong id="visitor-day">جارٍ تحديد اليوم والتاريخ…</strong><span id="visitor-time">--:--:--</span><small id="visitor-zone"></small></div>
+  <div class="advertiser-id"><small>معرّف المعلن</small><b id="advertiser-id-value">لم يتم ربط المعرّف بعد</b></div>
+  <div class="nav-label">القائمة الرئيسية</div>
+  <nav class="nav" aria-label="القائمة الجانبية">
+    <a class="active" href="advertiser-dashboard.html"><span class="nav-icon">⌂</span>لوحة التحكم</a>
+    <a href="advertiser-account.html"><span class="nav-icon">◉</span>حسابي</a>
+    <a href="advertiser-settings.html"><span class="nav-icon">⚙</span>الإعدادات</a>
+    <div class="nav-label">إدارة الإعلان</div>
+    <a href="advertiser-campaigns.html"><span class="nav-icon">▣</span>الحملات الإعلانية</a>
+    <a href="advertiser-audience.html"><span class="nav-icon">◎</span>الجمهور والاستهداف</a>
+    <a href="advertiser-creatives.html"><span class="nav-icon">▧</span>مكتبة المواد الإعلانية</a>
+    <a href="advertiser-tracking.html"><span class="nav-icon">⌁</span>تتبّع التحويلات والقياس</a>
+    <div class="nav-label">المال والتقارير</div>
+    <a href="advertiser-billing.html"><span class="nav-icon">◇</span>الميزانية والفوترة</a>
+    <a href="advertiser-payments.html"><span class="nav-icon">＋</span>وسائل الدفع</a>
+    <a href="advertiser-invoices.html"><span class="nav-icon">▤</span>الفواتير والمعاملات</a>
+    <a href="advertiser-reports.html"><span class="nav-icon">▥</span>التقارير والتحليلات</a>
+    <div class="nav-label">إدارة الحساب</div>
+    <a href="advertiser-team.html"><span class="nav-icon">♧</span>الفريق والصلاحيات</a>
+    <a href="advertiser-review.html"><span class="nav-icon">✓</span>مراجعة الإعلانات والسياسات</a>
+    <a href="advertiser-notifications.html"><span class="nav-icon">♢</span>الإشعارات</a>
+    <a href="advertiser-support.html"><span class="nav-icon">؟</span>المساعدة والدعم</a>
+  </nav>
 </aside>
 <main id="overview">
   <div class="topbar"><div class="crumb">AQX Advertising <span> / </span> <strong>لوحة المعلن</strong></div><div class="top-actions"><div class="icon-btn" aria-label="الإشعارات">♧</div><div class="profile"><div class="avatar">A</div><span>حساب المعلن</span></div></div></div>
@@ -51,7 +73,7 @@ main{min-width:0;padding:27px clamp(16px,3vw,42px) 55px;max-width:1600px;width:1
   <div class="section-title" id="reports"><h2>الأداء والتحليلات</h2><span>نطاق زمني: —</span></div>
   <section class="grid-main">
     <article class="panel"><div class="panel-head"><h3>أداء الحملات بمرور الوقت</h3><span class="muted">الظهور · النقرات · التحويلات</span></div><div class="empty-chart"><div class="chart-icon">⌁</div><b>سيظهر الرسم البياني بعد تشغيل أول حملة</b><span>لن يتم عرض أرقام أو نتائج تقديرية على أنها أداء فعلي.</span></div></article>
-    <article class="panel"><div class="panel-head"><h3>ملخص الحساب</h3><span class="muted">الحالة الحالية</span></div><div class="mini-list"><div class="mini-row"><span>حالة المنظومة</span><b style="color:var(--gold)">قبل الإطلاق</b></div><div class="mini-row"><span>الحملات النشطة</span><b>—</b></div><div class="mini-row"><span>الرصيد المتاح</span><b>—</b></div><div class="mini-row"><span>الفواتير المستحقة</span><b>—</b></div><div class="mini-row"><span>حالة المراجعة</span><b>غير مفعّلة</b></div></div></article>
+    <article class="panel"><div class="panel-head"><h3>ملخص الحساب</h3><span class="muted">نظرة عامة</span></div><div class="mini-list"><div class="mini-row"><span>الحملات النشطة</span><b>—</b></div><div class="mini-row"><span>الرصيد المتاح</span><b>—</b></div><div class="mini-row"><span>الفواتير المستحقة</span><b>—</b></div><div class="mini-row"><span>حالة المراجعة</span><b>—</b></div></div></article>
   </section>
   <div class="section-title" id="campaigns"><h2>الحملات الإعلانية</h2><span>إدارة ومتابعة جميع حملاتك من مكان واحد</span></div>
   <section class="panel"><div class="table-wrap"><table class="table"><thead><tr><th>اسم الحملة</th><th>الهدف</th><th>الميزانية</th><th>الحالة</th><th>النتائج</th></tr></thead><tbody><tr><td class="empty-table" colspan="5">لا توجد حملات حتى الآن — ستتمكن من إنشاء حملتك الأولى عند إطلاق الخدمة.</td></tr></tbody></table></div></section>
@@ -67,8 +89,27 @@ main{min-width:0;padding:27px clamp(16px,3vw,42px) 55px;max-width:1600px;width:1
     <article class="feature"><div class="feature-icon">✓</div><div><b>مراجعة الإعلانات والسياسات</b><p>متابعة حالة مراجعة المواد وأسباب الرفض وطلبات التعديل والاعتراضات.</p><em>تُفعّل عند الإطلاق</em></div></article>
     <article class="feature" id="support"><div class="feature-icon">؟</div><div><b>مركز المساعدة والدعم</b><p>الوصول إلى أدلة الاستخدام وفتح طلب دعم ومتابعة الاستفسارات والنزاعات.</p><em>تُفعّل عند الإطلاق</em></div></article>
   </section>
-  <footer class="footer"><span>AQX ADVERTISING · مساحة المعلن</span><span>واجهة ما قبل الإطلاق · لا توجد حملات أو معاملات تشغيلية معروضة</span></footer>
+  <footer class="footer"><span>AQX ADVERTISING · مساحة المعلن</span><span>مساحة إدارة المعلن</span></footer>
 </main>
 </div>
+<script>
+(function(){
+  const day=document.getElementById('visitor-day');
+  const time=document.getElementById('visitor-time');
+  const zone=document.getElementById('visitor-zone');
+  const country=document.getElementById('visitor-country');
+  const locale=navigator.language||'ar';
+  const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'التوقيت المحلي';
+  const region=(locale.match(/[-_]([A-Z]{2})$/)||[])[1];
+  country.textContent=region?'دولة/منطقة الزائر: '+region:'التاريخ والوقت المحليان للزائر';
+  zone.textContent='المنطقة الزمنية: '+tz;
+  function tick(){
+    const now=new Date();
+    day.textContent=new Intl.DateTimeFormat(locale,{weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(now);
+    time.textContent=new Intl.DateTimeFormat(locale,{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true}).format(now);
+  }
+  tick();setInterval(tick,1000);
+})();
+</script>
 </body>
 </html>
