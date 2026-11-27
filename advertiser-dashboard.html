@@ -25,7 +25,7 @@ async function guard(){
  const heartbeat=setInterval(()=>{if(Date.now()-last>=900000){clearInterval(heartbeat);client.auth.signOut({scope:"local"}).finally(()=>location.replace(login));return}
  try{const x=JSON.parse(localStorage.getItem(key)||"null");if(!x||x.owner!==owner){clearInterval(heartbeat);location.replace(login);return}claim()}catch{clearInterval(heartbeat);location.replace(login)}},2000);
  addEventListener("pagehide",()=>{clearInterval(heartbeat);events.forEach(n=>removeEventListener(n,mark));try{const x=JSON.parse(localStorage.getItem(key)||"null");if(x?.owner===owner)localStorage.removeItem(key)}catch{}},{once:true});
-}guard().catch(()=>location.replace(login));
+}guard().catch(()=>location.replace("./advertising-login.html?reason=security"));
 })();
 </script>
 </body>
