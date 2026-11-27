@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#071426">
+<title>الفحص الأمني | AQX Identity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#071426;--line:rgba(160,190,220,.18);--text:#f4f8fc;--muted:#a9bbce;--cyan:#53d6e8;--success:#72dfb2}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(ellipse at 20% 10%,rgba(36,115,169,.22),transparent 42%),var(--bg);color:var(--text);font-family:Cairo,sans-serif}
+main{width:min(100%,560px);padding:clamp(22px,5vw,38px);border:1px solid var(--line);border-radius:23px;background:linear-gradient(155deg,rgba(16,41,68,.98),rgba(9,27,47,.98));box-shadow:0 24px 80px #0007}
+.mark{width:58px;height:58px;display:grid;place-items:center;margin:0 auto 17px;border:1px solid #53d6e877;border-radius:18px;color:var(--cyan);font-weight:900;font-size:20px}
+h1{text-align:center;font-size:clamp(23px,5vw,30px);margin:0 0 8px}.lead{text-align:center;color:var(--muted);font-size:13px;line-height:2;margin:0 0 24px}
+.step{padding:15px;border:1px solid var(--line);border-radius:13px;background:#03101f66;color:#c6d8e8;font-size:13px;line-height:2}
+.captcha{display:flex;justify-content:center;min-height:78px;margin:18px 0}
+button{width:100%;border:0;border-radius:12px;padding:13px 16px;background:linear-gradient(100deg,#42c9dc,#428ee0);color:#061827;font:900 15px Cairo,sans-serif;cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}
+.message{display:none;margin-top:15px;padding:12px;border:1px solid var(--line);border-radius:12px;font-size:13px;line-height:1.9}.message.show{display:block}.message.error{color:#ffd1d1;border-color:#ff858566;background:#9628281f}.message.success{color:#c6ffe5;border-color:#72dfb255;background:#23825a1f}.message.info{color:#d4f5ff}
+a{display:block;text-align:center;margin-top:20px;color:var(--cyan);font-size:13px;text-decoration:none}
+</style></head>
+<body><main>
+<div class="mark">AQX</div><h1>الفحص الأمني</h1>
+<p class="lead">اكتملت خطوة تسجيل الدخول. أكمل التحقق الأمني المركزي باستخدام رمز الدخول لمرة واحدة قبل متابعة الوصول.</p>
+<div class="step">هذا الفحص مرتبط بجلسة AQX الحالية. رمز التحقق أحادي الاستخدام ومحدود الصلاحية، ولا يمنح أي صلاحية خارج ما تسمح به الهوية المركزية.</div>
+<div class="captcha"><div id="aqx-security-captcha"></div></div>
+<button id="verify-button" type="button" disabled>إكمال الفحص الأمني</button>
+<div class="message info show" id="status-message" role="status" aria-live="polite">جارٍ تهيئة الفحص الأمني…</div>
+<a href="./advertising-login.html">العودة إلى تسجيل الدخول</a>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const IDENTITY_URL="https://fkiokwwztbyztleeuwks.supabase.co/functions/v1/aqx-identity";
+const SUPABASE_URL="https://fkiokwwztbyztleeuwks.supabase.co";
+const PUBLISHABLE_KEY="sb_publishable_4DCXObCqPUoNnI8ANOo8dA_nRAg0y5_";
+const client=window.supabase?.createClient?window.supabase.createClient(SUPABASE_URL,PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}):null;
+const $=id=>document.getElementById(id);let captchaWidget=null,captchaToken="",proofToken="",sessionToken="";
+function message(text,type="info"){$("status-message").textContent=text;$("status-message").className="message show "+type}
+function mountCaptcha(siteKey){
+ if(!window.turnstile||captchaWidget!==null)return;
+ try{captchaWidget=window.turnstile.render("#aqx-security-captcha",{sitekey:siteKey,theme:"dark",language:"ar",callback:token=>{captchaToken=token;$("verify-button").disabled=!token},"expired-callback":()=>{captchaToken="";$("verify-button").disabled=true},"error-callback":()=>{captchaToken="";$("verify-button").disabled=true;message("تعذر إكمال اختبار التحقق. أعد المحاولة.","error")}})}
+ catch(_){message("تعذر تحميل اختبار التحقق الأمني.","error")}
+}
+window.aqxSecurityTurnstileOnload=()=>{if(typeof window.aqxMountSecurityCaptcha==="function")window.aqxMountSecurityCaptcha()};
+async function initSecurityGate(){
+ try{
+  const storedProof=sessionStorage.getItem("aqx_identity_login_proof");sessionToken=sessionStorage.getItem("aqx_identity_session_token")||"";
+  if(!storedProof||!sessionToken||!client){message("لم نعثر على بيانات الفحص الأمني الصالحة. ابدأ تسجيل الدخول من جديد.","error");return}
+  const proof=JSON.parse(storedProof);
+  if(proof?.purpose!=="dashboard_access"||typeof proof?.token!=="string"){message("بيانات إثبات الدخول غير صالحة. أعد تسجيل الدخول.","error");return}
+  proofToken=proof.token;
+  const response=await fetch(IDENTITY_URL+"/v1/registration/status",{headers:{apikey:PUBLISHABLE_KEY}});
+  const config=await response.json().catch(()=>({}));const siteKey=config?.captcha?.site_key;
+  if(!response.ok||config.success!==true||!siteKey){message("خدمة التحقق الأمني غير متاحة حاليًا. لم يتم تجاوز الفحص.","error");return}
+  window.aqxMountSecurityCaptcha=()=>mountCaptcha(siteKey);
+  if(window.turnstile)mountCaptcha(siteKey);
+  message("أكمل اختبار التحقق أدناه لتأكيد أنك صاحب محاولة الدخول.","info");
+ }catch(_){message("تعذر تهيئة الفحص الأمني. أعد تسجيل الدخول وحاول مرة أخرى.","error")}
+}
+$("verify-button").addEventListener("click",async()=>{
+ if(!captchaToken||!proofToken||!sessionToken||!client)return;
+ $("verify-button").disabled=true;$("verify-button").textContent="جارٍ اعتماد الفحص…";
+ try{
+  const {data:{session},error:sessionError}=await client.auth.getSession();
+  if(sessionError||!session?.access_token)throw new Error("AUTH_SESSION_MISSING");
+  const response=await fetch(IDENTITY_URL+"/v1/security/login-proof/consume",{method:"POST",headers:{apikey:PUBLISHABLE_KEY,Authorization:"Bearer "+session.access_token,"Content-Type":"application/json","x-aqx-session":sessionToken},body:JSON.stringify({proof_token:proofToken,captcha_token:captchaToken})});
+  const result=await response.json().catch(()=>({}));
+  if(!response.ok||result.valid!==true||result.purpose!=="dashboard_access")throw new Error(result.error||"SECURITY_VERIFICATION_FAILED");
+  sessionStorage.removeItem("aqx_identity_login_proof");
+  sessionStorage.setItem("aqx_security_check_completed_at",new Date().toISOString());
+  $("verify-button").hidden=true;
+  message("اكتمل الفحص الأمني بنجاح، وتم اعتماد إثبات الدخول لمرة واحدة. لوحة خدمة الإعلانات ستُفتح عند اكتمال تجهيزها.","success");
+ }catch(error){
+  const code=error.message||"SECURITY_VERIFICATION_FAILED";
+  const messages={LOGIN_PROOF_INVALID_OR_EXPIRED:"انتهت صلاحية إثبات الدخول أو سبق استخدامه. سجّل الدخول من جديد.",CAPTCHA_REQUIRED_OR_INVALID:"لم يجتز اختبار التحقق. أعد المحاولة.",CAPTCHA_NOT_CONFIGURED:"خدمة التحقق الأمني غير مهيأة على الخادم.",AUTH_SESSION_MISSING:"انتهت جلسة المصادقة. سجّل الدخول من جديد."};
+  message(messages[code]||"تعذر اعتماد الفحص الأمني. ابدأ تسجيل الدخول من جديد.","error");
+  $("verify-button").textContent="إعادة المحاولة";
+  if(window.turnstile&&captchaWidget!==null)window.turnstile.reset(captchaWidget);
+  captchaToken="";
+ }
+});
+initSecurityGate();
+</script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=aqxSecurityTurnstileOnload&render=explicit" async defer></script>
+</body></html>
